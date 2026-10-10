@@ -1,0 +1,3 @@
+model,cv_mae,best_parameters
+random_forest,48.876787353471414,"{""model__max_depth"": null, ""model__min_samples_leaf"": 1}"
+ridge,63.821857989792946,"{""model__alpha"": 10.0}"
