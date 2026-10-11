@@ -1,0 +1,6 @@
+criterion,D,R,D_plus_R,D_minus_R
+price,0.0,0.625,0.625,-0.625
+performance,1.0,0.0,1.0,1.0
+mass,0.0,0.25,0.25,-0.25
+battery_life,0.0,0.375,0.375,-0.375
+warranty,0.25,0.0,0.25,0.25
