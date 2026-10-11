@@ -1,0 +1,10 @@
+{
+  "sample_id": 1,
+  "configuration_id": 18,
+  "explainer_mode": "tree_path_dependent",
+  "base_value": 1031.8817668221395,
+  "prediction": 597.996080038418,
+  "synthetic_target": 573.44,
+  "reconstructed_prediction": 597.9960800384176,
+  "additivity_error": 3.410605131648481e-13
+}

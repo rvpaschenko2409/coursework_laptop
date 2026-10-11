@@ -1,0 +1,7 @@
+feature,value,shap_contribution
+cpu_cores,2,-218.28719376115552
+cpu_threads,4,-112.72008572466697
+cpu_frequency_ghz,2.0,-204.56083440213845
+ram_gb,32,46.2600760202466
+storage_gb,512,0.7834134577495713
+storage_type,SSD,54.63893762624292
