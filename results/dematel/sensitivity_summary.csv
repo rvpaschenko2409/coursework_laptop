@@ -1,0 +1,9 @@
+scenario,changed_classes,max_change_D_plus_R,max_change_D_minus_R
+performance -> price: 2,0,0.0535714285714286,0.0535714285714286
+performance -> price: 4,0,0.041666666666666685,0.041666666666666685
+performance -> mass: 1,0,0.10714285714285715,0.10714285714285715
+performance -> mass: 3,0,0.08333333333333331,0.08333333333333331
+performance -> battery_life: 2,0,0.0892857142857143,0.0892857142857143
+performance -> battery_life: 4,0,0.06944444444444442,0.06944444444444442
+warranty -> price: 1,0,0.125,0.125
+warranty -> price: 3,0,0.125,0.125
