@@ -1,0 +1,2 @@
+v,leader,advantage_threshold,gap_to_second,acceptable_advantage,acceptable_stability,compromise_set
+0.5,A2,0.25,0.13566245465974336,False,False,"A2, A3, A5"
