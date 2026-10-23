@@ -1,38 +1,36 @@
+"""Проверка чувствительности DEMATEL к изменению оценок."""
+
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
 
+from decision_core.dematel import calculate_dematel
+
+
 project_dir = Path(__file__).resolve().parents[1]
+
 table = pd.read_csv(
-    project_dir / "data" / "decision" / "dematel_direct.csv",
+    project_dir / "data/decision/dematel_direct.csv",
     index_col=0,
 )
+
 A = table.to_numpy(dtype=float)
 names = list(table.index)
 
 
 def calculate(matrix):
-    divisor = max(
-        matrix.sum(axis=1).max(),
-        matrix.sum(axis=0).max(),
+    direct = pd.DataFrame(
+        matrix,
+        index=table.index,
+        columns=table.columns,
     )
-    if divisor <= 0:
-        raise ValueError("Невозможно нормировать нулевую матрицу.")
+    _, _, indicators = calculate_dematel(direct)
 
-    normalized = matrix / divisor
-    radius = np.max(np.abs(np.linalg.eigvals(normalized)))
-    if radius >= 1:
-        raise ValueError("Не выполнено условие сходимости.")
-
-    identity = np.eye(len(matrix))
-    total = np.linalg.solve(
-        (identity - normalized).T, normalized.T
-    ).T
-
-    outgoing = total.sum(axis=1)
-    incoming = total.sum(axis=0)
-    return outgoing + incoming, outgoing - incoming
+    return (
+        indicators["D_plus_R"].to_numpy(),
+        indicators["D_minus_R"].to_numpy(),
+    )
 
 
 def classify(balance):
@@ -83,13 +81,18 @@ for i, j in np.argwhere(A > 0):
                 "classification": classes[k],
             })
 
-output_dir = project_dir / "results" / "dematel"
+output_dir = project_dir / "results/dematel"
 output_dir.mkdir(parents=True, exist_ok=True)
 
 summary = pd.DataFrame(scenarios)
-summary.to_csv(output_dir / "sensitivity_summary.csv", index=False)
-pd.DataFrame(details).to_csv(
-    output_dir / "sensitivity_details.csv", index=False
+details_table = pd.DataFrame(details)
+summary.to_csv(
+    output_dir / "sensitivity_summary.csv",
+    index=False,
+)
+details_table.to_csv(
+    output_dir / "sensitivity_details.csv",
+    index=False,
 )
 
 print("Проверено сценариев:", len(summary))
