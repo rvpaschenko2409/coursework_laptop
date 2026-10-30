@@ -1,0 +1,111 @@
+[
+  {
+    "name": "fixtures",
+    "sql": "INSERT INTO users(email,password_hash,name) VALUES ('test@example.test','xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','Test');\nINSERT INTO projects(owner_id,title) VALUES(1,'One'),(1,'Two');\nINSERT INTO project_members(project_id,user_id,role) VALUES(1,1,'analyst'),(2,1,'analyst');\nINSERT INTO criteria(project_id,code,name,direction) VALUES(1,'price','Price','min'),(1,'speed','Speed','max'),(2,'price','Price','min');\nINSERT INTO alternatives(project_id,code,name) VALUES(1,'A1','Laptop'),(2,'A1','Other');\nINSERT INTO datasets(project_id,name,origin,license,sha256,seed,generator_version,row_count,column_count,uploaded_by)\nVALUES(1,'Synthetic','synthetic','Own educational generator',repeat('a',64),42,'1',2000,6,1),(2,'Other','manual','Own',repeat('b',64),NULL,NULL,1,1,1);\nINSERT INTO dataset_groups VALUES(1,'config1','train');\nINSERT INTO dataset_rows(dataset_id,layer,row_number,configuration_id,split,data) VALUES(1,'processed',1,'config1','train','{\"cores\":4}');\nINSERT INTO ml_models(project_id,dataset_id,name,version,algorithm,feature_names,target_name,seed,artifact_path,artifact_sha256,is_active,created_by)\nVALUES(1,1,'rf',1,'random_forest','[\"cores\"]','synthetic_score',42,'models/rf.joblib',repeat('a',64),true,1);\nINSERT INTO predictions(project_id,model_id,alternative_id,criterion_id,value,features_snapshot,created_by) VALUES(1,1,1,2,1000,'{\"cores\":4}',1);\nINSERT INTO scores(project_id,alternative_id,criterion_id,expert_id,value,source,prediction_id) VALUES(1,1,2,1,1000,'ml',1);"
+  },
+  {
+    "name": "duplicate_email",
+    "sql": "INSERT INTO users(email,password_hash,name) VALUES('test@example.test','xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','D')",
+    "sqlstate": "23505"
+  },
+  {
+    "name": "case_email",
+    "sql": "INSERT INTO users(email,password_hash,name) VALUES('TEST@example.test','xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx','D')",
+    "sqlstate": "23514"
+  },
+  {
+    "name": "cross_project_score",
+    "sql": "INSERT INTO scores(project_id,alternative_id,criterion_id,value,source) VALUES(1,2,1,2,'manual')",
+    "sqlstate": "23503"
+  },
+  {
+    "name": "nan_score",
+    "sql": "INSERT INTO scores(project_id,alternative_id,criterion_id,value,source) VALUES(1,1,1,'NaN','manual')",
+    "sqlstate": "23514"
+  },
+  {
+    "name": "infinite_score",
+    "sql": "INSERT INTO scores(project_id,alternative_id,criterion_id,value,source) VALUES(1,1,1,'Infinity','manual')",
+    "sqlstate": "23514"
+  },
+  {
+    "name": "zero_score",
+    "sql": "INSERT INTO scores(project_id,alternative_id,criterion_id,value,source) VALUES(1,1,1,0,'manual')",
+    "sqlstate": "23514"
+  },
+  {
+    "name": "double_active_model",
+    "sql": "INSERT INTO ml_models(project_id,dataset_id,name,version,algorithm,feature_names,target_name,seed,artifact_path,artifact_sha256,is_active,created_by) VALUES(1,1,'ridge',1,'ridge','[\"cores\"]','synthetic_score',42,'models/ridge.joblib',repeat('a',64),true,1)",
+    "sqlstate": "23505"
+  },
+  {
+    "name": "foreign_dataset",
+    "sql": "INSERT INTO ml_models(project_id,dataset_id,name,version,algorithm,feature_names,target_name,seed,artifact_path,artifact_sha256,created_by) VALUES(1,2,'ridge',1,'ridge','[\"cores\"]','synthetic_score',42,'x',repeat('a',64),1)",
+    "sqlstate": "23503"
+  },
+  {
+    "name": "group_leakage",
+    "sql": "INSERT INTO dataset_rows(dataset_id,layer,row_number,configuration_id,split,data) VALUES(1,'processed',2,'config1','test','{}')",
+    "sqlstate": "23503"
+  },
+  {
+    "name": "missing_processed_group",
+    "sql": "INSERT INTO dataset_rows(dataset_id,layer,row_number,data) VALUES(1,'processed',3,'{}')",
+    "sqlstate": "23514"
+  },
+  {
+    "name": "dematel_diagonal",
+    "sql": "INSERT INTO comparisons VALUES(1,1,1,1,2)",
+    "sqlstate": "23514"
+  },
+  {
+    "name": "dematel_range",
+    "sql": "INSERT INTO comparisons VALUES(1,1,1,2,5)",
+    "sqlstate": "23514"
+  },
+  {
+    "name": "prediction_update",
+    "sql": "UPDATE predictions SET value=2000 WHERE id=1",
+    "sqlstate": "P0001"
+  },
+  {
+    "name": "manual_override_no_reason",
+    "sql": "UPDATE scores SET source='manual',value=1100 WHERE id=1",
+    "sqlstate": "P0001"
+  },
+  {
+    "name": "manual_override_history",
+    "sql": "UPDATE scores SET source='manual',value=1100,override_reason='Confirmed correction',expert_id=1 WHERE id=1"
+  },
+  {
+    "name": "valid_weights",
+    "sql": "BEGIN; INSERT INTO weight_sets(id,project_id,method,input_snapshot,project_revision,created_by) VALUES(1,1,'merec','{}',1,1); INSERT INTO weights VALUES(1,1,1,0.4),(1,1,2,0.6); COMMIT;"
+  },
+  {
+    "name": "empty_weight_set",
+    "sql": "INSERT INTO weight_sets(id,project_id,method,input_snapshot,project_revision,created_by) VALUES(2,1,'manual','{}',1,1)",
+    "sqlstate": "P0001"
+  },
+  {
+    "name": "wrong_weight_sum",
+    "sql": "UPDATE weights SET value=0.9 WHERE weight_set_id=1 AND criterion_id=1",
+    "sqlstate": "P0001"
+  },
+  {
+    "name": "finished_result",
+    "sql": "INSERT INTO results(project_id,created_by,request_key,project_revision,status,method,input_snapshot,core_version,finished_at) VALUES(1,1,'00000000-0000-0000-0000-000000000001',1,'succeeded','marcos','{\"A1\":[1,2]}','08191dd',now())"
+  },
+  {
+    "name": "finished_result_immutable",
+    "sql": "UPDATE results SET output='{\"rank\":1}' WHERE id=1",
+    "sqlstate": "P0001"
+  },
+  {
+    "name": "revision_changes",
+    "sql": "UPDATE alternatives SET name='Changed' WHERE id=1"
+  },
+  {
+    "name": "project_cascade",
+    "sql": "DELETE FROM projects WHERE id=1"
+  }
+]

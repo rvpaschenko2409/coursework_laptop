@@ -1,0 +1,8 @@
+# Additional dependencies; existing ML requirements are unchanged.
+SQLAlchemy==2.0.44
+alembic==1.17.1
+psycopg[binary]==3.2.12
+Mako==1.4.3
+MarkupSafe==3.0.4
+greenlet==3.5.6
+typing_extensions==4.16.0

@@ -1,0 +1,136 @@
+{
+  "date": "2026-10-30",
+  "engine": "PostgreSQL 17.5 on aarch64-unknown-linux-gnu, compiled by emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 3.1.74 (1092ec30a3fb1d46b1782ff1b4db5094d3d06ae5), 32-bit",
+  "environment": "PGlite: PostgreSQL compiled to WebAssembly; not the user Windows server",
+  "checks": [
+    {
+      "name": "create_schema",
+      "status": "passed"
+    },
+    {
+      "name": "fixtures",
+      "status": "passed"
+    },
+    {
+      "name": "duplicate_email",
+      "status": "passed",
+      "rejected_with": "23505"
+    },
+    {
+      "name": "case_email",
+      "status": "passed",
+      "rejected_with": "23514"
+    },
+    {
+      "name": "cross_project_score",
+      "status": "passed",
+      "rejected_with": "23503"
+    },
+    {
+      "name": "nan_score",
+      "status": "passed",
+      "rejected_with": "23514"
+    },
+    {
+      "name": "infinite_score",
+      "status": "passed",
+      "rejected_with": "23514"
+    },
+    {
+      "name": "zero_score",
+      "status": "passed",
+      "rejected_with": "23514"
+    },
+    {
+      "name": "double_active_model",
+      "status": "passed",
+      "rejected_with": "23505"
+    },
+    {
+      "name": "foreign_dataset",
+      "status": "passed",
+      "rejected_with": "23503"
+    },
+    {
+      "name": "group_leakage",
+      "status": "passed",
+      "rejected_with": "23503"
+    },
+    {
+      "name": "missing_processed_group",
+      "status": "passed",
+      "rejected_with": "23514"
+    },
+    {
+      "name": "dematel_diagonal",
+      "status": "passed",
+      "rejected_with": "23514"
+    },
+    {
+      "name": "dematel_range",
+      "status": "passed",
+      "rejected_with": "23514"
+    },
+    {
+      "name": "prediction_update",
+      "status": "passed",
+      "rejected_with": "P0001"
+    },
+    {
+      "name": "manual_override_no_reason",
+      "status": "passed",
+      "rejected_with": "P0001"
+    },
+    {
+      "name": "manual_override_history",
+      "status": "passed"
+    },
+    {
+      "name": "valid_weights",
+      "status": "passed"
+    },
+    {
+      "name": "empty_weight_set",
+      "status": "passed",
+      "rejected_with": "P0001"
+    },
+    {
+      "name": "wrong_weight_sum",
+      "status": "passed",
+      "rejected_with": "P0001"
+    },
+    {
+      "name": "finished_result",
+      "status": "passed"
+    },
+    {
+      "name": "finished_result_immutable",
+      "status": "passed",
+      "rejected_with": "P0001"
+    },
+    {
+      "name": "revision_changes",
+      "status": "passed"
+    },
+    {
+      "name": "project_cascade",
+      "status": "passed"
+    },
+    {
+      "name": "downgrade",
+      "status": "passed"
+    },
+    {
+      "name": "upgrade_after_downgrade",
+      "status": "passed"
+    }
+  ],
+  "table_count": 21,
+  "alembic_generated_sql_round_trip": "passed: upgrade/downgrade/upgrade, revision 0001, 21 tables plus alembic_version",
+  "combined_pytest": {
+    "passed": 59,
+    "skipped": 1,
+    "skip_reason": "TEST_DATABASE_URL not configured; native psycopg/PostgreSQL integration not run"
+  },
+  "windows_installer": "Prepared and reviewed; execution on the user Windows computer is pending"
+}
