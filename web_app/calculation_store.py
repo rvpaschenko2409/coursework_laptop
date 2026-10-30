@@ -90,6 +90,9 @@ def load_pair(connection,project_id,result_id):
     rows=connection.execute('''SELECT r.*,u.name AS actor_name FROM results r JOIN users u ON u.id=r.created_by
         WHERE r.project_id=%s AND r.params->>'batch_key'=%s ORDER BY r.method''',(project_id,batch)).fetchall()
     if len(rows)!=2 or {r['method'] for r in rows}!={'marcos','vikor'}:raise ValueError('Не найдена полная пара MARCOS и VIKOR.')
+    if first['params'].get('entrypoint')=='web_weights':
+        from web_app.weight_store import load_pair as load_weighted_pair
+        return load_weighted_pair(connection,project_id,rows)
     snapshot=first['input_snapshot'];calculated=compute(snapshot)
     for row in rows:
         if row['input_snapshot']!=snapshot or row['params'].get('weight_set_id')!=first['params'].get('weight_set_id') or row['created_by']!=first['created_by']:
@@ -97,6 +100,11 @@ def load_pair(connection,project_id,result_id):
         replay_result(connection,row['id'],project_id)
     stored=weight_set(connection,project_id,first['params'].get('weight_set_id'),snapshot,calculated)
     current=connection.execute('SELECT revision FROM projects WHERE id=%s',(project_id,)).fetchone()['revision']
+    return presentation(snapshot,calculated,rows,stored,current)
+
+
+def presentation(snapshot,calculated,rows,stored,current):
+    first=rows[0]
     by_code={row['code']:row for row in snapshot['alternatives']}
     criteria={row['code']:row for row in snapshot['criteria']}
     vikor={row['alternative_code']:row for row in calculated['vikor']['ranking']}
@@ -110,4 +118,6 @@ def load_pair(connection,project_id,result_id):
             for c,v in zip(snapshot['matrix']['columns'],values)]})
     return {'snapshot':snapshot,'calculated':calculated,'results':{r['method']:dict(r) for r in rows},'weight_set':stored,
         'comparison':comparison,'criteria':criteria,'matrix':matrix,'is_stale':current!=first['project_revision'],'current_revision':current,
-        'excluded':[by_code[c] for c in calculated['excluded_codes']],'verified':True}
+        'excluded':[by_code[c] for c in calculated['excluded_codes']],'verified':True,
+        'weighting':calculated.get('weighting') or {'method':'merec','alpha':None,'weights':calculated['merec']['weights']},
+        'weight_label':{'merec':'MEREC','manual':'Ручные веса','dematel':'DEMATEL','combined':'Комбинированные веса'}[stored['method']]}

@@ -1,0 +1,601 @@
+{
+  "stage": "web-weights",
+  "date": "2026-10-30",
+  "variant": 27,
+  "requirements": [
+    "FT-09",
+    "FT-10",
+    "FT-11",
+    "FT-12",
+    "FT-16"
+  ],
+  "full_tests": {
+    "passed": 199,
+    "skipped": 0,
+    "warnings": 1,
+    "environment": "isolated PGlite PostgreSQL-compatible engine; native PostgreSQL 18 user validation pending"
+  },
+  "default_tests": {
+    "passed": 148,
+    "skipped": 51,
+    "warnings": 1
+  },
+  "warning": "Existing third-party Starlette/AnyIO DeprecationWarning",
+  "coverage": [
+    "manual zero/nonfinite/ID validation and normalization",
+    "combined alpha boundaries and objective parity",
+    "both subjective sources",
+    "shared weights for two core ranking functions",
+    "DEMATEL provenance and criterion identity",
+    "MEREC legacy identity and replay",
+    "real session actor",
+    "role/CSRF/project scoping",
+    "stale revisions",
+    "atomic rollback",
+    "budget filter before objective weights",
+    "embedded historical DEMATEL replay",
+    "tampered alpha and embedded output rejected",
+    "duplicate form fields",
+    "HTML validation retains input",
+    "corrected DEMATEL matrix headings"
+  ],
+  "browser": {
+    "passed": true,
+    "viewports": [
+      {
+        "page": "merec_form",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "merec_form",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "merec_form",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "merec_form",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "merec_form",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "manual_form",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "manual_form",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "manual_form",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "manual_form",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "manual_form",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "validation",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "validation",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "validation",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "validation",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "validation",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "manual_result",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "manual_result",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "manual_result",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "manual_result",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "manual_result",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "manual_details",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "manual_details",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "manual_details",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "manual_details",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "manual_details",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "dematel_corrected",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "dematel_corrected",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "dematel_corrected",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "dematel_corrected",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "dematel_corrected",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "dematel_form",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "dematel_form",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "dematel_form",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "dematel_form",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "dematel_form",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "dematel_result",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "dematel_result",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "dematel_result",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "dematel_result",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "dematel_result",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "combined_dematel_form",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "combined_dematel_form",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "combined_dematel_form",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "combined_dematel_form",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "combined_dematel_form",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "combined_dematel_result",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "combined_dematel_result",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "combined_dematel_result",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "combined_dematel_result",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "combined_dematel_result",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "combined_manual_form",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "combined_manual_form",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "combined_manual_form",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "combined_manual_form",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "combined_manual_form",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "combined_manual_result",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "combined_manual_result",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "combined_manual_result",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "combined_manual_result",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "combined_manual_result",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "merec_result",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "merec_result",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "merec_result",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "merec_result",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "merec_result",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "historical",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "historical",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "historical",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "historical",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "historical",
+        "width": 1920,
+        "document_width": 1920
+      }
+    ],
+    "engine": "Chromium headless via Playwright",
+    "flow": "registration, explicit demo access, manual validation/save, DEMATEL source choice, two combined weight sources, MEREC control, corrected headings, charts and stale historical result"
+  },
+  "control_inputs": {
+    "budget": 100000,
+    "v": 0.5,
+    "manual_relative_weights": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "combined_alpha": 0.5,
+    "dematel": "original fictional demo expert"
+  },
+  "controls": {
+    "merec": {
+      "weights": [
+        0.2216980336915193,
+        0.26102871787846665,
+        0.11567135761082074,
+        0.18521337847920466,
+        0.21638851233998863
+      ],
+      "marcos": [
+        "A4",
+        "A2",
+        "A5",
+        "A3",
+        "A1"
+      ],
+      "utility": 0.6398967456876088,
+      "vikor": [
+        "A2",
+        "A3",
+        "A5",
+        "A4",
+        "A1"
+      ],
+      "compromise": [
+        "A2",
+        "A3",
+        "A5"
+      ]
+    },
+    "manual": {
+      "weights": [
+        0.2,
+        0.2,
+        0.2,
+        0.2,
+        0.2
+      ],
+      "marcos": [
+        "A5",
+        "A2",
+        "A4",
+        "A3",
+        "A1"
+      ],
+      "utility": 0.6488239553619503,
+      "vikor": [
+        "A2",
+        "A3",
+        "A5",
+        "A1",
+        "A4"
+      ],
+      "compromise": [
+        "A2"
+      ]
+    },
+    "dematel": {
+      "weights": [
+        0.25,
+        0.4,
+        0.1,
+        0.15,
+        0.1
+      ],
+      "marcos": [
+        "A4",
+        "A5",
+        "A3",
+        "A2",
+        "A1"
+      ],
+      "utility": 0.6485962495665215,
+      "vikor": [
+        "A3",
+        "A5",
+        "A2",
+        "A4",
+        "A1"
+      ],
+      "compromise": [
+        "A3",
+        "A5",
+        "A2",
+        "A4"
+      ]
+    },
+    "combined_manual": {
+      "weights": [
+        0.21084901684575966,
+        0.23051435893923333,
+        0.15783567880541038,
+        0.19260668923960234,
+        0.20819425616999432
+      ],
+      "marcos": [
+        "A5",
+        "A2",
+        "A4",
+        "A3",
+        "A1"
+      ],
+      "utility": 0.633085094555834,
+      "vikor": [
+        "A2",
+        "A3",
+        "A5",
+        "A4",
+        "A1"
+      ],
+      "compromise": [
+        "A2",
+        "A3"
+      ]
+    },
+    "combined_dematel": {
+      "weights": [
+        0.23584901684575965,
+        0.3305143589392333,
+        0.10783567880541037,
+        0.1676066892396023,
+        0.15819425616999433
+      ],
+      "marcos": [
+        "A4",
+        "A5",
+        "A2",
+        "A3",
+        "A1"
+      ],
+      "utility": 0.6442426973280383,
+      "vikor": [
+        "A5",
+        "A3",
+        "A2",
+        "A4",
+        "A1"
+      ],
+      "compromise": [
+        "A5",
+        "A3",
+        "A2"
+      ]
+    }
+  },
+  "preserved": [
+    "decision_core/*.py",
+    "decision_store/calculations.py",
+    "existing data and models",
+    "all existing migrations"
+  ],
+  "schema_versions": [
+    "0002",
+    "web0002"
+  ],
+  "new_migrations": 0,
+  "new_dependencies": 0,
+  "installer": {
+    "new_files": [
+      "docs/web_weights.md",
+      "docs/web_weights_checks.json",
+      "scripts/prepare_web_weights.py",
+      "tests/test_web_weights.py",
+      "web_app/templates/weights.html",
+      "web_app/weight_math.py",
+      "web_app/weight_routes.py",
+      "web_app/weight_store.py"
+    ],
+    "updated_base_sha256_utf8_lf": {
+      "web_app/main.py": "f42455a0eb4783eeed824f4e9d78e9e82f18bb348f4e9457045b735c25aa7b58",
+      "web_app/database.py": "0eeed8526a37c401be7df6d67b4a14e365fa7c98289a06b223015c1231b23b1d",
+      "web_app/calculation_store.py": "d594491a6109951e83864c0e337ae32b7854e56482ddd56dd1393f83a557e5d1",
+      "web_app/calculation_charts.py": "52a1d0228075c920b27ad3f4f628779f0e0ee3de0a646bce35fdf49c140b1e82",
+      "web_app/templates/calculations.html": "753b404a9aea3361f7aff0b92f58ad19d914425456d9afd60605a785ea9b5688",
+      "web_app/templates/calculation_result.html": "311b749b0f293bce00f3f9d0847e9aacf0d0c1db8f1edcc2d7709d297c717bce",
+      "web_app/templates/calculation_tables.html": "0cb0c15266a4d3ed44815f18a7a6c13f198ce7f60b46a8d3df08442ae5626834",
+      "web_app/templates/dematel_result.html": "55356ddbdc145bc2827d4cfb76f2e7ea1c55cf573c76506d4aae9a875086498b"
+    },
+    "crlf_and_bom_normalization_verified": true,
+    "native_powershell_execution": "not performed in Linux environment"
+  },
+  "not_in_this_stage": [
+    "sensitivity experiment",
+    "criteria CRUD",
+    "XLSX export",
+    "PWA",
+    "whole-course acceptance",
+    "native PostgreSQL18 and all browser families"
+  ]
+}

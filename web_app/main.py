@@ -315,4 +315,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     register_calculation_routes(app,Ctx,render,response,project_access,require_user)
     from web_app.dematel_routes import register_routes as register_dematel_routes
     register_dematel_routes(app,Ctx,render,response,project_access,require_user)
+    from web_app.weight_routes import register_routes as register_weight_routes
+    register_weight_routes(app,Ctx,render,response,project_access,require_user)
     return app
