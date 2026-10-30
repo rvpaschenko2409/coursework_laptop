@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-30",
+  "tolerance": 1e-08,
+  "checks": [
+    {
+      "file": "model_comparison_cv.csv",
+      "max_numeric_error": 0.0,
+      "passed": true
+    },
+    {
+      "file": "model_comparison_test.csv",
+      "max_numeric_error": 6.536993168992922e-13,
+      "passed": true
+    },
+    {
+      "file": "test_predictions.csv",
+      "max_numeric_error": 4.774847184307873e-12,
+      "passed": true
+    },
+    {
+      "file": "feature_importance.csv",
+      "max_numeric_error": 0.0,
+      "passed": true
+    },
+    {
+      "file": "feature_importance_repeats.csv",
+      "max_numeric_error": 0.0,
+      "passed": true
+    },
+    {
+      "file": "local_shap.csv",
+      "max_numeric_error": 0.0,
+      "passed": true
+    },
+    {
+      "file": "decision/decision_matrix.csv",
+      "max_numeric_error": 0.0,
+      "passed": true
+    },
+    {
+      "file": "decision/alternatives_with_predictions.csv",
+      "max_numeric_error": 0.0,
+      "passed": true
+    }
+  ]
+}
