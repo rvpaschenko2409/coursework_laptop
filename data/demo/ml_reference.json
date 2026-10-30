@@ -1,0 +1,12 @@
+{
+  "reference_version": 1,
+  "verified_on": "2026-10-30",
+  "project_source": "Original project with audited numerical results; bootstrap reference for ML registry",
+  "logical_fingerprint": "02e1737387c04c41a8a5943a6132890f8eb748a02e8163b88ec9629c3505df08",
+  "dataset_semantic_sha256": "43b853ddb80fc3213d16005a83f3fc6d84abddffa08d7127facbce4bb7f3cff7",
+  "artifacts": {
+    "ridge": "3aaafa89ab72b4e4432933531e4fc40db1c0085850e0a559dc4b64fdf674ff4e",
+    "random_forest": "a21936ccdcee2c1b8c52ec857765657c4fc24556b4030b10a8339103078b6276"
+  },
+  "note": "Line-ending normalization is included. Does not establish real-world accuracy."
+}
