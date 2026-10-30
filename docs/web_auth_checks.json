@@ -1,0 +1,137 @@
+{
+  "stage": "web-auth",
+  "variant": 27,
+  "date": "2026-10-30",
+  "scope": "Registration, sessions, project membership and read-only decision matrix; create project and set members.",
+  "environment": {
+    "python": "3.12",
+    "database_test_engine": "PostgreSQL through PGlite 0.5.13 and pglite-socket 0.2.16",
+    "authorization_checks": "SET LOCAL ROLE with real PostgreSQL table/column privileges",
+    "native_windows_postgresql_password_login": "pending user installation"
+  },
+  "pytest_with_test_database": {
+    "passed": 104,
+    "failed": 0,
+    "skipped": 0,
+    "warning": "One third-party Starlette/AnyIO deprecation warning"
+  },
+  "pytest_without_test_database": {
+    "passed": 90,
+    "skipped": 14,
+    "failed": 0
+  },
+  "new_tests": 15,
+  "migration_checks": [
+    "offline SQL generation",
+    "online upgrade",
+    "repeat upgrade",
+    "downgrade of web module in temporary test schema",
+    "re-upgrade",
+    "core alembic_version remains 0002"
+  ],
+  "core_version": "2615dd1e33d27cf817c78c9acfd1c5c39e05de3d8df4a5ab692c3edab6011729",
+  "core_unchanged": true,
+  "permissions_verified": [
+    "application role cannot CREATE in schema",
+    "cannot DELETE users or projects",
+    "cannot change user activity",
+    "cannot change project owner",
+    "stranger receives 404",
+    "expert cannot set roles",
+    "role changes read from database"
+  ],
+  "ui": {
+    "viewports": [
+      {
+        "page": "login",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "login",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "register",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "register",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "projects",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "projects",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "project",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "project",
+        "width": 390,
+        "document_width": 390
+      }
+    ],
+    "ui_flow": "register/create project/explicit membership/demo matrix/logout/login",
+    "ml_badges": 5,
+    "passed": true
+  },
+  "demo_access_grant": {
+    "explicit_only": true,
+    "repeat_keeps_revision": true,
+    "tested_function": "scripts.grant_demo_access.grant_access"
+  },
+  "python_compilation": true,
+  "installer_manifest": {
+    "new_project_files": 25,
+    "all_present": true,
+    "existing_core_files_in_archive": false,
+    "powershell_native_execution": "pending Windows installation"
+  },
+  "limitations": [
+    "Core supports five original criteria at this stage.",
+    "Web editing of alternatives, calculations, XLSX export and PWA are later stages.",
+    "Local HTTP only; external hosting requires HTTPS and secure-cookie settings.",
+    "No email confirmation, password recovery or MFA.",
+    "Project isolation is enforced by Python request authorization, not PostgreSQL RLS."
+  ],
+  "files_sha256": {
+    "README_WEB.txt": "31dbc68231abf4844aeccef7729101bc0a7ef489e5ea2dd60046a42a481a0f04",
+    "docs/web_auth.md": "98fec48e7550c59008fba4307638477e8e021d8ad40f8ae0c4d3f628d872c5be",
+    "install_web_auth.ps1": "4ca2c53b9d81c2cf9340c67752f594ad9560336504a705b12c0bbf8281be5c8e",
+    "requirements_web.txt": "aca96be6aeaf429f5b49d527f97e4a6e99cce22518c2f02221e7e85a8c9db607",
+    "scripts/grant_demo_access.py": "102a78ba30a615ea33c05ec57b21b1b5bb85aa7dd1c5c74e85cd15c99e21b7c8",
+    "scripts/prepare_web.py": "50e87e79cdcc04b1196e1a7559c2062c2a4a3ebde1483f1fc7918804ca28955a",
+    "scripts/run_web.py": "fd39ad99738c20b0723664399ac217d5da48515dc0705e34f658279f391450dc",
+    "tests/test_web_auth.py": "ed0e471d154af9d43aa2fcedc4a0a19f31ebcda932fce828a28f9f5c9e81bff0",
+    "web_alembic.ini": "3a7834a1040df84dd565184a33f413e858347a6d8ca89f87549b82e8ceff79d9",
+    "web_app/__init__.py": "a470ae138b6c43e137778bdc4125d06d8fab221009f0fdcad062fa9bd604b2a3",
+    "web_app/database.py": "be4eb4a364a5a2b6c33f8876129d4d364ceeb5428870a68fd7487278b1eea859",
+    "web_app/main.py": "d6d41c9f0724028adbe61d3ac90fa802fa38ff7f26028690d6742e3b235d56a3",
+    "web_app/security.py": "202917ca1baa38ec29c22931bed84262d865525ca6bdecb3e2238883933c08e1",
+    "web_app/static/app.css": "e98d0deb81ffdf8fe50e72cb0dd8d5a180b2be13a845aa97aa2be580a5e4c593",
+    "web_app/static/vendor/bootstrap-LICENSE.txt": "8c14611ae41ac6fd543c13349f22188eb12c69b3e59105c5eca3925a8e4eca3e",
+    "web_app/static/vendor/bootstrap.min.css": "3c8f27e6009ccfd710a905e6dcf12d0ee3c6f2ac7da05b0572d3e0d12e736fc8",
+    "web_app/templates/api_docs.html": "6698304714dbcbcded168b00556daea1dc06a00114eeba67ab1f4caa83ec2807",
+    "web_app/templates/base.html": "059eeb6a9018eb15a41e0ac15e16a4879dc1a37156e3a7d6aee54a96ab60e2ae",
+    "web_app/templates/error.html": "7788f48556f8df7a854d16f3cc6a968e0fe8b33d7496dda0d1ef17c0ff92bbd2",
+    "web_app/templates/login.html": "51db8f588c8db39164c789ca06b0e657964ee685827b4b16a09b7483b4427c3d",
+    "web_app/templates/project.html": "ac370a6218c31b693f4467d10dc731bb950a925b60ba797011da6fedfb9f1832",
+    "web_app/templates/projects.html": "58908855f0b7634510feecd2e2cfdf9d7194fb88bb03723139cdbdf0afa63d7d",
+    "web_app/templates/register.html": "7f3e078280e4e03c6636ff344f92245e390f46f640d63cc2ec3fb8ff57d53174",
+    "web_migrations/env.py": "6a74eef80ddfcdff9a3e9d2cf7ce18e8cf0c07b09c72e7e2404306345533a0ed",
+    "web_migrations/script.py.mako": "3be30278d513059e62a5855bc2b24b0c7204ef621d9c67997b10369b8bd3b727",
+    "web_migrations/versions/web0001_auth.py": "d0d25e90d4237628cbc3c7214f7b369944c2f4fe4ce558b08c9be9ac431cd6a9"
+  }
+}

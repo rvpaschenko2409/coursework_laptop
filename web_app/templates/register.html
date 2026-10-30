@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Регистрация · СППР «Ноутбук»{% endblock %}
+{% block content %}
+<section class="auth-card card"><div class="card-body">
+<p class="eyebrow">НОВАЯ УЧЁТНАЯ ЗАПИСЬ</p><h1>Регистрация</h1>
+<p class="text-secondary">Создавайте свои проекты и участвуйте в проектах коллег.</p>
+{% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+<form method="post" action="/register">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<div class="mb-3"><label class="form-label" for="name">Имя</label><input class="form-control" id="name" name="name" minlength="2" maxlength="100" autocomplete="name" required value="{{ name }}"></div>
+<div class="mb-3"><label class="form-label" for="email">Email</label><input class="form-control" id="email" name="email" type="email" maxlength="254" autocomplete="username" required value="{{ email }}"></div>
+<div class="mb-4"><label class="form-label" for="password">Пароль</label><input class="form-control" id="password" name="password" type="password" minlength="12" maxlength="128" autocomplete="new-password" aria-describedby="password-help" required><div id="password-help" class="form-text">От 12 до 128 символов. Можно использовать длинную фразу.</div></div>
+<button class="btn btn-primary w-100" type="submit">Создать учётную запись</button>
+</form><p class="auth-switch">Уже зарегистрированы? <a href="/login">Войти</a></p>
+</div></section>
+{% endblock %}
