@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
+from zoneinfo import ZoneInfo
 import secrets
 from typing import Annotated
 
@@ -17,6 +18,7 @@ import psycopg
 from psycopg.types.json import Jsonb
 
 from web_app.database import Database
+from web_app.alternative_validation import human_number,in_training_profiles
 from web_app.security import (COOKIE,PH,Context,csrf_check,is_blocked,limit_key,
     normalize_email,record_failure,rotate,session_context,validate_password,verify_password)
 
@@ -65,6 +67,8 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     app=FastAPI(title='СППР «Ноутбук»',version='0.1.0',docs_url=None,redoc_url=None,openapi_url=None)
     app.state.database=database
     env=Environment(loader=FileSystemLoader(ROOT/'templates'),autoescape=select_autoescape(['html','xml']))
+    env.filters['human_number']=human_number
+    env.filters['omsk_time']=lambda value:value.astimezone(ZoneInfo('Asia/Omsk')).strftime('%d.%m.%Y %H:%M')
     templates=Jinja2Templates(env=env)
     dummy_hash=PH.hash(secrets.token_urlsafe(32))
     app.add_middleware(TrustedHostMiddleware,allowed_hosts=list(settings.allowed_hosts))
@@ -107,7 +111,7 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
 
     def project_access(context,project_id,analyst=False,lock=False):
         user=require_user(context)
-        query='''SELECT p.id,p.owner_id,p.title,p.goal,p.budget,p.status,m.role::text AS role
+        query='''SELECT p.id,p.owner_id,p.title,p.goal,p.budget,p.status,p.revision,m.role::text AS role
             FROM projects p JOIN project_members m ON m.project_id=p.id WHERE p.id=%s AND m.user_id=%s'''
         row=context.connection.execute(query,(project_id,user['id'])).fetchone()
         if not row:raise HTTPException(404,'Проект не найден или доступ не предоставлен.')
@@ -256,7 +260,7 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
         project=project_access(context,project_id)
         criteria=[dict(row) for row in context.connection.execute('SELECT id,code,name,unit,direction::text AS direction,sort_order FROM criteria WHERE project_id=%s ORDER BY sort_order,id',(project_id,)).fetchall()]
         alternatives=[dict(row) for row in context.connection.execute('SELECT id,code,name,features FROM alternatives WHERE project_id=%s ORDER BY sort_order,id',(project_id,)).fetchall()]
-        scores=[dict(row) for row in context.connection.execute('SELECT alternative_id,criterion_id,value,source::text AS source FROM scores WHERE project_id=%s',(project_id,)).fetchall()]
+        scores=[dict(row) for row in context.connection.execute('SELECT alternative_id,criterion_id,value,prediction_id,source::text AS source FROM scores WHERE project_id=%s',(project_id,)).fetchall()]
         matrix={(row['alternative_id'],row['criterion_id']):row for row in scores}
         for alternative in alternatives:
             alternative['cells']=[matrix.get((alternative['id'],criterion['id'])) for criterion in criteria]
@@ -268,8 +272,11 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
             JOIN predictions p ON p.project_id=s.project_id AND p.id=s.prediction_id
             JOIN ml_models m ON m.project_id=p.project_id AND m.id=p.model_id
             JOIN datasets d ON d.project_id=m.project_id AND d.id=m.dataset_id
-            WHERE s.project_id=%s AND s.source='ml' AND d.origin='synthetic') AS present''',(project_id,)).fetchone()['present']
-        return {'project':project,'criteria':criteria,'alternatives':alternatives,'members':members,'synthetic_predictions':synthetic}
+            WHERE s.project_id=%s AND s.prediction_id IS NOT NULL AND d.origin='synthetic') AS present''',(project_id,)).fetchone()['present']
+        stale=context.connection.execute('''SELECT EXISTS(SELECT 1 FROM
+            (SELECT DISTINCT ON(method) project_revision FROM results WHERE project_id=%s AND status='succeeded' ORDER BY method,created_at DESC,id DESC) r
+            WHERE r.project_revision<>%s) AS present''',(project_id,project['revision'])).fetchone()['present']
+        return {'project':project,'criteria':criteria,'alternatives':alternatives,'members':members,'synthetic_predictions':synthetic,'stale_results':stale,'outside_profiles':any(not in_training_profiles(a['features']) for a in alternatives)}
 
     @app.get('/projects/{project_id}',response_class=HTMLResponse)
     def project_page(project_id: int,request: Request,context: Ctx):
@@ -301,4 +308,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
             context.connection.execute("INSERT INTO audit_events(project_id,actor_id,action,entity_type,entity_id,details) VALUES(%s,%s,'web_member_set','user',%s,%s)",(project_id,context.user['id'],str(target['id']),Jsonb({'role':role})))
         return response(request,context,{'project_id':project_id,'role':role},target=f'/projects/{project_id}')
 
+    from web_app.alternative_routes import register_routes
+    register_routes(app,Ctx,render,response,project_access,require_user)
     return app

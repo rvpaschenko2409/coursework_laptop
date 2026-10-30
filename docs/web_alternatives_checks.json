@@ -1,0 +1,286 @@
+{
+  "stage": "web-alternatives",
+  "variant": 27,
+  "date": "2026-10-30",
+  "base_commit": "b345f7f",
+  "branch": "feature/web-alternatives",
+  "pytest_with_test_database": {
+    "passed": 128,
+    "skipped": 0,
+    "failed": 0,
+    "seconds": 10.8
+  },
+  "pytest_without_test_database": {
+    "passed": 105,
+    "skipped": 23,
+    "failed": 0,
+    "seconds": 2.79
+  },
+  "new_tests": 24,
+  "third_party_warning": "Starlette TestClient references an AnyIO alias that is deprecated; no failing tests.",
+  "database_test_engine": "PostgreSQL through PGlite 0.5.13 and pglite-socket 0.2.16; SET LOCAL ROLE verifies actual SQL grants",
+  "migration": {
+    "web_version": "web0002",
+    "core_version": "0002",
+    "online_upgrade": true,
+    "repeat_upgrade": true,
+    "downgrade_in_temporary_schema": true,
+    "offline_sql": true,
+    "new_tables": [
+      "web_deleted_alternatives"
+    ]
+  },
+  "core_sha256": "2615dd1e33d27cf817c78c9acfd1c5c39e05de3d8df4a5ab692c3edab6011729",
+  "calculation_core_unchanged": true,
+  "verified": [
+    "Four manual scores and six hardware fields validated",
+    "Invalid form causes no partial write",
+    "No active model leaves performance blank in draft",
+    "Active registered ML model generates versioned prediction",
+    "Manual override links original prediction and requires reason",
+    "PostgreSQL trigger records old/new values and actual user",
+    "Changed hardware creates new prediction",
+    "Checksum verified before joblib deserialization",
+    "Untrusted artifact path rejected",
+    "Expert cannot edit hardware or delete alternative",
+    "LPR is read-only for alternatives",
+    "Stranger and cross-project IDs rejected",
+    "CSRF enforced",
+    "Revision conflict returns 409",
+    "Duplicate codes and more than 15 alternatives rejected",
+    "No-op retains revision",
+    "XSS escaped",
+    "Deletion requires matching code",
+    "Deletion snapshot preserves scores, predictions and history",
+    "Historical MARCOS replay succeeds after edit and deletion",
+    "Archive cannot be deleted by server database role"
+  ],
+  "ui": {
+    "passed": true,
+    "viewports": [
+      {
+        "page": "new",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "new",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "new",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "new",
+        "width": 1024,
+        "document_width": 1024
+      },
+      {
+        "page": "new",
+        "width": 1440,
+        "document_width": 1440
+      },
+      {
+        "page": "edit",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "edit",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "edit",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "edit",
+        "width": 1024,
+        "document_width": 1024
+      },
+      {
+        "page": "edit",
+        "width": 1440,
+        "document_width": 1440
+      },
+      {
+        "page": "validation",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "validation",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "validation",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "validation",
+        "width": 1024,
+        "document_width": 1024
+      },
+      {
+        "page": "validation",
+        "width": 1440,
+        "document_width": 1440
+      },
+      {
+        "page": "project",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "project",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "project",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "project",
+        "width": 1024,
+        "document_width": 1024
+      },
+      {
+        "page": "project",
+        "width": 1440,
+        "document_width": 1440
+      },
+      {
+        "page": "history",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "history",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "history",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "history",
+        "width": 1024,
+        "document_width": 1024
+      },
+      {
+        "page": "history",
+        "width": 1440,
+        "document_width": 1440
+      },
+      {
+        "page": "delete",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "delete",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "delete",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "delete",
+        "width": 1024,
+        "document_width": 1024
+      },
+      {
+        "page": "delete",
+        "width": 1440,
+        "document_width": 1440
+      },
+      {
+        "page": "archive",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "archive",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "archive",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "archive",
+        "width": 1024,
+        "document_width": 1024
+      },
+      {
+        "page": "archive",
+        "width": 1440,
+        "document_width": 1440
+      }
+    ],
+    "flow": "registration, grant demo, create with ML, validation, manual override, history, automatic prediction after feature edit, delete confirmation, archived snapshot",
+    "engine": "Chromium headless through Playwright"
+  },
+  "visual_inspection": [
+    "new editor",
+    "validation state",
+    "decision matrix",
+    "score history",
+    "delete confirmation",
+    "deleted-alternative archive"
+  ],
+  "installer": {
+    "new_files": 12,
+    "updated_files": 4,
+    "normalized_base_hashes_verified": true,
+    "windows_crlf_hashes_verified": true,
+    "backup_before_overwrite": true,
+    "native_powershell_execution": "pending Windows installation"
+  },
+  "native_windows_postgresql_migration_and_startup": "pending user installation",
+  "requirements_changed": false,
+  "limitations": [
+    "Five original criteria only",
+    "No CSV/XLSX import yet",
+    "New projects need a later model-connection stage for automatic performance",
+    "No archive restore endpoint",
+    "Web calculation, training, export and PWA are separate stages",
+    "Only Chromium exercised here; other browsers not claimed",
+    "Server authorization rather than PostgreSQL RLS"
+  ],
+  "files_sha256": {
+    "README_ALTERNATIVES.txt": "e9bff9a726093f6d84c802e5ae8a479ac284e620fb6bdbc921e5b76840fdeba8",
+    "docs/web_alternatives.md": "3a36ed49847430c9f9b5790ef975378b651855f0548dd071bca56148d4cf3185",
+    "install_web_alternatives.ps1": "b5e460909e38e9ce2c94a35993eae2c73e0a6c1b66a6e380339b4cedef6ae3f5",
+    "scripts/prepare_alternatives.py": "1ba5dce5bf46c1a4bf99b5f4b124d742d1cc4ac28710d908ffa450ceb2530b16",
+    "tests/test_web_alternatives.py": "b34db91e067193975635bdcab6b93b57227516c7777f0129cd3c1c442f88cf87",
+    "web_app/alternative_routes.py": "2be1c3d6a075a1c262f5e5b1c161b5aedc2f823726b72926781a74e12f6c4e13",
+    "web_app/alternative_store.py": "c4635b8d688f00adb2354821f83a5556a9ab6894ea4a78a4f13fbfc2a6961648",
+    "web_app/alternative_validation.py": "9bcff7b2ec9ac23b78a484429351372da4307be3876e68f626e1be3522b77377",
+    "web_app/database.py": "21fd33d4e956b463ef592735be924736cde18b206b6e6b966f45865bfaf7e561",
+    "web_app/laptop_predictions.py": "047ff08d18f63e4e16cba771bfb71024b3ab82378e1cc87788f49dec92c4924c",
+    "web_app/main.py": "049c4be76d061dd4d3dea8da82c3ca369d0e843f4d4b06b8120291183859856c",
+    "web_app/static/app.css": "41693e787cbd8f78219e9ea08ce48c288ff74559fbf0994f2b2324d39e1b9d16",
+    "web_app/templates/alternative_archive.html": "d28c50fcfb69167e549e617bae3b1149b6488160d193cc72fced4570c39e7380",
+    "web_app/templates/alternative_delete.html": "6fadaf606430f69da4fd65c9b265ab8c45007cef1941f9b7d65b8bb53981f852",
+    "web_app/templates/alternative_form.html": "06abe36aed6d0c124e39bd28605ef00018ccfac52b76d45de4e578a0dfd30567",
+    "web_app/templates/project.html": "2c406eac701d2a65a79a6cef8ed6ff05a5126c08beeb3b629150d7bd84447122",
+    "web_migrations/versions/web0002_alternative_archive.py": "9d9dc6290995fa806def4aed8a3e4ea5fde857022ca90457de6c693bd8d1e061"
+  }
+}

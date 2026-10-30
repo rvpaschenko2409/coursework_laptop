@@ -21,8 +21,8 @@ class Database:
                 raise ValueError('Веб-сервер должен работать от отдельной непривилегированной роли приложения.')
             if connection.execute('SELECT version_num FROM alembic_version').fetchone()['version_num']!='0002':
                 raise ValueError('Нужна схема ядра 0002.')
-            if connection.execute('SELECT version_num FROM web_alembic_version').fetchone()['version_num']!='web0001':
-                raise ValueError('Нужна миграция web0001.')
+            if connection.execute('SELECT version_num FROM web_alembic_version').fetchone()['version_num'] not in ('web0001','web0002'):
+                raise ValueError('Нужна веб-миграция web0001 или web0002.')
             if connection.execute("SELECT has_schema_privilege(current_user,current_schema(),'CREATE') AS allowed").fetchone()['allowed']:
                 raise ValueError('Роль приложения не должна иметь CREATE в рабочей схеме.')
             connection.execute('DELETE FROM web_sessions WHERE expires_at<=now()')
@@ -55,3 +55,17 @@ def grant_web_permissions(connection,schema: str='public',role: str='coursework_
         grant('SELECT, INSERT, UPDATE, DELETE',table)
     for sequence in ('users_id_seq','projects_id_seq','criteria_id_seq','audit_events_id_seq'):
         connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier(sequence),sql.Identifier(role)))
+
+    if connection.execute("SELECT to_regclass(%s) AS name",(schema+'.web_deleted_alternatives',)).fetchone()['name'] is not None:
+        grant('INSERT(project_id,code,name,description,features,sort_order)','alternatives')
+        grant('UPDATE(code,name,description,features)','alternatives')
+        grant('DELETE','alternatives')
+        grant('INSERT(project_id,alternative_id,criterion_id,expert_id,value,source,prediction_id,override_reason)','scores')
+        grant('UPDATE(value,source,prediction_id,expert_id,override_reason)','scores')
+        grant('DELETE','scores')
+        grant('INSERT(project_id,model_id,alternative_id,criterion_id,value,features_snapshot,explanation,created_by)','predictions')
+        grant('DELETE','predictions')
+        grant('SELECT,INSERT,DELETE','score_history')
+        grant('SELECT,INSERT','web_deleted_alternatives')
+        for sequence in ('alternatives_id_seq','scores_id_seq','predictions_id_seq','score_history_id_seq','web_deleted_alternatives_id_seq'):
+            connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier(sequence),sql.Identifier(role)))
