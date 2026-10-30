@@ -78,3 +78,9 @@ def grant_web_permissions(connection,schema: str='public',role: str='coursework_
     grant('INSERT(project_id,created_by,request_key,project_revision,status,method,params,input_snapshot,output,core_version,finished_at)','results')
     for sequence in ('weight_sets_id_seq','results_id_seq'):
         connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier(sequence),sql.Identifier(role)))
+
+    grant('SELECT,INSERT','comparisons')
+    grant('UPDATE(value)','comparisons')
+    grant('SELECT','structure_models')
+    grant('INSERT(project_id,method,input,output,project_revision,created_by)','structure_models')
+    connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier('structure_models_id_seq'),sql.Identifier(role)))

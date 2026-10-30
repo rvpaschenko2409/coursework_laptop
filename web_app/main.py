@@ -47,7 +47,8 @@ class SmallForms:
             message=await receive()
             if message['type']=='http.disconnect':return
             part=message.get('body',b'');size+=len(part)
-            if size>8192:
+            limit=65536 if scope.get('path','').endswith('/dematel/definition') else 8192
+            if size>limit:
                 return await JSONResponse({'detail':'Форма слишком большая.'},status_code=413)(scope,receive,send)
             chunks.append(part)
             if not message.get('more_body',False):break
@@ -312,4 +313,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     register_routes(app,Ctx,render,response,project_access,require_user)
     from web_app.calculation_routes import register_routes as register_calculation_routes
     register_calculation_routes(app,Ctx,render,response,project_access,require_user)
+    from web_app.dematel_routes import register_routes as register_dematel_routes
+    register_dematel_routes(app,Ctx,render,response,project_access,require_user)
     return app

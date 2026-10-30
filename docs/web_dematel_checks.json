@@ -1,0 +1,299 @@
+{
+  "stage": "web-dematel",
+  "variant": 27,
+  "date": "2026-10-30",
+  "base_commit": "3908df1",
+  "branch": "feature/web-dematel",
+  "pytest_with_test_database": {
+    "passed": 169,
+    "skipped": 0,
+    "failed": 0,
+    "seconds": 19.55
+  },
+  "pytest_without_test_database": {
+    "passed": 129,
+    "skipped": 40,
+    "failed": 0,
+    "seconds": 2.63
+  },
+  "new_tests": 20,
+  "third_party_warning": "Starlette TestClient references a deprecated AnyIO alias; no failing tests.",
+  "database_test_engine": "PostgreSQL through PGlite 0.5.13 and pglite-socket 0.2.16; SET LOCAL ROLE checks real SQL permissions",
+  "core_database_version": "0002",
+  "web_database_version": "web0002",
+  "new_migrations": 0,
+  "new_tables": 0,
+  "original_ranking_core_unchanged": true,
+  "ranking_core_sha256": "2615dd1e33d27cf817c78c9acfd1c5c39e05de3d8df4a5ab692c3edab6011729",
+  "dematel_core_unchanged": true,
+  "dematel_core_sha256": "542f3780db8b5398f257301ca5e116a27437df9660302359bd08ed689d6fdda6",
+  "control": {
+    "divisor": 8,
+    "spectral_radius": 0,
+    "D": [
+      0,
+      1,
+      0,
+      0,
+      0.25
+    ],
+    "R": [
+      0.625,
+      0,
+      0.25,
+      0.375,
+      0
+    ],
+    "sum_D": 1.25,
+    "sum_R": 1.25,
+    "T_equals_N": true
+  },
+  "verified": [
+    "Original calculate_dematel reused without edits",
+    "Integer 0..4 and zero diagonal enforced",
+    "Zero matrix may be stored but cannot be calculated",
+    "Nonconvergent and numerically near-singular normalized matrices rejected",
+    "Equal-weight average of direct matrices before calculation",
+    "Graph threshold changes edges only",
+    "Fixed project criteria IDs prevent cross-project matrices",
+    "Personal assessments cannot target another user",
+    "Expert cannot calculate or change CATWOE",
+    "LPR read-only",
+    "CSRF and project revisions checked",
+    "CATWOE and root definition saved and audited",
+    "Large Cyrillic definition fits bounded endpoint body",
+    "No-op matrix/definition keeps project revision",
+    "Actual analyst recorded separately from selected assessors",
+    "Inactive fictional demo source explicitly labelled",
+    "Historical snapshots preserve prior model and ratings",
+    "Repeat same-user request avoids duplicates",
+    "Rollback after insert removes partial result",
+    "Private chart images and JSON snapshots",
+    "App database role cannot update/delete DEMATEL results or delete comparisons"
+  ],
+  "ui": {
+    "passed": true,
+    "viewports": [
+      {
+        "page": "overview",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "overview",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "overview",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "overview",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "overview",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "validation",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "validation",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "validation",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "validation",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "validation",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "result",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "result",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "result",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "result",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "result",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "details",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "details",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "details",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "details",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "details",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "definition",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "definition",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "definition",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "definition",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "definition",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "matrix",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "matrix",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "matrix",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "matrix",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "matrix",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "stale",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "stale",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "stale",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "stale",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "stale",
+        "width": 1920,
+        "document_width": 1920
+      }
+    ],
+    "engine": "Chromium headless via Playwright",
+    "flow": "registration, explicit demo access, historical demo source selection, invalid graph threshold, calculate, chart images, intermediate matrices, CATWOE edit, personal matrix save, old-snapshot verification, equal-weight aggregation of two sources"
+  },
+  "visual_inspection": [
+    "matrix at 360px with table-only scrolling",
+    "result and both causal diagrams at 1366px",
+    "overview and source labels at 390px",
+    "CATWOE and intermediate matrices rendered in browser"
+  ],
+  "installer": {
+    "new_files": 11,
+    "updated_files": 4,
+    "backup_before_overwrite": true,
+    "base_hashes_and_crlf_verified": true,
+    "native_powershell_execution": "pending user installation"
+  },
+  "python_compilation": true,
+  "additional_dependencies": false,
+  "native_windows_postgresql_preparation_and_server": "pending user installation",
+  "limitations": [
+    "DEMATEL weights shown separately; ranking remains MEREC",
+    "No empirical causal claim",
+    "At most 20 equally weighted assessor matrices per run",
+    "No stakeholder-registry editor yet",
+    "Combined/manual weighting, sensitivity, XLSX, LPR choice, ML workflow and PWA remain separate stages",
+    "Chromium only tested here; other browsers/Lighthouse not claimed",
+    "Server ACLs rather than PostgreSQL RLS"
+  ],
+  "files_sha256": {
+    "README_DEMATEL.txt": "ca658ba0d111da81926ebe69ee43913f6676054ca08dea71e139bf259eabbe94",
+    "docs/web_dematel.md": "5b6d85ab8165977449faa6691da7373a28a63c1d4667457876421e6290f0f221",
+    "install_web_dematel.ps1": "36e5c872e1797a5031e0729e84cdab4639f20d79d23313276dd5708ff03854f5",
+    "scripts/prepare_web_dematel.py": "713f501b72fc14f40171190ec2c458f8b7b55d39867713954912e9e68aa29ba5",
+    "tests/test_web_dematel.py": "4729c20ae0259099b0f3d423a3b4bc2d153a81d3ca9bd97616b4d63146821d5b",
+    "web_app/database.py": "0eeed8526a37c401be7df6d67b4a14e365fa7c98289a06b223015c1231b23b1d",
+    "web_app/dematel_charts.py": "0664f64b85d2f53701ad3996bb28f6e81a8b9129e74cf271aa8867dc7ef992e1",
+    "web_app/dematel_routes.py": "86c9b5e4e11a6b41787766b1dd5368eaa561eeafaa71fef0848e0419c746ca76",
+    "web_app/dematel_store.py": "36daff0ac03e8f3e750495b2ed9f9cbf88dcb82e6a3c12fe9c2d741aa0ecd593",
+    "web_app/main.py": "f42455a0eb4783eeed824f4e9d78e9e82f18bb348f4e9457045b735c25aa7b58",
+    "web_app/static/app.css": "531600db8488b03188384791965d164d20d0de4e82ceb21751a256bed0ca6b60",
+    "web_app/templates/dematel.html": "b359b16e380edf1b5ddb16dc51f4edd512b9fbe65fe6ab53da5f8635d900e5c0",
+    "web_app/templates/dematel_definition.html": "9d9f8315eacbfdf907fc3cb5efac07cff333f05a35632ef7c972df85a3646f71",
+    "web_app/templates/dematel_matrix.html": "340942c6de2cb5d9635e6a12cdb4dc140ed6bb2ecb5cd32795612402cb44650c",
+    "web_app/templates/dematel_result.html": "55356ddbdc145bc2827d4cfb76f2e7ea1c55cf573c76506d4aae9a875086498b",
+    "web_app/templates/project.html": "ddb9a6f231b6d4e1f250a0a0bd3d876e96a6d049ce6cc3cabc2807fdb3e73cff"
+  }
+}
