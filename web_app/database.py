@@ -69,3 +69,12 @@ def grant_web_permissions(connection,schema: str='public',role: str='coursework_
         grant('SELECT,INSERT','web_deleted_alternatives')
         for sequence in ('alternatives_id_seq','scores_id_seq','predictions_id_seq','score_history_id_seq','web_deleted_alternatives_id_seq'):
             connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier(sequence),sql.Identifier(role)))
+
+    grant('INSERT(project_id,method,input_snapshot,project_revision,created_by)','weight_sets')
+    # The existing guard_weight_identity trigger locks its parent row FOR UPDATE.
+    # Any column-level UPDATE permits that lock; MEREC's CHECK keeps alpha NULL.
+    grant('UPDATE(alpha)','weight_sets')
+    grant('INSERT(project_id,weight_set_id,criterion_id,value)','weights')
+    grant('INSERT(project_id,created_by,request_key,project_revision,status,method,params,input_snapshot,output,core_version,finished_at)','results')
+    for sequence in ('weight_sets_id_seq','results_id_seq'):
+        connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier(sequence),sql.Identifier(role)))

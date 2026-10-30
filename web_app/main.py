@@ -310,4 +310,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
 
     from web_app.alternative_routes import register_routes
     register_routes(app,Ctx,render,response,project_access,require_user)
+    from web_app.calculation_routes import register_routes as register_calculation_routes
+    register_calculation_routes(app,Ctx,render,response,project_access,require_user)
     return app

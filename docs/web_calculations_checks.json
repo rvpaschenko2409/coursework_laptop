@@ -1,0 +1,297 @@
+{
+  "stage": "web-calculations",
+  "variant": 27,
+  "date": "2026-10-30",
+  "base_commit": "b222c84",
+  "branch": "feature/web-calculations",
+  "pytest_with_test_database": {
+    "passed": 149,
+    "skipped": 0,
+    "failed": 0,
+    "seconds": 17.13
+  },
+  "pytest_without_test_database": {
+    "passed": 116,
+    "skipped": 33,
+    "failed": 0,
+    "seconds": 2.47
+  },
+  "new_tests": 21,
+  "third_party_warning": "Starlette TestClient references a deprecated AnyIO alias; no failing tests.",
+  "database_engine": "PostgreSQL through PGlite 0.5.13 / pglite-socket 0.2.16; actual SQL privileges checked with SET LOCAL ROLE",
+  "versions": {
+    "core_database": "0002",
+    "web_database": "web0002",
+    "new_tables": 0,
+    "new_migrations": 0
+  },
+  "core_sha256": "2615dd1e33d27cf817c78c9acfd1c5c39e05de3d8df4a5ab692c3edab6011729",
+  "original_core_unchanged": true,
+  "control": {
+    "v": 0.5,
+    "budget": 100000,
+    "marcos_leader": "A4",
+    "vikor_leader": "A2",
+    "vikor_compromise": [
+      "A2",
+      "A3",
+      "A5"
+    ]
+  },
+  "verified": [
+    "Original mathematical functions reused without edits",
+    "Actual logged-in user recorded in weights/results/audit",
+    "Repeated same-user request returns existing pair",
+    "Different users have distinct authorship",
+    "MEREC weights sum to one",
+    "Both VIKOR endpoints v=0 and v=1",
+    "Budget filter before ranking",
+    "Fewer than two eligible alternatives rejected",
+    "Missing performance rejected",
+    "Stale submitted revision returns 409",
+    "Analyst-only launch",
+    "Expert and LPR may read/replay",
+    "Foreign project/result/chart/snapshot IDs blocked",
+    "CSRF enforced",
+    "Rollback after inserted records leaves no partial pair or weights",
+    "Historical input remains unchanged after current data edits",
+    "Legacy CLI result readable and replayable",
+    "PNG headers and sizes correct",
+    "Snapshots downloaded privately as JSON",
+    "Application role cannot modify/delete results or delete weights",
+    "History pagination stable and bounded"
+  ],
+  "ui": {
+    "passed": true,
+    "viewports": [
+      {
+        "page": "launch",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "launch",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "launch",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "launch",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "launch",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "validation",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "validation",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "validation",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "validation",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "validation",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "result",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "result",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "result",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "result",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "result",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "intermediate",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "intermediate",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "intermediate",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "intermediate",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "intermediate",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "stale",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "stale",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "stale",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "stale",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "stale",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "budget",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "budget",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "budget",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "budget",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "budget",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "history",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "history",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "history",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "history",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "history",
+        "width": 1920,
+        "document_width": 1920
+      }
+    ],
+    "flow": "register, grant access, launch, invalid v, calculate, valid chart images, intermediate values, provenance, idempotent repeat, historical stale result, budget-filtered run, history",
+    "engine": "Chromium headless via Playwright",
+    "control": {
+      "marcos_leader": "A4",
+      "vikor_compromise": [
+        "A2",
+        "A3",
+        "A5"
+      ]
+    }
+  },
+  "visual_inspection": [
+    "launch and history at 1366px",
+    "result page at 390px",
+    "correct source/author/current and historical status",
+    "comparison table, chart links, MEREC weights, VIKOR conditions, matrix and collapsed details"
+  ],
+  "installer": {
+    "new_files": 10,
+    "updated_files": 4,
+    "backup_before_overwrite": true,
+    "base_hashes_and_windows_crlf_verified": true,
+    "native_powershell_execution": "pending user installation"
+  },
+  "python_compilation": true,
+  "additional_dependencies": false,
+  "native_windows_postgresql_grants_and_http_launch": "pending user installation",
+  "limitations": [
+    "Five original criteria and MEREC weights only",
+    "No web DEMATEL, manual/combined weights or sensitivity yet",
+    "No LPR choice persistence yet",
+    "No XLSX export; technical JSON is not a substitute",
+    "Import, model training/connection for new projects and PWA remain separate stages",
+    "Only Chromium exercised; other browsers and Lighthouse not claimed",
+    "No timing SLA claim for the user machine",
+    "Server ACLs rather than PostgreSQL RLS"
+  ],
+  "files_sha256": {
+    "README_CALCULATIONS.txt": "cc19a931b76559b412299742068878ef5513972df8e9946955803fafcae10698",
+    "docs/web_calculations.md": "5291550f55c8576ec05a8879546208e0d4da332b9940f8528f85fcce6faf82b8",
+    "install_web_calculations.ps1": "7ada7f89b899628d3f79e095c88511e46ef0adc596960f8a10feb1f6f246baec",
+    "scripts/prepare_web_calculations.py": "735c23c8348f8978d2f7d3d2990c137d9765ba436cf3338b99eef4132a9e2533",
+    "tests/test_web_calculations.py": "09683b100f2821f2eac0cf1212600b04700542366299b134920dc82005c6b004",
+    "web_app/calculation_charts.py": "52a1d0228075c920b27ad3f4f628779f0e0ee3de0a646bce35fdf49c140b1e82",
+    "web_app/calculation_routes.py": "9f4f14b296ea85b63f8b2f7df2695b39cc3f4c31c16888454e6e85ffa9df6e02",
+    "web_app/calculation_store.py": "d594491a6109951e83864c0e337ae32b7854e56482ddd56dd1393f83a557e5d1",
+    "web_app/database.py": "5ed9bc71522d6a47fc32aaee1407b79222ad90028caef2c7ec0a713e7239587a",
+    "web_app/main.py": "127d7f456756cf955040d9f6ec3e7b03b21628661b735a703e790aed1e05395b",
+    "web_app/static/app.css": "b72da6a554d4fe6190ca87b15534cce45d85422acaa00db60667b23160450929",
+    "web_app/templates/calculation_result.html": "311b749b0f293bce00f3f9d0847e9aacf0d0c1db8f1edcc2d7709d297c717bce",
+    "web_app/templates/calculation_tables.html": "0cb0c15266a4d3ed44815f18a7a6c13f198ce7f60b46a8d3df08442ae5626834",
+    "web_app/templates/calculations.html": "753b404a9aea3361f7aff0b92f58ad19d914425456d9afd60605a785ea9b5688",
+    "web_app/templates/project.html": "451abfe1e7e541db7537fcfbc8984b0c81c83a90a3af13e53bf66e79119b1205"
+  }
+}
