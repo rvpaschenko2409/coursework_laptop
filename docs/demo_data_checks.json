@@ -1,0 +1,293 @@
+{
+  "date": "2026-10-30",
+  "environment": "PostgreSQL 18.6 in WebAssembly (PGlite 0.5.13), TCP socket, psycopg 3.2.12; isolated test schemas, not the user Windows server",
+  "combined_pytest": {
+    "passed": 70,
+    "failed": 0,
+    "skipped": 0
+  },
+  "tests": [
+    {
+      "name": "test_database_ddl_matches_revision",
+      "status": "passed"
+    },
+    {
+      "name": "test_database_offline_migration",
+      "status": "passed"
+    },
+    {
+      "name": "test_database_postgresql_constraints",
+      "status": "passed"
+    },
+    {
+      "name": "test_indirect_influence",
+      "status": "passed"
+    },
+    {
+      "name": "test_convergent_cycle",
+      "status": "passed"
+    },
+    {
+      "name": "test_nonconvergent_cycle",
+      "status": "passed"
+    },
+    {
+      "name": "test_zero_matrix",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_assessment[-1]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_assessment[5]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_assessment[nan]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_assessment[inf]",
+      "status": "passed"
+    },
+    {
+      "name": "test_mismatched_criteria",
+      "status": "passed"
+    },
+    {
+      "name": "test_manual_example",
+      "status": "passed"
+    },
+    {
+      "name": "test_equal_alternatives_share_rank",
+      "status": "passed"
+    },
+    {
+      "name": "test_weight_order_does_not_matter",
+      "status": "passed"
+    },
+    {
+      "name": "test_input_is_unchanged",
+      "status": "passed"
+    },
+    {
+      "name": "test_wrong_weight_sum_is_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_negative_weight_is_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_missing_weight_is_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_nonfinite_weight_is_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_symmetric_manual_example",
+      "status": "passed"
+    },
+    {
+      "name": "test_constant_criterion_has_zero_weight",
+      "status": "passed"
+    },
+    {
+      "name": "test_identical_alternatives_are_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_change_of_units_does_not_change_weights",
+      "status": "passed"
+    },
+    {
+      "name": "test_input_is_unchanged",
+      "status": "passed"
+    },
+    {
+      "name": "test_column_order_does_not_change_result",
+      "status": "passed"
+    },
+    {
+      "name": "test_manual_example[normalize_ratio-expected0]",
+      "status": "passed"
+    },
+    {
+      "name": "test_manual_example[normalize_minmax-expected1]",
+      "status": "passed"
+    },
+    {
+      "name": "test_constant_column[normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_constant_column[normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_input_is_unchanged[normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_input_is_unchanged[normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_column_order[normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_column_order[normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_values[0-normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_values[0-normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_values[-1-normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_values[-1-normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_values[nan-normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_values[nan-normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_values[inf-normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_values[inf-normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_empty_matrix[normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_empty_matrix[normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_missing_criterion[normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_missing_criterion[normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_duplicate_columns[normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_duplicate_columns[normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_duplicate_alternatives[normalize_ratio]",
+      "status": "passed"
+    },
+    {
+      "name": "test_duplicate_alternatives[normalize_minmax]",
+      "status": "passed"
+    },
+    {
+      "name": "test_demo_provenance_and_pending_prediction",
+      "status": "passed"
+    },
+    {
+      "name": "test_line_endings_do_not_change_fingerprint",
+      "status": "passed"
+    },
+    {
+      "name": "test_bad_alternative_rejected[35000-0]",
+      "status": "passed"
+    },
+    {
+      "name": "test_bad_alternative_rejected[35000-NaN]",
+      "status": "passed"
+    },
+    {
+      "name": "test_bad_alternative_rejected[35000-Infinity]",
+      "status": "passed"
+    },
+    {
+      "name": "test_bad_alternative_rejected[35000--1]",
+      "status": "passed"
+    },
+    {
+      "name": "test_bad_alternative_rejected[synthetic-real]",
+      "status": "passed"
+    },
+    {
+      "name": "test_duplicate_alternative_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_dematel_nonzero_diagonal_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_demo_transaction_and_repeat",
+      "status": "passed"
+    },
+    {
+      "name": "test_manual_unique_winner",
+      "status": "passed"
+    },
+    {
+      "name": "test_identical_alternatives",
+      "status": "passed"
+    },
+    {
+      "name": "test_v_endpoints[0.0]",
+      "status": "passed"
+    },
+    {
+      "name": "test_v_endpoints[1.0]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_v[-0.1]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_v[1.1]",
+      "status": "passed"
+    },
+    {
+      "name": "test_invalid_v[nan]",
+      "status": "passed"
+    },
+    {
+      "name": "test_one_alternative_is_rejected",
+      "status": "passed"
+    },
+    {
+      "name": "test_input_is_unchanged",
+      "status": "passed"
+    },
+    {
+      "name": "test_weight_order_does_not_matter",
+      "status": "passed"
+    }
+  ],
+  "windows_installation": "pending on user computer",
+  "note": "Tests cover original core, schema constraints, demo validation, actual SQL insertion, repeat/no duplicates, edited-source refusal, edited-project preservation, transaction rollback. Authentication and multi-session concurrency on native PostgreSQL are not asserted."
+}
