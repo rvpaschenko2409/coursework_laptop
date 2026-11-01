@@ -86,7 +86,7 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
         response.headers['X-Content-Type-Options']='nosniff'
         response.headers['X-Frame-Options']='DENY'
         response.headers['Referrer-Policy']='same-origin'
-        response.headers['Content-Security-Policy']="default-src 'self'; style-src 'self'; script-src 'none'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
+        response.headers['Content-Security-Policy']="default-src 'self'; style-src 'self'; script-src 'self'; object-src 'none'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'none'; form-action 'self'"
         if not request.url.path.startswith('/static/'):
             response.headers['Cache-Control']='no-store'
         return response

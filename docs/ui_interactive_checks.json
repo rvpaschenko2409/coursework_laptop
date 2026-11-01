@@ -1,0 +1,956 @@
+{
+  "stage": "ui-interactive",
+  "date": "2026-11-01",
+  "variant": 27,
+  "base_commit": "d766353",
+  "full_tests": {
+    "passed": 305,
+    "skipped": 0,
+    "warnings": 1,
+    "seconds": 118.8,
+    "environment": "isolated PGlite PostgreSQL-compatible engine, application role and real core fixtures"
+  },
+  "default_tests": {
+    "passed": 214,
+    "skipped": 91,
+    "warnings": 1,
+    "seconds": 8.53
+  },
+  "new_test_cases": 5,
+  "after_aria_group_fix": {
+    "targeted_tests_passed": 5,
+    "browser_flows_repeated": true,
+    "lighthouse_repeated": true
+  },
+  "warning": "Existing Starlette/AnyIO DeprecationWarning",
+  "browser": {
+    "passed": true,
+    "viewports": [
+      {
+        "page": "project_dark",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project_dark",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project_dark",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project_dark",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project_dark",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "search_one",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "search_one",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "search_one",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "search_one",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "search_one",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_filters",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_filters",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_filters",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_filters",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_filters",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_filters",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_filters",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_filters",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_filters",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_filters",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project_light",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project_light",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project_light",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project_light",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project_light",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "charts_light",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "charts_light",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "charts_light",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "charts_light",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "charts_light",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "chart_details_light",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "chart_details_light",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "chart_details_light",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "chart_details_light",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "chart_details_light",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "charts_dark",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "charts_dark",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "charts_dark",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "charts_dark",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "charts_dark",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects_light",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects_light",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects_light",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects_light",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects_light",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_form_light",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_form_light",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_form_light",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_form_light",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_form_light",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "weights_form_light",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "weights_form_light",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "weights_form_light",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "weights_form_light",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "weights_form_light",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_light",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_light",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_light",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_light",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_light",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders_light",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders_light",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders_light",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders_light",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders_light",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_light",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_light",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_light",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_light",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_light",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "account_light",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "account_light",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "account_light",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "account_light",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "account_light",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects_dark",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects_dark",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects_dark",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects_dark",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects_dark",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_form_dark",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_form_dark",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_form_dark",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_form_dark",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_form_dark",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "weights_form_dark",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "weights_form_dark",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "weights_form_dark",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "weights_form_dark",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "weights_form_dark",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_dark",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_dark",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_dark",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_dark",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_dark",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders_dark",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders_dark",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders_dark",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders_dark",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders_dark",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_dark",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_dark",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_dark",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_dark",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_dark",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "account_dark",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "account_dark",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "account_dark",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "account_dark",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "account_dark",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      }
+    ],
+    "engine": "Chromium headless via Playwright",
+    "flows": [
+      "saved theme survives reload",
+      "case-insensitive search and combined price/RAM/storage filters affect cards and table together",
+      "empty results, reset and literal unsafe input",
+      "chart data source A4 preserved; mouse, keyboard arrows and series toggles",
+      "original PNG chart accessible",
+      "server project revision unchanged",
+      "no JavaScript fallback",
+      "storage-denied fallback",
+      "no uncaught browser errors or CSP violations"
+    ]
+  },
+  "lighthouse": {
+    "version": "12.8.2",
+    "scope": "two authenticated pages, default dark theme, simulated mobile on isolated local server; no native Windows hardware speed guarantee",
+    "results": [
+      {
+        "page": "project",
+        "scores": {
+          "performance": 80,
+          "accessibility": 100,
+          "best-practices": 100
+        }
+      },
+      {
+        "page": "calculation",
+        "scores": {
+          "performance": 87,
+          "accessibility": 100,
+          "best-practices": 100
+        }
+      }
+    ]
+  },
+  "representative_text_contrast_pairs": [
+    {
+      "pair": "dark body",
+      "foreground": "#eef3ff",
+      "background": "#090d17",
+      "ratio": 17.47
+    },
+    {
+      "pair": "dark muted",
+      "foreground": "#b4c1d8",
+      "background": "#121b2c",
+      "ratio": 9.48
+    },
+    {
+      "pair": "dark link",
+      "foreground": "#9ad8ff",
+      "background": "#121b2c",
+      "ratio": 11.19
+    },
+    {
+      "pair": "light body",
+      "foreground": "#19283f",
+      "background": "#f4f6fc",
+      "ratio": 13.72
+    },
+    {
+      "pair": "light muted",
+      "foreground": "#4c5c75",
+      "background": "#ffffff",
+      "ratio": 6.79
+    },
+    {
+      "pair": "light link",
+      "foreground": "#205b8b",
+      "background": "#ffffff",
+      "ratio": 7.17
+    },
+    {
+      "pair": "light info",
+      "foreground": "#194d72",
+      "background": "#e9f4fe",
+      "ratio": 8.03
+    },
+    {
+      "pair": "light warning",
+      "foreground": "#73500f",
+      "background": "#fff3d9",
+      "ratio": 6.62
+    },
+    {
+      "pair": "light badge",
+      "foreground": "#155e49",
+      "background": "#dff4ec",
+      "ratio": 6.7
+    },
+    {
+      "pair": "light result",
+      "foreground": "#59409c",
+      "background": "#edf3fc",
+      "ratio": 7.14
+    },
+    {
+      "pair": "primary button",
+      "foreground": "#ffffff",
+      "background": "#7755d4",
+      "ratio": 5.21
+    }
+  ],
+  "features": [
+    "dark/light theme with local preference and guarded storage",
+    "case-insensitive name/code search; combined maximum price, minimum RAM and storage filters",
+    "same visible IDs in cards and matrix rows; empty result and reset",
+    "weights and MARCOS/VIKOR rank charts from verified server snapshot; exact value details on hover/focus/tap",
+    "keyboard navigation and accessible series toggles",
+    "original PNG images available; ordinary server-rendered app without JavaScript"
+  ],
+  "security": [
+    "CSP script-src self without unsafe-inline or unsafe-eval; object-src none",
+    "escaped template attributes and tojson/forceescape",
+    "textContent; no innerHTML/eval/fetch in local script",
+    "theme storage contains only dark/light; no project or authentication data stored",
+    "UI controls do not write project records or trigger calculation",
+    "server roles and CSRF preserved"
+  ],
+  "preserved": [
+    "mathematical modules and replay hashes",
+    "original CSS Night Circuit asset",
+    "data and ML artifacts",
+    "PostgreSQL schemas, permissions and migrations",
+    "decision choice and export modules and XLSX template",
+    "all saved outputs, ranks and decisions"
+  ],
+  "new_migrations": 0,
+  "new_dependencies": 0,
+  "new_database_grants": 0,
+  "installer": {
+    "new_files": [
+      "docs/ui_interactive.md",
+      "docs/ui_interactive_checks.json",
+      "tests/test_ui_interactive.py",
+      "web_app/static/interactive.css",
+      "web_app/static/interactive.js",
+      "web_app/templates/ui_interactive.html"
+    ],
+    "updated_base_sha256_utf8_lf": {
+      "web_app/main.py": "5ef4635d1e24dcee749c0ee7991e2da5b9d636d46c72cb2c68666491fd601704",
+      "web_app/templates/base.html": "f288a9d99d24777d8c4358378d16c6ef51584c83e74471c6c8c7cfa18603fd7e",
+      "web_app/templates/calculation_result.html": "42e76cb7160e545a6acb694cbb40305a57400b4fb82874b4c0fbefa07f407063",
+      "web_app/templates/project.html": "e3220ba2053e82b0aa591290be0545660e511692ed3386731b9be2b5bb73e5d9"
+    },
+    "crlf_bom_normalization_verified": true,
+    "native_powershell_execution": "not performed in Linux"
+  },
+  "limits": [
+    "browser flows tested in Chromium; Firefox, Safari and native user Windows checks remain",
+    "representative contrast pairs and page audits do not constitute full WCAG certification",
+    "DEMATEL and sensitivity graphs retain image/table presentation",
+    "filters do not change decision matrix or budget filter used by methods",
+    "no live recalculation, browser Python, service worker, PWA installation or synchronization in this stage",
+    "not full coursework completion"
+  ]
+}
