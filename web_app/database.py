@@ -84,3 +84,8 @@ def grant_web_permissions(connection,schema: str='public',role: str='coursework_
     grant('SELECT','structure_models')
     grant('INSERT(project_id,method,input,output,project_revision,created_by)','structure_models')
     connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier('structure_models_id_seq'),sql.Identifier(role)))
+
+    grant('INSERT(project_id,name,stakeholder_role,interests,power,legitimacy,urgency)','stakeholders')
+    grant('UPDATE(name,stakeholder_role,interests,power,legitimacy,urgency)','stakeholders')
+    grant('DELETE','stakeholders')
+    connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier('stakeholders_id_seq'),sql.Identifier(role)))

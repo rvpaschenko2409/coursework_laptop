@@ -1,0 +1,422 @@
+{
+  "stage": "web-stakeholders",
+  "date": "2026-11-01",
+  "variant": 27,
+  "requirements": [
+    "FT-08b",
+    "project roles and audit"
+  ],
+  "methodology": {
+    "manual_section": "2.3",
+    "qualitative_rule_version": "mitchell-threshold-3-v1",
+    "attribute_expressed_when_score_at_least": 3,
+    "salience": "(power+legitimacy+urgency)/3",
+    "round_digits": 3,
+    "class_by_count": {
+      "0": "Нет выраженных атрибутов",
+      "1": "Латентный",
+      "2": "Ожидающий",
+      "3": "Определяющий"
+    },
+    "threshold_status": "Explicit project convention consistent with manual examples; not asserted as a universal threshold",
+    "all_125_attribute_combinations_checked": true
+  },
+  "full_tests": {
+    "passed": 258,
+    "skipped": 0,
+    "warnings": 1,
+    "environment": "isolated PGlite PostgreSQL-compatible engine; native PostgreSQL18 user verification pending"
+  },
+  "default_tests": {
+    "passed": 188,
+    "skipped": 70,
+    "warnings": 1
+  },
+  "warning": "Existing third-party Starlette/AnyIO DeprecationWarning",
+  "coverage": [
+    "input validation and integer 1-5 scores",
+    "no prefilled scores",
+    "class differs for equal means with different attributes",
+    "original four demo stakeholders unchanged",
+    "CRUD and full snapshots in audit",
+    "real session actor",
+    "no new account or membership",
+    "no-op edits do not bump revision",
+    "Unicode/case/space duplicate handling",
+    "role/CSRF/project ID scoping",
+    "unknown fields and mass assignment rejected",
+    "stale form conflict",
+    "confirmation before deletion",
+    "archived project read-only",
+    "rollback includes data/revision/audit",
+    "old result replay and weights unchanged",
+    "maximum Unicode form and unchanged other body limits",
+    "XSS escaping",
+    "duplicate form fields rejected",
+    "registry/history pagination",
+    "database role cannot move identities or delete audit"
+  ],
+  "browser": {
+    "passed": true,
+    "viewports": [
+      {
+        "page": "registry",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "registry",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "registry",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "registry",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "registry",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "new_form",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "new_form",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "new_form",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "new_form",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "new_form",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "validation",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "validation",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "validation",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "validation",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "validation",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "created",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "created",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "created",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "created",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "created",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "edit_form",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "edit_form",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "edit_form",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "edit_form",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "edit_form",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "updated",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "updated",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "updated",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "updated",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "updated",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "history",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "history",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "history",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "history",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "history",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "delete_form",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "delete_form",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "delete_form",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "delete_form",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "delete_form",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "delete_validation",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "delete_validation",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "delete_validation",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "delete_validation",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "delete_validation",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "deleted_history",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "deleted_history",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "deleted_history",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "deleted_history",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "deleted_history",
+        "width": 1920,
+        "document_width": 1920
+      }
+    ],
+    "engine": "Chromium headless via Playwright",
+    "flow": "registration, explicit demo access, original four stakeholders, blank creation form, field validation with retained values, create, edit and class change, audit, deletion confirmation, retained deleted record history"
+  },
+  "controls": [
+    {
+      "name": "Руководитель",
+      "power": 5,
+      "legitimacy": 5,
+      "urgency": 2,
+      "salience": 4,
+      "class": "Ожидающий"
+    },
+    {
+      "name": "Офисные сотрудники",
+      "power": 1,
+      "legitimacy": 5,
+      "urgency": 2,
+      "salience": 2.667,
+      "class": "Латентный"
+    },
+    {
+      "name": "ИТ-специалист",
+      "power": 3,
+      "legitimacy": 5,
+      "urgency": 2,
+      "salience": 3.333,
+      "class": "Ожидающий"
+    },
+    {
+      "name": "Специалист по закупкам",
+      "power": 3,
+      "legitimacy": 5,
+      "urgency": 2,
+      "salience": 3.333,
+      "class": "Ожидающий"
+    }
+  ],
+  "limits": {
+    "stakeholders_per_project": 100,
+    "page_size": 20,
+    "name_characters": [
+      2,
+      200
+    ],
+    "role_characters": [
+      2,
+      300
+    ],
+    "interests_characters": [
+      3,
+      1000
+    ],
+    "reason_characters": [
+      3,
+      500
+    ],
+    "stakeholder_post_body_bytes": 32768
+  },
+  "preserved": [
+    "decision_core/*.py",
+    "decision_store/calculations.py",
+    "web_app/weight_math.py",
+    "web_app/sensitivity_math.py",
+    "existing data and models",
+    "all migrations",
+    "previous calculation records"
+  ],
+  "schema_versions": [
+    "0002",
+    "web0002"
+  ],
+  "new_migrations": 0,
+  "new_dependencies": 0,
+  "grants": [
+    "stakeholders INSERT(project_id,name,stakeholder_role,interests,power,legitimacy,urgency)",
+    "stakeholders UPDATE(name,stakeholder_role,interests,power,legitimacy,urgency)",
+    "stakeholders DELETE",
+    "stakeholders_id_seq USAGE"
+  ],
+  "installer": {
+    "new_files": [
+      "docs/web_stakeholders.md",
+      "docs/web_stakeholders_checks.json",
+      "scripts/prepare_web_stakeholders.py",
+      "tests/test_web_stakeholders.py",
+      "web_app/stakeholder_routes.py",
+      "web_app/stakeholder_store.py",
+      "web_app/stakeholder_validation.py",
+      "web_app/templates/stakeholder_delete.html",
+      "web_app/templates/stakeholder_form.html",
+      "web_app/templates/stakeholder_history.html",
+      "web_app/templates/stakeholders.html"
+    ],
+    "updated_base_sha256_utf8_lf": {
+      "web_app/main.py": "622771e1c06a2b1a7234d76213d3573d7affc1ab8c1eea9134857aa11a073d41",
+      "web_app/database.py": "7caa0d93e288af3ab5c83a8a270f7a99071b2e5ab2dc90dffccb8919d6a45e76",
+      "web_app/static/app.css": "88f37c667ac7be311f10cdd074b2b78753dbdee99fcd5c27a935a540f6b7ee27",
+      "web_app/templates/project.html": "ddb9a6f231b6d4e1f250a0a0bd3d876e96a6d049ce6cc3cabc2807fdb3e73cff"
+    },
+    "crlf_and_bom_normalization_verified": true,
+    "native_powershell_execution": "not performed in Linux environment"
+  },
+  "not_in_stage": [
+    "automatic criterion weighting or expert coefficient adjustment",
+    "account creation from a stakeholder",
+    "whole-course acceptance",
+    "native PostgreSQL18 and all browser families",
+    "Lighthouse"
+  ]
+}

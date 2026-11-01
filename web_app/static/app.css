@@ -6,3 +6,5 @@
 .dematel-matrix-scroll{position:relative}
 
 .sensitivity-table{min-width:940px}.sensitivity-ranks{min-width:900px}#scenario{scroll-margin-top:24px}
+
+.stakeholder-table{min-width:1100px}.stakeholder-table th,.stakeholder-table td{padding:15px 12px}.stakeholder-table th:first-child{width:180px;min-width:180px;max-width:220px;overflow-wrap:anywhere}.stakeholder-table td:nth-child(2){min-width:280px;max-width:380px}.stakeholder-text{white-space:pre-wrap;overflow-wrap:anywhere}.stakeholder-history-table{min-width:700px}.stakeholder-history-table td{min-width:230px;max-width:480px}

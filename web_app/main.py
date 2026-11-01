@@ -5,6 +5,7 @@ from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from zoneinfo import ZoneInfo
 import secrets
+import re
 from typing import Annotated
 
 from fastapi import FastAPI, Depends, Form, HTTPException, Request
@@ -47,7 +48,9 @@ class SmallForms:
             message=await receive()
             if message['type']=='http.disconnect':return
             part=message.get('body',b'');size+=len(part)
-            limit=65536 if scope.get('path','').endswith('/dematel/definition') else 8192
+            path=scope.get('path','')
+            stakeholder_form=re.fullmatch(r'/(?:api/)?projects/[0-9]+/stakeholders(?:/[0-9]+(?:/delete)?)?',path)
+            limit=32768 if stakeholder_form else (65536 if path.endswith('/dematel/definition') else 8192)
             if size>limit:
                 return await JSONResponse({'detail':'Форма слишком большая.'},status_code=413)(scope,receive,send)
             chunks.append(part)
@@ -319,4 +322,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     register_weight_routes(app,Ctx,render,response,project_access,require_user)
     from web_app.sensitivity_routes import register_routes as register_sensitivity_routes
     register_sensitivity_routes(app,Ctx,render,response,project_access,require_user)
+    from web_app.stakeholder_routes import register_routes as register_stakeholder_routes
+    register_stakeholder_routes(app,Ctx,render,response,project_access,require_user)
     return app
