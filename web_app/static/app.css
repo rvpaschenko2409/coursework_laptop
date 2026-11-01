@@ -4,3 +4,5 @@
 .dematel-source{display:flex;align-items:center;gap:12px;min-height:60px;padding:10px 0;border-bottom:1px solid #e4e9f0}.dematel-source input{width:22px;height:22px;flex:0 0 auto}.dematel-legend{font-size:1rem;font-weight:650}.dematel-keys{display:flex;gap:12px 24px;flex-wrap:wrap}.dematel-grid{min-width:720px}.dematel-grid th,.dematel-grid td{padding:12px;vertical-align:top}.dematel-grid th{min-width:110px}.dematel-grid th:first-child{min-width:150px}.dematel-grid input{width:64px;text-align:center}.dematel-grid input[readonly]{background:#edf1f7;color:#61738b}.dematel-grid thead th{background:#f6f8fc}.dematel-grid .unit-label{max-width:140px}.dematel-grid .field-error{display:block;max-width:110px}
 
 .dematel-matrix-scroll{position:relative}
+
+.sensitivity-table{min-width:940px}.sensitivity-ranks{min-width:900px}#scenario{scroll-margin-top:24px}

@@ -1,0 +1,719 @@
+{
+  "stage": "web-sensitivity",
+  "date": "2026-10-30",
+  "variant": 27,
+  "requirements": [
+    "TZ sensitivity of weights and v",
+    "FT-10",
+    "FT-12",
+    "FT-16"
+  ],
+  "methodology": "Classical one-at-a-time sensitivity (manual section 2.18); explicit project grid; not SMAA",
+  "full_tests": {
+    "passed": 226,
+    "skipped": 0,
+    "warnings": 1,
+    "environment": "isolated PGlite PostgreSQL-compatible engine; native PostgreSQL18 user verification pending"
+  },
+  "default_tests": {
+    "passed": 167,
+    "skipped": 59,
+    "warnings": 1
+  },
+  "warning": "Existing third-party Starlette/AnyIO DeprecationWarning",
+  "plan": {
+    "step_percent_default": 10,
+    "step_percent_bounds": [
+      0.01,
+      25
+    ],
+    "relative_multiples": [
+      -2,
+      -1,
+      1,
+      2
+    ],
+    "normalization": "multiply selected original weight by (1+delta), divide all components by new sum",
+    "v_grid": "0 to 1 by 0.1, plus baseline v if absent",
+    "default_row_count": 32,
+    "includes_duplicate_baseline_v_control": true,
+    "frozen": [
+      "matrix",
+      "eligible alternatives",
+      "budget",
+      "ML predictions",
+      "v during weight scenarios",
+      "weights during v scenarios"
+    ]
+  },
+  "coverage": [
+    "invalid and boundary steps",
+    "ID alignment",
+    "sum and ratio preservation",
+    "one-at-a-time perturbations",
+    "zero weights and all-rank ties",
+    "same core functions for every scenario",
+    "MARCOS v invariance",
+    "non-grid base v inclusion",
+    "baseline output parity",
+    "four weight-source methods",
+    "real actor and dedup including canonical source pair",
+    "role/CSRF/project isolation",
+    "stale revisions",
+    "historical source and source deletion",
+    "rollback after insert",
+    "private charts and JSON",
+    "selected scenario and invalid IDs",
+    "HTML input preservation",
+    "duplicate fields",
+    "archived project and immutable result trigger"
+  ],
+  "browser": {
+    "passed": true,
+    "viewports": [
+      {
+        "page": "form",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "form",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "form",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "form",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "form",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "validation",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "validation",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "validation",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "validation",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "validation",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "result",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "result",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "result",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "result",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "result",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "weight_scenarios",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "weight_scenarios",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "weight_scenarios",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "weight_scenarios",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "weight_scenarios",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "selected",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "selected",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "selected",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "selected",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "selected",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "details",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "details",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "details",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "details",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "details",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "history",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "history",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "history",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "history",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "history",
+        "width": 1920,
+        "document_width": 1920
+      },
+      {
+        "page": "historical",
+        "width": 360,
+        "document_width": 360
+      },
+      {
+        "page": "historical",
+        "width": 390,
+        "document_width": 390
+      },
+      {
+        "page": "historical",
+        "width": 768,
+        "document_width": 768
+      },
+      {
+        "page": "historical",
+        "width": 1366,
+        "document_width": 1366
+      },
+      {
+        "page": "historical",
+        "width": 1920,
+        "document_width": 1920
+      }
+    ],
+    "engine": "Chromium headless via Playwright",
+    "flow": "registration, explicit demo access, MEREC baseline, invalid step, sensitivity launch, 32 scenarios, private charts, scenario selection, per-alternative rank deltas, score and condition tables, JSON download, history, stale replay"
+  },
+  "control_inputs": {
+    "budget": 100000,
+    "v": 0.5,
+    "step_percent": 10,
+    "manual_relative_weights": [
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  },
+  "controls": {
+    "merec": {
+      "scenario_count": 32,
+      "summary": {
+        "weight": {
+          "count": 20,
+          "marcos_leader_changes": 1,
+          "vikor_leader_changes": 1,
+          "vikor_compromise_changes": 6,
+          "marcos_order_changes": 8,
+          "vikor_order_changes": 5
+        },
+        "v": {
+          "count": 11,
+          "marcos_leader_changes": 0,
+          "vikor_leader_changes": 6,
+          "vikor_compromise_changes": 8,
+          "marcos_order_changes": 0,
+          "vikor_order_changes": 9
+        }
+      },
+      "rank_ranges": [
+        {
+          "code": "A1",
+          "marcos": {
+            "min": 5,
+            "max": 5
+          },
+          "vikor": {
+            "min": 5,
+            "max": 5
+          }
+        },
+        {
+          "code": "A2",
+          "marcos": {
+            "min": 2,
+            "max": 3
+          },
+          "vikor": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "code": "A3",
+          "marcos": {
+            "min": 4,
+            "max": 4
+          },
+          "vikor": {
+            "min": 1,
+            "max": 3
+          }
+        },
+        {
+          "code": "A4",
+          "marcos": {
+            "min": 1,
+            "max": 2
+          },
+          "vikor": {
+            "min": 3,
+            "max": 4
+          }
+        },
+        {
+          "code": "A5",
+          "marcos": {
+            "min": 1,
+            "max": 3
+          },
+          "vikor": {
+            "min": 1,
+            "max": 4
+          }
+        }
+      ],
+      "v_cases": [
+        {
+          "v": 0.0,
+          "leaders": [
+            "A3"
+          ],
+          "compromise": [
+            "A3",
+            "A2"
+          ]
+        },
+        {
+          "v": 0.1,
+          "leaders": [
+            "A3"
+          ],
+          "compromise": [
+            "A3",
+            "A2"
+          ]
+        },
+        {
+          "v": 0.2,
+          "leaders": [
+            "A3"
+          ],
+          "compromise": [
+            "A3",
+            "A2"
+          ]
+        },
+        {
+          "v": 0.3,
+          "leaders": [
+            "A3"
+          ],
+          "compromise": [
+            "A3",
+            "A2"
+          ]
+        },
+        {
+          "v": 0.4,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2",
+            "A3",
+            "A5"
+          ]
+        },
+        {
+          "v": 0.5,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2",
+            "A3",
+            "A5"
+          ]
+        },
+        {
+          "v": 0.6,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2",
+            "A5",
+            "A3"
+          ]
+        },
+        {
+          "v": 0.7,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2",
+            "A5"
+          ]
+        },
+        {
+          "v": 0.8,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2",
+            "A5"
+          ]
+        },
+        {
+          "v": 0.9,
+          "leaders": [
+            "A5"
+          ],
+          "compromise": [
+            "A5",
+            "A2"
+          ]
+        },
+        {
+          "v": 1.0,
+          "leaders": [
+            "A5"
+          ],
+          "compromise": [
+            "A5",
+            "A2"
+          ]
+        }
+      ]
+    },
+    "manual": {
+      "scenario_count": 32,
+      "summary": {
+        "weight": {
+          "count": 20,
+          "marcos_leader_changes": 0,
+          "vikor_leader_changes": 0,
+          "vikor_compromise_changes": 5,
+          "marcos_order_changes": 9,
+          "vikor_order_changes": 14
+        },
+        "v": {
+          "count": 11,
+          "marcos_leader_changes": 0,
+          "vikor_leader_changes": 2,
+          "vikor_compromise_changes": 7,
+          "marcos_order_changes": 0,
+          "vikor_order_changes": 6
+        }
+      },
+      "rank_ranges": [
+        {
+          "code": "A1",
+          "marcos": {
+            "min": 4,
+            "max": 5
+          },
+          "vikor": {
+            "min": 3,
+            "max": 5
+          }
+        },
+        {
+          "code": "A2",
+          "marcos": {
+            "min": 2,
+            "max": 2
+          },
+          "vikor": {
+            "min": 1,
+            "max": 2
+          }
+        },
+        {
+          "code": "A3",
+          "marcos": {
+            "min": 4,
+            "max": 5
+          },
+          "vikor": {
+            "min": 2,
+            "max": 4
+          }
+        },
+        {
+          "code": "A4",
+          "marcos": {
+            "min": 3,
+            "max": 3
+          },
+          "vikor": {
+            "min": 3,
+            "max": 5
+          }
+        },
+        {
+          "code": "A5",
+          "marcos": {
+            "min": 1,
+            "max": 1
+          },
+          "vikor": {
+            "min": 1,
+            "max": 3
+          }
+        }
+      ],
+      "v_cases": [
+        {
+          "v": 0.0,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2",
+            "A3"
+          ]
+        },
+        {
+          "v": 0.1,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2",
+            "A3"
+          ]
+        },
+        {
+          "v": 0.2,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2",
+            "A3"
+          ]
+        },
+        {
+          "v": 0.3,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2"
+          ]
+        },
+        {
+          "v": 0.4,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2"
+          ]
+        },
+        {
+          "v": 0.5,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2"
+          ]
+        },
+        {
+          "v": 0.6,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2"
+          ]
+        },
+        {
+          "v": 0.7,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2",
+            "A5"
+          ]
+        },
+        {
+          "v": 0.8,
+          "leaders": [
+            "A2"
+          ],
+          "compromise": [
+            "A2",
+            "A5"
+          ]
+        },
+        {
+          "v": 0.9,
+          "leaders": [
+            "A5"
+          ],
+          "compromise": [
+            "A5",
+            "A2"
+          ]
+        },
+        {
+          "v": 1.0,
+          "leaders": [
+            "A5"
+          ],
+          "compromise": [
+            "A5",
+            "A2"
+          ]
+        }
+      ]
+    }
+  },
+  "preserved": [
+    "decision_core/*.py",
+    "decision_store/calculations.py",
+    "web_app/weight_math.py",
+    "all existing migrations",
+    "data and models",
+    "previous results"
+  ],
+  "schema_versions": [
+    "0002",
+    "web0002"
+  ],
+  "new_migrations": 0,
+  "new_dependencies": 0,
+  "new_database_grants": 0,
+  "installer": {
+    "new_files": [
+      "docs/web_sensitivity.md",
+      "docs/web_sensitivity_checks.json",
+      "tests/test_web_sensitivity.py",
+      "web_app/sensitivity_charts.py",
+      "web_app/sensitivity_math.py",
+      "web_app/sensitivity_routes.py",
+      "web_app/sensitivity_store.py",
+      "web_app/templates/sensitivity_form.html",
+      "web_app/templates/sensitivity_history.html",
+      "web_app/templates/sensitivity_result.html"
+    ],
+    "updated_base_sha256_utf8_lf": {
+      "web_app/main.py": "59cf310c357e110b7ddf109a805430e41f5d01199d5909525c5cf776892c935c",
+      "web_app/static/app.css": "531600db8488b03188384791965d164d20d0de4e82ceb21751a256bed0ca6b60",
+      "web_app/templates/calculations.html": "4b08d546b34bf743d44c77ccabc2bcb345e5861668ebca089ad88cb0902f1a37",
+      "web_app/templates/calculation_result.html": "49226c33ef8599a2bf1a583325d5c057334a76156984284a5e5e843e41938f8f"
+    },
+    "crlf_and_bom_normalization_verified": true,
+    "native_powershell_execution": "not performed in Linux environment"
+  },
+  "not_in_stage": [
+    "SMAA",
+    "global stability proof",
+    "ML prediction uncertainty",
+    "alpha-grid sensitivity",
+    "criteria CRUD",
+    "XLSX export",
+    "PWA",
+    "whole-course acceptance",
+    "native PostgreSQL18 and all browser families"
+  ]
+}

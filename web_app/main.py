@@ -317,4 +317,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     register_dematel_routes(app,Ctx,render,response,project_access,require_user)
     from web_app.weight_routes import register_routes as register_weight_routes
     register_weight_routes(app,Ctx,render,response,project_access,require_user)
+    from web_app.sensitivity_routes import register_routes as register_sensitivity_routes
+    register_sensitivity_routes(app,Ctx,render,response,project_access,require_user)
     return app
