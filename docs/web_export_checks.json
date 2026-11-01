@@ -1,0 +1,255 @@
+{
+  "stage": "web-export",
+  "date": "2026-11-01",
+  "variant": 27,
+  "requirement": "FT-13 XLSX and method report section pp.92-93",
+  "full_tests": {
+    "passed": 300,
+    "skipped": 0,
+    "warnings": 1,
+    "seconds": 111.15,
+    "environment": "isolated PGlite PostgreSQL-compatible engine and application-role fixtures"
+  },
+  "default_tests": {
+    "passed": 212,
+    "skipped": 88,
+    "warnings": 1,
+    "seconds": 10.48
+  },
+  "new_test_cases": 18,
+  "warning": "Existing Starlette/AnyIO DeprecationWarning",
+  "browser": {
+    "passed": true,
+    "viewports": [
+      {
+        "page": "calculation_export",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "calculation_export",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "calculation_export",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "calculation_export",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "calculation_export",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_export",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_export",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_export",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_export",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "choice_export",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_choice_export",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_choice_export",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_choice_export",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_choice_export",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_choice_export",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_calculation_export",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_calculation_export",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_calculation_export",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_calculation_export",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_calculation_export",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      }
+    ],
+    "engine": "Chromium headless via Playwright",
+    "flows": [
+      "calculation button downloads authorized XLSX with ranks",
+      "LPR button downloads XLSX with original A2 choice",
+      "old reports remain downloadable with stale warning"
+    ]
+  },
+  "spreadsheet": {
+    "template_authoring": "Artifact Tool",
+    "template_sample_values_removed": true,
+    "runtime_filling": "Python standard library, bundled OOXML styles and chart",
+    "sheets": [
+      "Отчёт",
+      "Рейтинги",
+      "Матрица",
+      "Веса",
+      "Промежуточные",
+      "ML и источники",
+      "Решение ЛПР"
+    ],
+    "chart": "native two-series rank chart, cell references and caches resized to eligible alternatives",
+    "preview": "all seven sheets rendered and visually inspected after export/import",
+    "preview_limit": "Artifact Tool imported dates as displayed serials in its preview; numeric date types and number formats independently verified by read-only reader and LibreOffice round trip",
+    "formulas": "no worksheet formulas; user input encoded as literal inlineStr; chart references point to internal rank cells",
+    "native_round_trip": {
+      "opened_and_saved": true,
+      "engine": "LibreOffice Calc, headless",
+      "sheets": 7,
+      "native_chart_series": 2,
+      "rank_score_tolerance": 1e-12,
+      "dates_recognized": true,
+      "choice_preserved": "A2",
+      "microsoft_excel_on_windows": "not run"
+    },
+    "template_sha256": "5c6e0787cbd546b39010a45d2e3ad30505715062dd2e6b1634a3280c487f60e5"
+  },
+  "verified": [
+    "both download buttons and binary MIME/content-disposition/no-store headers",
+    "all project-member roles can read; anonymous and foreign projects denied",
+    "no result, weight-set, choice or audit insert on export",
+    "exact source matrix, weights, ranks and ML test metrics",
+    "same source for MARCOS or VIKOR ID",
+    "latest decision only from the same pair; no substitution from another calculation",
+    "choice report replays embedded snapshots after current project/alternative edits and live VIKOR removal",
+    "budget-excluded values retained in source section but omitted from rank chart",
+    "MEREC, manual, DEMATEL and combined weights",
+    "formula-like project titles remain text",
+    "invalid XML, oversized cells and nonfinite numbers rejected",
+    "corrupt saved decision rejected before file generation",
+    "unknown training date explicitly marked; registration date is separate"
+  ],
+  "new_migrations": 0,
+  "new_dependencies": 0,
+  "new_database_grants": 0,
+  "new_javascript": 0,
+  "preserved": [
+    "mathematical core and version hashes",
+    "weight and sensitivity adapters",
+    "decision choice replay modules",
+    "existing data, model artifacts and stored outputs",
+    "database schema and all migrations",
+    "CSS, dark UI, existing roles and sessions"
+  ],
+  "installer": {
+    "new_files": [
+      "docs/web_export.md",
+      "docs/web_export_checks.json",
+      "tests/test_web_export.py",
+      "web_app/assets/report_template.xlsx",
+      "web_app/export_data.py",
+      "web_app/export_routes.py",
+      "web_app/export_rows.py",
+      "web_app/export_xlsx.py"
+    ],
+    "updated_base_sha256_utf8_lf": {
+      "web_app/main.py": "af8bacb251ccadf4bb2dafee02ea6bcea91142c2c4e7e58f0021abbfc534f6cc",
+      "web_app/templates/calculation_result.html": "ea86c2bf3d31582144b7cd59ef88174058e6f0dd0f9cd9251b127b65e00b01ce",
+      "web_app/templates/decision_choice_detail.html": "44c4655d5bc5c704580ddadb33b52dc5fb7b10bfcccab255af0bbcd16b4cfb2f"
+    },
+    "crlf_bom_normalization_verified": true,
+    "native_powershell_execution": "not performed in Linux"
+  },
+  "limits": [
+    "native Windows/PostgreSQL installation and Excel manual check remain with user",
+    "LibreOffice round trip is not Microsoft Excel testing",
+    "no Firefox/Safari verification",
+    "XLSX contains frozen method results; edits do not recalculate methods",
+    "snapshot hashes are consistency checks, not digital signatures",
+    "not a claim of full coursework, PWA, browser Python or interactive UI completion"
+  ]
+}
