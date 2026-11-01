@@ -1,0 +1,531 @@
+{
+  "stage": "web-decision-choice",
+  "date": "2026-11-01",
+  "variant": 27,
+  "full_tests": {
+    "passed": 282,
+    "skipped": 0,
+    "warnings": 1,
+    "seconds": 96.46,
+    "environment": "isolated PGlite PostgreSQL-compatible engine, application permissions and session fixtures"
+  },
+  "default_tests": {
+    "passed": 201,
+    "skipped": 81,
+    "warnings": 1
+  },
+  "warning": "Existing Starlette/AnyIO DeprecationWarning",
+  "new_test_cases": 24,
+  "browser": {
+    "passed": true,
+    "viewports": [
+      {
+        "page": "analyst_read_only",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "analyst_read_only",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "analyst_read_only",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "analyst_read_only",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "analyst_read_only",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_history",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_history",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_history",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_history",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_history",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "lpr_form",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "lpr_form",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "lpr_form",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "lpr_form",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "lpr_form",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "filled_form",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "filled_form",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "filled_form",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "filled_form",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "filled_form",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "saved_choice",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "saved_choice",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "saved_choice",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "saved_choice",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "saved_choice",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "saved_details",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "saved_details",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "saved_details",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "saved_details",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "saved_details",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "history",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "history",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "history",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "history",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "history",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "reconsider",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "reconsider",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "reconsider",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "reconsider",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "reconsider",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "outside_compromise",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "outside_compromise",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "outside_compromise",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "outside_compromise",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "outside_compromise",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_choice",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_choice",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_choice",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_choice",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "historical_choice",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stale_choice",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stale_choice",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stale_choice",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stale_choice",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stale_choice",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stale_form",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stale_form",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stale_form",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stale_form",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stale_form",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      }
+    ],
+    "engine": "Chromium headless via Playwright",
+    "flows": [
+      "LPR submits real form; persisted author, A2 and reason",
+      "reconsideration appends A4 with compromise warning",
+      "historical and stale state retained",
+      "analyst read-only form"
+    ]
+  },
+  "verified": [
+    "only decision_maker can save; analyst including creator cannot",
+    "separate registered account assigned by analyst",
+    "CSRF, project scoping, self-promotion refusal, request bounds and HTML escaping",
+    "no preselected choice; explicit alternative, reason and acknowledgement",
+    "current non-archived project and source calculation required",
+    "budget filter eligibility",
+    "snapshot authorship with role at decision, selected scores, weights and both rankings",
+    "exact retry through either MARCOS or VIKOR produces no duplicate",
+    "previous-choice anchor detects unseen concurrent decisions; explicit reconsideration appends history",
+    "atomic choice and audit event rollback",
+    "saved actor name independent of current user name",
+    "historical replay after alternative change and removal of live VIKOR row",
+    "tampering detected by fingerprint and recomputed selected rank",
+    "application cannot UPDATE or DELETE choices; FK protects referenced MARCOS result",
+    "MEREC, manual, DEMATEL and combined weight contexts preserve their source"
+  ],
+  "preserved": [
+    "decision_core mathematical modules",
+    "decision_store calculations",
+    "weight_math and sensitivity_math; existing replay hashes",
+    "original datasets and ML artifacts",
+    "all existing migrations",
+    "dark UI assets and CSS",
+    "existing results and choices"
+  ],
+  "new_migrations": 0,
+  "new_dependencies": 0,
+  "new_javascript": 0,
+  "grants": {
+    "table": "decision_choices",
+    "operations": [
+      "SELECT",
+      "INSERT(project_id,result_id,alternative_code,alternative_snapshot,decided_by,reason)"
+    ],
+    "sequence": "USAGE decision_choices_id_seq",
+    "update_delete": false
+  },
+  "control": {
+    "merec_marcos_leader": "A4",
+    "merec_vikor_leader": "A2",
+    "merec_compromise": [
+      "A2",
+      "A3",
+      "A5"
+    ],
+    "selected": "A2",
+    "selected_marcos_rank": 2,
+    "selected_vikor_rank": 1
+  },
+  "installer": {
+    "new_files": [
+      "docs/web_decision_choice.md",
+      "docs/web_decision_choice_checks.json",
+      "scripts/prepare_web_decision_choice.py",
+      "tests/test_web_decision_choice.py",
+      "web_app/decision_choice_logic.py",
+      "web_app/decision_choice_routes.py",
+      "web_app/decision_choice_store.py",
+      "web_app/templates/decision_choice_detail.html",
+      "web_app/templates/decision_choice_form.html",
+      "web_app/templates/decision_choice_history.html"
+    ],
+    "updated_base_sha256_utf8_lf": {
+      "web_app/database.py": "5042d7fd6f87fc1c4fef6b4f29a727392a70e6dfc291820a9b7c555b9084b3eb",
+      "web_app/main.py": "11c39cb48a9f0b6f5bfd5289ea48b23725199ed4d1b13da876ea264d619a4e7b",
+      "web_app/templates/calculation_result.html": "56cd3e609ab977573108db344943de976c6c0a135f6a31e3ad1db8f1228d9487",
+      "web_app/templates/project.html": "6d13b675e5dc678be21d64a026ad17492e5ef0e5d5b937a6933b4beb2f148b65"
+    },
+    "crlf_bom_normalization_verified": true,
+    "native_powershell_execution": "not performed in Linux"
+  },
+  "limits": [
+    "native Windows PostgreSQL installation and final manual verification remain with user",
+    "PGlite is not a full native PostgreSQL deployment test",
+    "browser checks in Chromium, no Firefox or Safari claim",
+    "fingerprint is consistency verification, not a digital signature or protection from DB administrator",
+    "per-user project authorization is at application layer",
+    "this stage does not complete coursework, XLSX export, JavaScript or PWA"
+  ]
+}

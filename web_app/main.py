@@ -50,7 +50,8 @@ class SmallForms:
             part=message.get('body',b'');size+=len(part)
             path=scope.get('path','')
             stakeholder_form=re.fullmatch(r'/(?:api/)?projects/[0-9]+/stakeholders(?:/[0-9]+(?:/delete)?)?',path)
-            limit=32768 if stakeholder_form else (65536 if path.endswith('/dematel/definition') else 8192)
+            choice_form=re.fullmatch(r'/(?:api/)?projects/[0-9]+/calculations/[0-9]+/choice',path)
+            limit=32768 if stakeholder_form or choice_form else (65536 if path.endswith('/dematel/definition') else 8192)
             if size>limit:
                 return await JSONResponse({'detail':'Форма слишком большая.'},status_code=413)(scope,receive,send)
             chunks.append(part)
@@ -324,4 +325,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     register_sensitivity_routes(app,Ctx,render,response,project_access,require_user)
     from web_app.stakeholder_routes import register_routes as register_stakeholder_routes
     register_stakeholder_routes(app,Ctx,render,response,project_access,require_user)
+    from web_app.decision_choice_routes import register_routes as register_decision_choice_routes
+    register_decision_choice_routes(app,Ctx,render,response,project_access,require_user)
     return app

@@ -89,3 +89,7 @@ def grant_web_permissions(connection,schema: str='public',role: str='coursework_
     grant('UPDATE(name,stakeholder_role,interests,power,legitimacy,urgency)','stakeholders')
     grant('DELETE','stakeholders')
     connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier('stakeholders_id_seq'),sql.Identifier(role)))
+
+    grant('SELECT','decision_choices')
+    grant('INSERT(project_id,result_id,alternative_code,alternative_snapshot,decided_by,reason)','decision_choices')
+    connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier('decision_choices_id_seq'),sql.Identifier(role)))
