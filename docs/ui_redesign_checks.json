@@ -1,0 +1,1349 @@
+{
+  "stage": "ui-redesign",
+  "date": "2026-11-01",
+  "variant": 27,
+  "theme": "Night Circuit",
+  "requirements": [
+    "TZ responsive widths",
+    "text >=16px",
+    "targets >=44x44",
+    "contrast >=4.5",
+    "keyboard",
+    "collapsible menu",
+    "Lighthouse >=60/80/80"
+  ],
+  "full_tests": {
+    "passed": 258,
+    "skipped": 0,
+    "warnings": 1,
+    "environment": "isolated PGlite PostgreSQL-compatible engine; native user PostgreSQL verification separate"
+  },
+  "default_tests": {
+    "passed": 188,
+    "skipped": 70,
+    "warnings": 1
+  },
+  "warning": "Existing Starlette/AnyIO DeprecationWarning",
+  "browser": {
+    "passed": true,
+    "viewports": [
+      {
+        "page": "login",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "login",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "login",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "login",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "login",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "register",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "register",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "register",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "register",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "register",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_projects",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_projects",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_projects",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_projects",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "empty_projects",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "projects",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "profile_menu",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "profile_menu",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "profile_menu",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "profile_menu",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "profile_menu",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "project",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_new",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_new",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_new",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_new",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_new",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_edit",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_edit",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_edit",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_edit",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_edit",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_delete",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_delete",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_delete",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_delete",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_delete",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_archive",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_archive",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_archive",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_archive",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "alternative_archive",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_result",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_result",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_result",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_result",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_result",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_matrix",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_matrix",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_matrix",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_matrix",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "dematel_matrix",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "definition",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "definition",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "definition",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "definition",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "definition",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "manual_weights",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "manual_weights",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "manual_weights",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "manual_weights",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "manual_weights",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_manual_form",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_manual_form",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_manual_form",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_manual_form",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_manual_form",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_dematel_form",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_dematel_form",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_dematel_form",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_dematel_form",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_dematel_form",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_result",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_result",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_result",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_result",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "combined_result",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "calculations",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "calculations",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "calculations",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "calculations",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "calculations",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "result",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "result",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "result",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "result",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "result",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "result_details",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "result_details",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "result_details",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "result_details",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "result_details",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "sensitivity_form",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "sensitivity_form",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "sensitivity_form",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "sensitivity_form",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "sensitivity_form",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "sensitivity_result",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "sensitivity_result",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "sensitivity_result",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "sensitivity_result",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "sensitivity_result",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholders",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_new",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_new",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_new",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_new",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_new",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_edit",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_edit",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_edit",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_edit",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_edit",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_delete",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_delete",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_delete",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_delete",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_delete",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_history",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_history",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_history",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_history",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "stakeholder_history",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "api_docs",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "api_docs",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "api_docs",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "api_docs",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "api_docs",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "error",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "error",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "error",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "error",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "error",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "reduced_motion",
+        "width": 360,
+        "document_width": 360,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "reduced_motion",
+        "width": 390,
+        "document_width": 390,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "reduced_motion",
+        "width": 768,
+        "document_width": 768,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "reduced_motion",
+        "width": 1366,
+        "document_width": 1366,
+        "small_text": 0,
+        "undersized_targets": 0
+      },
+      {
+        "page": "reduced_motion",
+        "width": 1920,
+        "document_width": 1920,
+        "small_text": 0,
+        "undersized_targets": 0
+      }
+    ],
+    "engine": "Chromium headless via Playwright",
+    "keyboard_and_motion": [
+      "keyboard skip link",
+      "native account menu with Enter",
+      "reduced motion disables transitions"
+    ],
+    "flow": "authentication, project overview, real hardware cards, alternatives, DEMATEL, CATWOE, manual/combined weights, unchanged MEREC results, sensitivity, stakeholders, API documentation, error page; charts loaded"
+  },
+  "contrast_pairs": [
+    {
+      "element": "Основной текст",
+      "foreground": "#eef3ff",
+      "background": "#121b2c",
+      "ratio": 15.506,
+      "minimum": 4.5
+    },
+    {
+      "element": "Вторичный текст",
+      "foreground": "#b4c1d8",
+      "background": "#19253a",
+      "ratio": 8.456,
+      "minimum": 4.5
+    },
+    {
+      "element": "Текст в шапке таблицы",
+      "foreground": "#e9effc",
+      "background": "#1b2940",
+      "ratio": 12.67,
+      "minimum": 4.5
+    },
+    {
+      "element": "Ссылка",
+      "foreground": "#9ad8ff",
+      "background": "#121b2c",
+      "ratio": 11.191,
+      "minimum": 4.5
+    },
+    {
+      "element": "Кнопка начало градиента",
+      "foreground": "#ffffff",
+      "background": "#6551ce",
+      "ratio": 5.799,
+      "minimum": 4.5
+    },
+    {
+      "element": "Кнопка конец градиента",
+      "foreground": "#ffffff",
+      "background": "#7755d4",
+      "ratio": 5.205,
+      "minimum": 4.5
+    },
+    {
+      "element": "Кнопка наведение",
+      "foreground": "#ffffff",
+      "background": "#6945c8",
+      "ratio": 6.391,
+      "minimum": 4.5
+    },
+    {
+      "element": "Контурная кнопка",
+      "foreground": "#bfe6ff",
+      "background": "#16273c",
+      "ratio": 11.499,
+      "minimum": 4.5
+    },
+    {
+      "element": "Вторичная кнопка",
+      "foreground": "#d0dcef",
+      "background": "#192338",
+      "ratio": 11.327,
+      "minimum": 4.5
+    },
+    {
+      "element": "Удаление",
+      "foreground": "#ffffff",
+      "background": "#a52f4b",
+      "ratio": 6.757,
+      "minimum": 4.5
+    },
+    {
+      "element": "Ошибка",
+      "foreground": "#ffb6c5",
+      "background": "#121b2c",
+      "ratio": 10.46,
+      "minimum": 4.5
+    },
+    {
+      "element": "Alert info",
+      "foreground": "#c6e8ff",
+      "background": "#12273b",
+      "ratio": 11.883,
+      "minimum": 4.5
+    },
+    {
+      "element": "Alert warning",
+      "foreground": "#ffe0a3",
+      "background": "#30261b",
+      "ratio": 11.59,
+      "minimum": 4.5
+    },
+    {
+      "element": "Alert danger",
+      "foreground": "#ffc2ce",
+      "background": "#331b2a",
+      "ratio": 10.413,
+      "minimum": 4.5
+    },
+    {
+      "element": "Placeholder",
+      "foreground": "#a5b4cc",
+      "background": "#0c1423",
+      "ratio": 8.772,
+      "minimum": 4.5
+    },
+    {
+      "element": "Текст поля",
+      "foreground": "#eef3ff",
+      "background": "#0c1423",
+      "ratio": 16.579,
+      "minimum": 4.5
+    },
+    {
+      "element": "Метка прогноза",
+      "foreground": "#b2f1e0",
+      "background": "#153936",
+      "ratio": 9.909,
+      "minimum": 4.5
+    },
+    {
+      "element": "Обводка поля",
+      "foreground": "#657b9b",
+      "background": "#0c1423",
+      "ratio": 4.263,
+      "minimum": 3
+    },
+    {
+      "element": "Клавиатурный фокус",
+      "foreground": "#a8efff",
+      "background": "#19253a",
+      "ratio": 12.037,
+      "minimum": 3
+    }
+  ],
+  "lighthouse": [
+    {
+      "page": "projects",
+      "version": "12.8.2",
+      "form_factor": "mobile",
+      "throttling_method": "simulate",
+      "url_path": "/projects",
+      "scores": {
+        "performance": 97,
+        "accessibility": 100,
+        "best-practices": 100
+      },
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36"
+    },
+    {
+      "page": "project",
+      "version": "12.8.2",
+      "form_factor": "mobile",
+      "throttling_method": "simulate",
+      "url_path": "/projects/1",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100
+      },
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36"
+    },
+    {
+      "page": "result",
+      "version": "12.8.2",
+      "form_factor": "mobile",
+      "throttling_method": "simulate",
+      "url_path": "/projects/1/calculations/3",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100
+      },
+      "browser": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36"
+    }
+  ],
+  "lighthouse_scope": "Three authenticated pages; mobile simulation on local isolated server, not a hardware-independent speed guarantee",
+  "behavior": [
+    "dark local theme",
+    "existing form names/actions/CSRF preserved",
+    "profile menu uses native details without JavaScript",
+    "project cards use original alternatives and sources",
+    "no invented rank or benchmark",
+    "reduced-motion support",
+    "unchanged charts with light canvas",
+    "DOM text size and interactive-target checks across 155 viewports",
+    "old DEMATEL footer copy aligned with already implemented weight selection"
+  ],
+  "preserved": [
+    "all Python modules",
+    "mathematical functions and core hashes",
+    "models and datasets",
+    "existing database and migrations",
+    "roles and CSRF",
+    "stored outputs"
+  ],
+  "new_migrations": 0,
+  "new_dependencies": 0,
+  "new_database_grants": 0,
+  "new_javascript": 0,
+  "installer": {
+    "new_files": [
+      "docs/ui_redesign.md",
+      "docs/ui_redesign_checks.json",
+      "web_app/templates/ui_visuals.html"
+    ],
+    "updated_base_sha256_utf8_lf": {
+      "web_app/static/app.css": "88840c75614d70df67f6dc09bf579534bfb71e982656d480778211e356448259",
+      "web_app/templates/base.html": "059eeb6a9018eb15a41e0ac15e16a4879dc1a37156e3a7d6aee54a96ab60e2ae",
+      "web_app/templates/dematel.html": "b359b16e380edf1b5ddb16dc51f4edd512b9fbe65fe6ab53da5f8635d900e5c0",
+      "web_app/templates/login.html": "51db8f588c8db39164c789ca06b0e657964ee685827b4b16a09b7483b4427c3d",
+      "web_app/templates/project.html": "bad6b08b9cf56dfded2833937425ef718dd7fd90849375a387933cf6fd66dbea",
+      "web_app/templates/projects.html": "58908855f0b7634510feecd2e2cfdf9d7194fb88bb03723139cdbdf0afa63d7d",
+      "web_app/templates/register.html": "7f3e078280e4e03c6636ff344f92245e390f46f640d63cc2ec3fb8ff57d53174"
+    },
+    "crlf_bom_normalization_verified": true,
+    "native_powershell_execution": "not performed in Linux environment"
+  },
+  "not_claimed": [
+    "PWA completion",
+    "entire coursework completion",
+    "Firefox/Safari/Yandex verification",
+    "native Windows performance measurement",
+    "all WCAG criteria fully audited"
+  ]
+}

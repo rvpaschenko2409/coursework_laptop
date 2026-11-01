@@ -1,6 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}{% from 'ui_visuals.html' import device_scene %}
 {% block title %}Вход · СППР «Ноутбук»{% endblock %}
 {% block content %}
+<div class="auth-layout"><aside class="auth-visual"><p class="eyebrow">ВЫБОР ТЕХНИКИ</p><h2>Характеристики разные.<br>Решение — ваше.</h2><p>Соберите варианты в одном проекте, сравните рейтинги и проверьте, насколько устойчив результат.</p>{{ device_scene() }}<div class="method-tags"><span class="method-tag">MEREC</span><span class="method-tag">MARCOS</span><span class="method-tag">VIKOR</span></div></aside>
 <section class="auth-card card"><div class="card-body">
 <p class="eyebrow">РАБОЧЕЕ ПРОСТРАНСТВО</p><h1>Вход</h1>
 <p class="text-secondary">Войдите, чтобы открыть свои проекты выбора ноутбуков.</p>
@@ -11,5 +12,5 @@
 <div class="mb-4"><label class="form-label" for="password">Пароль</label><input class="form-control" id="password" name="password" type="password" maxlength="128" autocomplete="current-password" required></div>
 <button class="btn btn-primary w-100" type="submit">Войти</button>
 </form><p class="auth-switch">Нет учётной записи? <a href="/register">Зарегистрироваться</a></p>
-</div></section>
+</div></section></div>
 {% endblock %}

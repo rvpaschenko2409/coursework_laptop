@@ -1,6 +1,7 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}{% from 'ui_visuals.html' import device_scene %}
 {% block title %}Регистрация · СППР «Ноутбук»{% endblock %}
 {% block content %}
+<div class="auth-layout"><aside class="auth-visual"><p class="eyebrow">ВЫБОР ТЕХНИКИ</p><h2>Характеристики разные.<br>Решение — ваше.</h2><p>Соберите варианты в одном проекте, сравните рейтинги и проверьте, насколько устойчив результат.</p>{{ device_scene() }}<div class="method-tags"><span class="method-tag">MEREC</span><span class="method-tag">MARCOS</span><span class="method-tag">VIKOR</span></div></aside>
 <section class="auth-card card"><div class="card-body">
 <p class="eyebrow">НОВАЯ УЧЁТНАЯ ЗАПИСЬ</p><h1>Регистрация</h1>
 <p class="text-secondary">Создавайте свои проекты и участвуйте в проектах коллег.</p>
@@ -12,5 +13,5 @@
 <div class="mb-4"><label class="form-label" for="password">Пароль</label><input class="form-control" id="password" name="password" type="password" minlength="12" maxlength="128" autocomplete="new-password" aria-describedby="password-help" required><div id="password-help" class="form-text">От 12 до 128 символов. Можно использовать длинную фразу.</div></div>
 <button class="btn btn-primary w-100" type="submit">Создать учётную запись</button>
 </form><p class="auth-switch">Уже зарегистрированы? <a href="/login">Войти</a></p>
-</div></section>
+</div></section></div>
 {% endblock %}

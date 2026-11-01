@@ -1,20 +1,20 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-bs-theme="dark">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#0c1220"><meta name="color-scheme" content="dark">
 <title>{% block title %}СППР «Ноутбук»{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static',path='/vendor/bootstrap.min.css') }}">
-<link rel="stylesheet" href="{{ url_for('static',path='/app.css') }}">
+<link rel="stylesheet" href="{{ url_for('static',path='/app.css') }}?v=night-circuit-1">
 </head>
-<body>
+<body>{% from 'ui_visuals.html' import icon %}
 <a class="skip-link" href="#main">Перейти к содержимому</a>
 <header class="topbar"><div class="container nav-inner">
-<a class="brand" href="/projects"><span class="brandmark" aria-hidden="true">Н</span><span>СППР «Ноутбук»</span></a>
+<a class="brand" href="/projects"><span class="brandmark">{{ icon('laptop') }}</span><span class="brand-type"><span class="brand-name">СППР «Ноутбук»</span><span class="brand-note">Выбирайте обоснованно</span></span></a>
 <nav aria-label="Учётная запись" class="nav-user">
-{% if user %}<a class="api-link" href="/docs">API</a><span class="user-name" title="{{ user.name }}">{{ user.name }}</span>
-<form method="post" action="/logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="btn btn-outline-secondary" type="submit">Выйти</button></form>
-{% else %}<a href="/login">Вход</a><a class="btn btn-primary" href="/register">Регистрация</a>{% endif %}
+{% if user %}<a class="nav-home" href="/projects"{% if request.url.path=='/projects' %} aria-current="page"{% endif %}>{{ icon('grid') }}<span>Мои проекты</span></a>
+<details class="account-menu"><summary><span class="user-avatar" aria-hidden="true">{{ user.name[:1]|upper }}</span><span class="user-name" title="{{ user.name }}">{{ user.name }}</span>{{ icon('chevron','menu-chevron') }}</summary><div class="account-panel"><span class="menu-label">Учётная запись</span><a class="api-link" href="/docs">API приложения</a><form method="post" action="/logout"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="btn btn-outline-secondary" type="submit">Выйти</button></form></div></details>
+{% else %}<a class="nav-home" href="/login">Вход</a><a class="btn btn-primary" href="/register">Регистрация {{ icon('arrow') }}</a>{% endif %}
 </nav></div></header>
 <main id="main" class="container main-content" tabindex="-1">{% block content %}{% endblock %}</main>
-<footer class="container page-footer">Учебная система поддержки принятия решений · Вариант 27</footer>
+<footer class="container page-footer"><span>Учебная система поддержки принятия решений</span><span class="footer-tag">Вариант 27</span></footer>
 </body></html>

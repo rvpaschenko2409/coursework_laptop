@@ -1,20 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %}{% from 'ui_visuals.html' import icon,device_scene %}
 {% block title %}Мои проекты · СППР «Ноутбук»{% endblock %}
 {% block content %}
-<div class="page-heading"><p class="eyebrow">ВЫБОР ОБОРУДОВАНИЯ</p><h1>Мои проекты</h1><p class="text-secondary">Здесь находятся ваши проекты и проекты, к которым вам предоставлен доступ.</p></div>
+<section class="hero-panel"><div class="page-heading"><p class="eyebrow">РАБОЧЕЕ ПРОСТРАНСТВО</p><h1>Мои проекты</h1><p class="hero-description">Сравнивайте ноутбуки по важным характеристикам и бюджету. Проверяйте рекомендации, прежде чем сделать выбор.</p><div class="method-tags" aria-label="Методы принятия решений"><span class="method-tag">MEREC</span><span class="method-tag">MARCOS</span><span class="method-tag">VIKOR</span></div></div>{{ device_scene() }}</section>
 {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
 <div class="row g-4"><section class="col-lg-8" aria-label="Список проектов">
 {% if projects %}<div class="project-grid">{% for project in projects %}
 <article class="card project-card"><div class="card-body"><div class="card-topline"><span class="role-badge">{{ roles[project.role] }}</span><span class="text-secondary small">№ {{ project.id }}</span></div>
 <h2><a href="/projects/{{ project.id }}">{{ project.title }}</a></h2><p class="project-goal">{{ project.goal or 'Цель проекта пока не указана.' }}</p>
 <div class="project-meta"><span>Бюджет: {% if project.budget %}{{ '{:,.0f}'.format(project.budget).replace(',', ' ') }} ₽{% else %}не задан{% endif %}</span><span>Ноутбуков: {{ project.alternatives_count }}</span></div>
-<a class="btn btn-outline-primary mt-3" href="/projects/{{ project.id }}">Открыть проект</a></div></article>
-{% endfor %}</div>{% else %}<div class="card empty-state"><div class="card-body"><span class="empty-symbol" aria-hidden="true">＋</span><h2>Пока нет проектов</h2><p class="text-secondary">Создайте первый проект. Чтобы открыть существующий проект, попросите его аналитика предоставить доступ к вашей учётной записи.</p></div></div>{% endif %}
-</section><aside class="col-lg-4"><section class="card"><div class="card-body"><h2>Новый проект</h2>
+<div class="project-open"><a class="btn btn-outline-primary w-100" href="/projects/{{ project.id }}">Открыть проект {{ icon('arrow') }}</a></div></div></article>
+{% endfor %}</div>{% else %}<div class="card empty-state"><div class="card-body"><span class="empty-symbol">{{ icon('plus') }}</span><h2>Пока нет проектов</h2><p class="text-secondary">Создайте первый проект. Чтобы открыть существующий проект, попросите его аналитика предоставить доступ к вашей учётной записи.</p></div></div>{% endif %}
+</section><aside class="col-lg-4"><section class="card project-create-card"><div class="card-body"><p class="section-kicker">Следующее сравнение</p><h2>Новый проект</h2>
 <form method="post" action="/projects"><input type="hidden" name="csrf" value="{{ csrf }}">
 <div class="mb-3"><label class="form-label" for="title">Название</label><input class="form-control" id="title" name="title" minlength="2" maxlength="200" required placeholder="Ноутбуки для сотрудников"></div>
 <div class="mb-3"><label class="form-label" for="goal">Цель</label><textarea class="form-control" id="goal" name="goal" rows="3" maxlength="2000" placeholder="Для каких задач выбираем технику?"></textarea></div>
 <div class="mb-4"><label class="form-label" for="budget">Бюджет на один ноутбук, ₽</label><input class="form-control" id="budget" name="budget" inputmode="decimal" maxlength="32" placeholder="100000"><div class="form-text">Можно оставить пустым.</div></div>
-<button class="btn btn-primary w-100" type="submit">Создать проект</button></form>
+<button class="btn btn-primary w-100" type="submit">{{ icon('plus') }} Создать проект</button></form>
 </div></section></aside></div>
 {% endblock %}
