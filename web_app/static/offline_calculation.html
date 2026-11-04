@@ -57,6 +57,15 @@
     </div>
   </div>
 </details>
+<section class="offline-session" data-offline-sync hidden aria-label="Синхронизация черновика">
+  <div>
+    <p>Сохраните параметры текущего сценария в браузере. Отправить их на сервер может аналитик проекта.</p>
+    <button type="button" data-save-draft>Сохранить черновик</button>
+    <button type="button" data-send-draft disabled>Отправить на сервер</button>
+    <p role="status" data-sync-status></p>
+    <a data-sync-result hidden>Открыть результат на сервере</a>
+  </div>
+</section>
 <section class="offline-matrix" data-offline-project-matrix aria-label="Сохранённые оценки ноутбуков"></section>
 </main>
 </body>

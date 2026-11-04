@@ -5,7 +5,7 @@
     await registration.update();
     const deadline = Date.now() + 60000;
     while (registration.active?.state !== 'activated' || registration.installing || registration.waiting ||
-        !(await caches.match('/static/offline_calculation.html', {cacheName: 'coursework-offline-calculation-v5'}))) {
+        !(await caches.match('/static/offline_calculation.html', {cacheName: 'coursework-offline-calculation-v6'}))) {
       if (Date.now() >= deadline || (!registration.installing && !registration.waiting && !registration.active)) {
         throw new Error('Offline assets unavailable');
       }
@@ -36,6 +36,8 @@
       }
     });
   }
+
+  const draftPrefix = 'coursework.offline-draft.v1.';
 
   const panel = document.querySelector('[data-live-preview]');
   if (!panel) return;
@@ -196,6 +198,73 @@
       }
     }, 250);
   }
+  function initializeSync(projectId, revision) {
+    const box = document.querySelector('[data-offline-sync]');
+    const key = draftPrefix + projectId;
+    const save = box.querySelector('[data-save-draft]');
+    const send = box.querySelector('[data-send-draft]');
+    const notice = box.querySelector('[data-sync-status]');
+    const link = box.querySelector('[data-sync-result]');
+    const {criterion, change, v} = form.elements;
+    box.hidden = false;
+
+    if (localStorage.getItem(key)) {
+      send.disabled = false;
+      notice.textContent = 'Есть сохранённый черновик.';
+    }
+
+    save.addEventListener('click', () => {
+      try {
+        localStorage.setItem(key, JSON.stringify({
+          revision, criterion: criterion.value, change: change.value, v: v.value,
+        }));
+        send.disabled = false;
+        link.hidden = true;
+        notice.textContent = 'Черновик сохранён в браузере.';
+      } catch {
+        notice.textContent = 'Не удалось сохранить черновик в браузере.';
+      }
+    });
+
+    send.addEventListener('click', async () => {
+      const stored = localStorage.getItem(key);
+      if (!stored) return;
+      send.disabled = true;
+      save.disabled = true;
+      link.hidden = true;
+      notice.textContent = 'Отправляем черновик…';
+      try {
+        const tokenResponse = await fetch('/api/auth/csrf', {cache: 'no-store', signal: AbortSignal.timeout(10000)});
+        if (!tokenResponse.ok) throw new Error('Не удалось получить доступ к серверу.');
+        const {csrf_token: csrf} = await tokenResponse.json();
+        const response = await fetch('/api/projects/' + projectId + '/offline/sync', {
+          method: 'POST',
+          body: new URLSearchParams({...JSON.parse(stored), csrf}),
+          signal: AbortSignal.timeout(30000),
+        });
+        if (response.status === 409) {
+          notice.textContent = 'Версия проекта на сервере изменилась. Черновик остался в браузере.';
+          return;
+        }
+        if (response.status === 401) throw new Error('Войдите в систему и повторите отправку.');
+        if (response.status === 403) throw new Error('Проверьте права аналитика и повторите отправку.');
+        const result = await response.json();
+        if (!response.ok) throw new Error(typeof result.detail === 'string' ? result.detail : 'Сервер отклонил расчёт.');
+        if (localStorage.getItem(key) === stored) localStorage.removeItem(key);
+        link.href = '/projects/' + projectId + '/calculations/' + result.result_ids.marcos;
+        link.hidden = false;
+        notice.textContent = result.created ? 'Расчёт сохранён на сервере.' : 'Этот расчёт уже есть на сервере.';
+      } catch (error) {
+        notice.textContent = error instanceof TypeError || error.name === 'TimeoutError'
+          ? 'Сервер недоступен. Черновик остался в браузере.'
+          : error.message + ' Черновик остался в браузере.';
+      } finally {
+        save.disabled = false;
+        send.disabled = !localStorage.getItem(key);
+      }
+    });
+  }
+
   function initializeOfflinePage() {
     const info = document.querySelector('[data-offline-info]');
     const remove = document.querySelector('[data-delete-offline]');
@@ -222,6 +291,7 @@
       }
       saved = JSON.parse(localStorage.getItem(activeKey));
       if (saved && projectKey) {
+        initializeSync(saved.input.project_id, saved.input.revision);
         saved.criteria = saved.input.criteria;
         saved.originalV = 0.5;
         saved.scenario = [saved.criteria[0][0], 0, 0.5];
@@ -279,7 +349,10 @@
         try {
           localStorage.removeItem(activeKey);
           matrixBox?.replaceChildren();
-          if (projectKey) location.replace(location.pathname);
+          if (projectKey) {
+            localStorage.removeItem(draftPrefix + id);
+            location.replace(location.pathname);
+          }
           clearTimeout(timer);
           generation++;
           worker?.terminate();
