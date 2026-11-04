@@ -7,9 +7,10 @@
       <label for="preview-criterion" class="form-label">Критерий</label>
       <select name="criterion" id="preview-criterion" class="form-select mb-3">
         {% for row in weighting.weights %}
-        <option value="{{ row.criterion }}">{{ criteria[row.criterion].name }}</option>
+        <option value="{{ row.criterion }}" data-original-weight="{{ row.weight }}">{{ criteria[row.criterion].name }}</option>
         {% endfor %}
       </select>
+      <p class="results-base-weight" data-results-base-weight></p>
       <label for="preview-change">Относительное изменение веса, %</label>
       <output for="preview-change">0</output>
       <input type="range" class="form-range d-block mb-3" id="preview-change" name="change" min="-50" max="50" value="0">
@@ -35,4 +36,4 @@
     </div>
   </div>
 </details>
-<script src="{{ url_for('static',path='/live_preview.js') }}" defer></script>
+<script src="{{ url_for('static',path='/live_preview.js') }}?v=studio" defer></script>

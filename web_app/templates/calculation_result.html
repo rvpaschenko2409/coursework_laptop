@@ -4,14 +4,99 @@
 {% block content %}
 {% set primary=results.marcos %}{% set cond=calculated.vikor.conditions %}{% set saved=snapshot.project %}
 <a class="back-link" href="/projects/{{ project.id }}/calculations">← К истории расчётов</a>
-<div class="page-heading"><p class="eyebrow">{{ saved.title }} · РАСЧЁТ № {{ primary.id }}</p><h1>Результаты выбора ноутбука</h1><p class="text-secondary">{{ primary.created_at|omsk_time }} · Омск · {{ primary.actor_name }}<br>Версия данных {{ saved.revision }} · {{ weight_label }}{% if weighting.alpha is not none %} · α = {{ weighting.alpha }}{% endif %} · v = {{ snapshot.parameters.v }}</p></div>
+<link rel="stylesheet" href="{{ url_for('static', path='/results_redesign.css') }}?v=studio">
+<script src="{{ url_for('static', path='/results_redesign.js') }}?v=motion" defer></script>
+<div class="results-view">
+<header class="results-hero">
+  <div class="results-hero-copy">
+  <div class="results-kicker"><span>СППР · ВЫБОР НОУТБУКА</span><span>РАСЧЁТ № {{ primary.id }}</span></div>
+  <h1>Результаты выбора ноутбука</h1>
+  <p class="results-project">{{ saved.title }}</p>
+  <p class="results-meta">{{ primary.created_at|omsk_time }} · Омск · {{ primary.actor_name }}<br>
+    Версия данных {{ saved.revision }} · {{ weight_label }}{% if weighting.alpha is not none %} · α = {{ weighting.alpha }}{% endif %} · v = {{ snapshot.parameters.v }}</p>
+  <nav class="results-actions" aria-label="Действия с результатом">
+    <a class="btn btn-primary" href="/projects/{{ project.id }}/calculations/{{ primary.id }}/choice">Окончательный выбор ЛПР</a>
+    <a class="btn btn-outline-primary" href="/projects/{{ project.id }}/calculations/{{ primary.id }}/export.xlsx">Скачать отчёт Excel</a>
+    <a class="btn btn-outline-primary" href="/projects/{{ project.id }}/calculations/{{ primary.id }}/sensitivity">Анализ чувствительности</a>
+    <a class="btn btn-outline-secondary" href="#results-compare">Сравнить рейтинги</a>
+  </nav>
+  </div>
+  <div class="results-illustration" aria-hidden="true">
+    <svg viewBox="0 0 360 240" fill="none">
+      <circle cx="180" cy="118" r="98" class="results-orbit"/>
+      <circle cx="180" cy="118" r="76" class="results-orbit results-orbit-inner"/>
+      <circle cx="102" cy="58" r="5" class="results-signal"/>
+      <circle cx="265" cy="166" r="4" class="results-signal"/>
+      <g class="results-laptop">
+        <rect x="77" y="53" width="206" height="127" rx="13" class="results-device"/>
+        <rect x="89" y="65" width="182" height="102" rx="6" class="results-screen"/>
+        <path d="M63 180H297L312 195H48L63 180Z" class="results-device"/>
+        <path d="M155 185H205" class="results-trace"/>
+        <path d="M109 143L143 124L174 135L205 101L248 84" class="results-trace"/>
+        <circle cx="248" cy="84" r="5" class="results-signal"/>
+      </g>
+    </svg>
+  </div>
+</header>
 {% if is_stale %}<div class="alert alert-warning" role="status">Это исторический результат. После расчёта данные проекта изменились: сохранена версия {{ saved.revision }}, текущая — {{ current_revision }}. Показанные значения взяты из прежнего снимка.</div>{% else %}<p class="status-current calculation-state">Результат соответствует текущей версии данных.</p>{% endif %}
 {% for message in snapshot.limitations %}<p class="alert alert-info">{{ message }}</p>{% endfor %}
-<div class="row g-4 mb-4"><section class="col-lg-6"><div class="card result-summary"><div class="card-body"><p class="eyebrow">MARCOS · ПОЛЕЗНОСТЬ ВЫШЕ — ЛУЧШЕ</p><h2>Первое место: {{ calculated.marcos.ranking[0].alternative_code }}</h2><p class="result-number">{{ '%.6f'|format(calculated.marcos.ranking[0].utility) }}</p><p class="text-secondary mb-0">Рейтинг учитывает близость к идеальной и антиидеальной альтернативам.</p></div></div></section>
-<section class="col-lg-6"><div class="card result-summary"><div class="card-body"><p class="eyebrow">VIKOR · Q НИЖЕ — ЛУЧШЕ</p><h2>Лидер по Q: {{ cond.leader }}</h2><p><strong>Компромиссный набор: {{ cond.compromise_set|join(', ') }}</strong></p><p class="text-secondary mb-0">Лидер рейтинга не всегда является единственным компромиссным решением.</p></div></div></section></div>
-<p><a class="btn btn-outline-primary me-3" href="/projects/{{ project.id }}/calculations/{{ primary.id }}/export.xlsx">Скачать отчёт Excel</a><a class="btn btn-primary me-3" href="/projects/{{ project.id }}/calculations/{{ primary.id }}/choice">Окончательный выбор ЛПР</a><a class="btn btn-outline-primary" href="/projects/{{ project.id }}/calculations/{{ primary.id }}/sensitivity">Анализ чувствительности</a></p><p class="decision-note">Методы могут давать разные рейтинги. Окончательный выбор принимает ЛПР с учётом ограничений и смысла критериев.</p>
+{% set marcos_leader = calculated.marcos.ranking[0] %}
+{% set vikor_leader = calculated.vikor.ranking[0] %}
+{% set marcos_names = comparison|selectattr('code','equalto',marcos_leader.alternative_code)|map(attribute='name')|list %}
+{% set vikor_names = comparison|selectattr('code','equalto',cond.leader)|map(attribute='name')|list %}
+<section class="results-overview" aria-labelledby="results-overview-title">
+  <h2 id="results-overview-title">Рекомендации методов</h2>
+  <p class="results-verdict">
+    {% if marcos_leader.alternative_code == cond.leader %}
+      MARCOS и VIKOR ставят {{ cond.leader }} на первое место.
+    {% else %}
+      Методы выделили разные варианты: MARCOS — {{ marcos_leader.alternative_code }}, VIKOR — {{ cond.leader }}.
+    {% endif %}
+    Окончательный выбор принимает ЛПР.
+  </p>
+  <div class="results-leaders">
+    <article class="results-leader">
+      <p class="results-method">MARCOS <span>Полезность выше — лучше</span></p>
+      <h3>Первое место: {{ marcos_leader.alternative_code }}</h3>
+      {% if marcos_names %}<p class="results-name">{{ marcos_names[0] }}</p>{% endif %}
+      <p class="results-value">{{ '%.6f'|format(marcos_leader.utility) }} <span>полезность</span></p>
+      <p class="text-secondary mb-0">Метод учитывает близость к идеальной и антиидеальной альтернативам.</p>
+    </article>
+    <article class="results-leader">
+      <p class="results-method">VIKOR <span>Q ниже — лучше</span></p>
+      <h3>Лидер по Q: {{ cond.leader }}</h3>
+      {% if vikor_names %}<p class="results-name">{{ vikor_names[0] }}</p>{% endif %}
+      <p class="results-value">{{ '%.6f'|format(vikor_leader.Q) }} <span>показатель Q</span></p>
+      <p class="mb-0">Компромиссный набор: <strong>{{ cond.compromise_set|join(', ') }}</strong></p>
+    </article>
+  </div>
+</section>
+<section class="card results-comparison mb-4" id="results-compare" aria-labelledby="results-comparison-title">
+  <div class="card-body">
+    <h2 id="results-comparison-title">Сравнение рейтингов</h2>
+    <p class="text-secondary mb-0">Оба метода используют одинаковую матрицу после бюджетного фильтра и одинаковые веса: {{ weight_label }}.</p>
+  </div>
+  <div class="table-responsive">
+    <table class="table calculation-table mb-0">
+      <thead><tr><th scope="col">Ноутбук</th><th scope="col">Ранг MARCOS</th><th scope="col">Ранг VIKOR</th><th scope="col">Компромисс VIKOR</th></tr></thead>
+      <tbody>
+      {% for row in comparison %}
+        <tr><th scope="row">{{ row.code }}<span class="unit-label">{{ row.name }}</span></th>
+          {% for rank in [row.marcos.rank, row.vikor.rank] %}<td><span class="results-rank{% if rank == 1 %} results-rank-first{% endif %}">{{ rank }}{% if rank == 1 %} · лидер{% endif %}</span></td>{% endfor %}
+          <td>{{ 'В наборе' if row.code in cond.compromise_set else '—' }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <details class="results-score-details">
+    <summary>Показать оценки полезности, S, R и Q</summary>
+    <div class="table-responsive"><table class="table calculation-table mb-0">
+      <thead><tr><th scope="col">Ноутбук</th><th scope="col">Полезность MARCOS</th><th scope="col">S</th><th scope="col">R</th><th scope="col">Q</th></tr></thead>
+      <tbody>{% for row in comparison %}<tr><th scope="row">{{ row.code }}</th><td>{{ '%.6f'|format(row.marcos.utility) }}</td><td>{{ '%.6f'|format(row.vikor.S) }}</td><td>{{ '%.6f'|format(row.vikor.R) }}</td><td>{{ '%.6f'|format(row.vikor.Q) }}</td></tr>{% endfor %}</tbody>
+    </table></div>
+  </details>
+</section>
 {% include "live_preview.html" %}
-<section class="card mb-4"><div class="card-body"><h2>Сравнение рейтингов</h2><p class="text-secondary mb-0">Оба метода используют одинаковую матрицу после бюджетного фильтра и одинаковые веса: {{ weight_label }}.</p></div><div class="table-responsive"><table class="table calculation-table mb-0"><thead><tr><th>Ноутбук</th><th>Ранг MARCOS</th><th>Полезность</th><th>Ранг VIKOR</th><th>S</th><th>R</th><th>Q</th></tr></thead><tbody>{% for row in comparison %}<tr><th scope="row">{{ row.code }}<span class="unit-label">{{ row.name }}</span></th><td>{{ row.marcos.rank }}</td><td>{{ '%.6f'|format(row.marcos.utility) }}</td><td>{{ row.vikor.rank }}</td><td>{{ '%.6f'|format(row.vikor.S) }}</td><td>{{ '%.6f'|format(row.vikor.R) }}</td><td>{{ '%.6f'|format(row.vikor.Q) }}</td></tr>{% endfor %}</tbody></table></div></section>
 <div class="row g-4 mb-4"><section class="col-lg-6"><div class="card chart-card"><div class="card-body"><h2>Веса критериев</h2>{% set weight_points=[] %}{% for r in weighting.weights %}{% set _=weight_points.append({'label':'C' ~ loop.index ~ ' · ' ~ criteria[r.criterion].name,'series':'Вес','value':r.weight,'detail':weight_label ~ '. ' ~ criteria[r.criterion].unit}) %}{% endfor %}{{ bars(weight_points,1,'Интерактивные веса критериев') }}<a class="chart-link" href="/projects/{{ project.id }}/calculations/{{ primary.id }}/weights.png" target="_blank" rel="noopener"><img class="calculation-chart" src="/projects/{{ project.id }}/calculations/{{ primary.id }}/weights.png" width="1248" height="663" alt="Диаграмма выбранных весов; точные значения приведены ниже"><span>Открыть диаграмму крупнее</span></a></div></div></section>
 <section class="col-lg-6"><div class="card chart-card"><div class="card-body"><h2>Ранги методов</h2><p class="form-help">Ранг 1 — первое место. Более длинная полоса означает более низкое место.</p>{% set rank_points=[] %}{% for r in comparison %}{% set _=rank_points.append({'label':r.code,'series':'MARCOS','value':r.marcos.rank,'detail':r.name ~ '. Полезность: ' ~ r.marcos.utility}) %}{% set _=rank_points.append({'label':r.code,'series':'VIKOR','value':r.vikor.rank,'detail':r.name ~ '. Q: ' ~ r.vikor.Q ~ '. В компромиссном наборе: ' ~ ('да' if r.code in cond.compromise_set else 'нет')}) %}{% endfor %}{{ bars(rank_points,comparison|length,'Интерактивное сравнение рангов') }}<a class="chart-link" href="/projects/{{ project.id }}/calculations/{{ primary.id }}/ranks.png" target="_blank" rel="noopener"><img class="calculation-chart" src="/projects/{{ project.id }}/calculations/{{ primary.id }}/ranks.png" width="1248" height="663" alt="Сравнение рангов MARCOS и VIKOR; точные значения приведены в таблице"><span>Открыть диаграмму крупнее</span></a></div></div></section></div>
 <div class="row g-4 mb-4"><section class="col-lg-8"><div class="card h-100"><div class="card-body"><h2>Применённые веса · {{ weight_label }}</h2>
@@ -36,4 +121,5 @@
 <details class="card calculation-details"><summary>Происхождение и проверка результата</summary><div class="card-body"><p class="status-current">Оба метода воспроизведены по сохранённому снимку и совпали с результатами ядра.</p><dl class="calculation-metadata"><dt>Источник запуска</dt><dd>{{ 'Веб-интерфейс' if primary.params.get('entrypoint')=='web' else 'Командная строка; технический автор — владелец проекта' }}</dd><dt>Идентификаторы результатов</dt><dd>MARCOS: {{ primary.id }} · VIKOR: {{ results.vikor.id }} · Веса: {{ weight_set.id }}</dd><dt>Отпечаток входов</dt><dd class="hash-value">{{ primary.params.input_fingerprint }}</dd><dt>Версия ядра</dt><dd class="hash-value">{{ primary.core_version }}</dd></dl>
 {% for model in snapshot.models %}<p class="form-help">Модель {{ model.name }}, версия {{ model.version }}, алгоритм {{ model.algorithm }}, набор данных № {{ model.dataset_id }}.</p>{% endfor %}
 <a class="btn btn-outline-primary" href="/projects/{{ project.id }}/calculations/{{ primary.id }}/snapshot.json">Скачать снимок JSON</a></div></details>
+</div>
 {% endblock %}

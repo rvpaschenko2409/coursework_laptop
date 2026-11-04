@@ -89,6 +89,8 @@
         const cell = document.createElement('td');
         const delta = data.changes[method].rank_deltas[code];
         const movement = delta < 0 ? '↑ ' + -delta : delta > 0 ? '↓ ' + delta : 'без изменений';
+        if (delta < 0) cell.classList.add('rank-gained');
+        if (delta > 0) cell.classList.add('rank-lost');
         cell.textContent = rank + ' · ' + movement;
         const bar = document.createElement('meter');
         bar.className = 'd-block w-100';
@@ -120,7 +122,7 @@
     for (const output of form.querySelectorAll('output')) {
       output.value = format.format(Number(document.getElementById(output.htmlFor.value).value));
     }
-    rows.replaceChildren();
+    if (offline) rows.replaceChildren();
     status.textContent = 'Пересчитываем…';
     timer = setTimeout(async () => {
       controller = new AbortController();
@@ -146,7 +148,11 @@
         }
         if (revision === generation) show(data, local);
       } catch {
-        if (revision === generation) status.textContent = 'Пересчёт не выполнен. Измените параметр или нажмите «Сбросить».';
+        if (revision === generation) {
+          status.textContent = rows.childElementCount
+            ? 'Пересчёт не выполнен. В таблице остался предыдущий результат.'
+            : 'Пересчёт не выполнен. Измените параметр или нажмите «Сбросить».';
+        }
       }
     }, 250);
   }

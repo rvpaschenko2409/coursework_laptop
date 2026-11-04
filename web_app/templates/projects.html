@@ -1,16 +1,16 @@
 {% extends 'base.html' %}{% from 'ui_visuals.html' import icon,device_scene %}
 {% block title %}Мои проекты · СППР «Ноутбук»{% endblock %}
 {% block content %}
-<section class="hero-panel"><div class="page-heading"><p class="eyebrow">РАБОЧЕЕ ПРОСТРАНСТВО</p><h1>Мои проекты</h1><p class="hero-description">Сравнивайте ноутбуки по важным характеристикам и бюджету. Проверяйте рекомендации, прежде чем сделать выбор.</p><div class="method-tags" aria-label="Методы принятия решений"><span class="method-tag">MEREC</span><span class="method-tag">MARCOS</span><span class="method-tag">VIKOR</span></div></div>{{ device_scene() }}</section>
+<section class="hero-panel studio-hero"><div class="page-heading"><p class="eyebrow">РАБОЧЕЕ ПРОСТРАНСТВО</p><h1>Мои проекты</h1><p class="hero-description">Сравнивайте ноутбуки по важным характеристикам и бюджету. Проверяйте рекомендации, прежде чем сделать выбор.</p><div class="method-tags" aria-label="Методы принятия решений"><span class="method-tag">MEREC</span><span class="method-tag">MARCOS</span><span class="method-tag">VIKOR</span></div><div class="studio-hero-actions"><a class="btn btn-primary" href="#project-list">Мои проекты {{ icon('arrow') }}</a><a class="btn btn-outline-secondary" href="#new-project">Новый проект</a></div></div>{{ device_scene() }}</section>
 {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
-<div class="row g-4"><section class="col-lg-8" aria-label="Список проектов">
+<div class="row g-4"><section class="col-lg-8" aria-label="Список проектов" id="project-list"><div class="studio-section-title"><h2>Проекты</h2>{% if projects %}<span class="studio-count">{{ projects|length }}</span>{% endif %}</div>
 {% if projects %}<div class="project-grid">{% for project in projects %}
 <article class="card project-card"><div class="card-body"><div class="card-topline"><span class="role-badge">{{ roles[project.role] }}</span><span class="text-secondary small">№ {{ project.id }}</span></div>
 <h2><a href="/projects/{{ project.id }}">{{ project.title }}</a></h2><p class="project-goal">{{ project.goal or 'Цель проекта пока не указана.' }}</p>
 <div class="project-meta"><span>Бюджет: {% if project.budget %}{{ '{:,.0f}'.format(project.budget).replace(',', ' ') }} ₽{% else %}не задан{% endif %}</span><span>Ноутбуков: {{ project.alternatives_count }}</span></div>
 <div class="project-open"><a class="btn btn-outline-primary w-100" href="/projects/{{ project.id }}">Открыть проект {{ icon('arrow') }}</a></div></div></article>
 {% endfor %}</div>{% else %}<div class="card empty-state"><div class="card-body"><span class="empty-symbol">{{ icon('plus') }}</span><h2>Пока нет проектов</h2><p class="text-secondary">Создайте первый проект. Чтобы открыть существующий проект, попросите его аналитика предоставить доступ к вашей учётной записи.</p></div></div>{% endif %}
-</section><aside class="col-lg-4"><section class="card project-create-card"><div class="card-body"><p class="section-kicker">Следующее сравнение</p><h2>Новый проект</h2>
+</section><aside class="col-lg-4"><section class="card project-create-card" id="new-project"><div class="card-body"><p class="section-kicker">Следующее сравнение</p><h2>Новый проект</h2>
 <form method="post" action="/projects"><input type="hidden" name="csrf" value="{{ csrf }}">
 <div class="mb-3"><label class="form-label" for="title">Название</label><input class="form-control" id="title" name="title" minlength="2" maxlength="200" required placeholder="Ноутбуки для сотрудников"></div>
 <div class="mb-3"><label class="form-label" for="goal">Цель</label><textarea class="form-control" id="goal" name="goal" rows="3" maxlength="2000" placeholder="Для каких задач выбираем технику?"></textarea></div>
