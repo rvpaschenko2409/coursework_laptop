@@ -25,10 +25,19 @@ matrix = pd.DataFrame(**data['matrix'])
 def rows(frame):
     return frame.rename_axis('alternative_code').reset_index().to_dict(orient='records')
 
+if 'project_id' in data:
+    from decision_core.merec import calculate_merec
+    base = calculate_merec(matrix).set_index('criterion')['weight']
+    data['weights'] = base.to_dict()
+    data['rankings'] = {
+        'marcos': rows(calculate_marcos(matrix, base)),
+        'vikor': rows(calculate_vikor(matrix, base, v=0.5)[0]),
+    }
+
 def preview(request_json):
     criterion, change, v, *options = json.loads(request_json)
     base_weights = data['weights']
-    if options and options[0]:
+    if options and options[0] and 'project_id' not in data:
         from decision_core.merec import calculate_merec
         base_weights = calculate_merec(matrix).set_index('criterion')['weight'].to_dict()
     weights = perturb(base_weights, criterion, change / 100)

@@ -1,4 +1,4 @@
-const cacheName = 'coursework-offline-calculation-v3';
+const cacheName = 'coursework-offline-calculation-v5';
 const assets = new Set([
   '/static/offline_calculation.html',
   '/static/offline_calculation.css',
@@ -41,9 +41,11 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   if (event.request.method !== 'GET' || url.origin !== self.location.origin ||
-      url.search || !assets.has(url.pathname)) return;
+      (url.search && !(event.request.mode === 'navigate' &&
+        url.pathname === '/static/offline_calculation.html' &&
+        /^\?project=[1-9]\d*$/.test(url.search))) || !assets.has(url.pathname)) return;
   event.respondWith((async () => {
     const cache = await caches.open(cacheName);
-    return await cache.match(event.request) || fetch(event.request);
+    return await cache.match(url.pathname) || fetch(event.request);
   })());
 });

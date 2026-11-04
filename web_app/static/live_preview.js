@@ -1,4 +1,42 @@
 (() => {
+  const projectPrefix = 'coursework.offline-project.v1.';
+  async function prepareOfflinePage() {
+    const registration = await navigator.serviceWorker.register('/static/offline_calculation_sw.js');
+    await registration.update();
+    const deadline = Date.now() + 60000;
+    while (registration.active?.state !== 'activated' || registration.installing || registration.waiting ||
+        !(await caches.match('/static/offline_calculation.html', {cacheName: 'coursework-offline-calculation-v5'}))) {
+      if (Date.now() >= deadline || (!registration.installing && !registration.waiting && !registration.active)) {
+        throw new Error('Offline assets unavailable');
+      }
+      await new Promise(resolve => setTimeout(resolve, 200));
+    }
+  }
+
+  const projectBox = document.querySelector('[data-save-project]');
+  if (projectBox && 'serviceWorker' in navigator) {
+    projectBox.hidden = false;
+    const button = projectBox.querySelector('button');
+    const notice = projectBox.querySelector('[data-offline-project-status]');
+    button.addEventListener('click', async () => {
+      button.disabled = true;
+      notice.textContent = 'Готовим офлайн-копию проекта…';
+      try {
+        const response = await fetch(projectBox.dataset.saveProject, {cache: 'no-store'});
+        const input = await response.json();
+        if (!response.ok) throw new Error(typeof input.detail === 'string' ? input.detail : 'Проект недоступен.');
+        await prepareOfflinePage();
+        localStorage.setItem(projectPrefix + input.project_id, JSON.stringify({input, savedAt: Date.now()}));
+        projectBox.querySelector('a').href = '/static/offline_calculation.html?project=' + input.project_id;
+        notice.textContent = 'Проект сохранён. Теперь его можно открыть при выключенном сервере.';
+      } catch (error) {
+        notice.textContent = 'Не удалось сохранить проект. ' + error.message;
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+
   const panel = document.querySelector('[data-live-preview]');
   if (!panel) return;
   const form = panel.querySelector('form');
@@ -109,7 +147,7 @@
       (data.changes[method].leaders_changed ? ' (лидер изменился)' : '')
     );
     const selected = form.elements.criterion.value;
-    const mode = offline && form.elements.merec?.checked ? 'MEREC рассчитан заново · ' : '';
+    const mode = offline && (saved.input.project_id || form.elements.merec?.checked) ? 'MEREC рассчитан заново · ' : '';
     status.textContent = (local ? 'В браузере · ' : 'На сервере · ') + mode + summary.join('. ') + '. Компромисс VIKOR · ' +
       data.conditions.compromise_set.join(', ') + '. Вес выбранного критерия · ' +
       format.format(data.weights[selected]) + '.';
@@ -161,33 +199,87 @@
   function initializeOfflinePage() {
     const info = document.querySelector('[data-offline-info]');
     const remove = document.querySelector('[data-delete-offline]');
+    const list = document.querySelector('[data-offline-project-list]');
+    const matrixBox = document.querySelector('[data-offline-project-matrix]');
+    const id = new URLSearchParams(location.search).get('project');
+    const projectKey = id ? projectPrefix + id : null;
+    const activeKey = projectKey || storageKey;
     try {
-      saved = JSON.parse(localStorage.getItem(storageKey));
+      if (list) {
+        const addLink = (label, url) => {
+          const link = document.createElement('a');
+          link.textContent = label;
+          link.href = url;
+          const item = document.createElement('p');
+          item.append(link);
+          list.append(item);
+        };
+        for (const key of Object.keys(localStorage).filter(key => key.startsWith(projectPrefix)).sort()) {
+          const record = JSON.parse(localStorage.getItem(key));
+          if (record?.input) addLink(record.input.project_title, '?project=' + record.input.project_id);
+        }
+        if (localStorage.getItem(storageKey)) addLink('Открыть копию прежнего расчёта', location.pathname);
+      }
+      saved = JSON.parse(localStorage.getItem(activeKey));
+      if (saved && projectKey) {
+        saved.criteria = saved.input.criteria;
+        saved.originalV = 0.5;
+        saved.scenario = [saved.criteria[0][0], 0, 0.5];
+        const table = document.createElement('table');
+        table.createCaption().textContent = 'Сохранённые оценки ноутбуков';
+        const headers = new Map(saved.criteria);
+        const head = table.createTHead().insertRow();
+        for (const name of ['Ноутбук', ...saved.input.matrix.columns.map(code => headers.get(code))]) {
+          const cell = document.createElement('th');
+          cell.scope = 'col';
+          cell.textContent = name;
+          head.append(cell);
+        }
+        const body = table.createTBody();
+        saved.input.matrix.index.forEach((code, index) => {
+          const row = body.insertRow();
+          row.insertCell().textContent = code + ' · ' + saved.input.alternatives[code];
+          for (const value of saved.input.matrix.data[index]) row.insertCell().textContent = format.format(value);
+        });
+        matrixBox.classList.add('table-responsive');
+        matrixBox.append(table);
+        const details = document.createElement('p');
+        details.textContent = 'Бюджет: ' + (saved.input.budget == null ? 'не задан' : format.format(saved.input.budget) + ' ₽') +
+          (saved.input.excluded.length ? ' · Исключены: ' + saved.input.excluded.join(', ') : '');
+        matrixBox.prepend(details);
+        for (const limitation of saved.input.limitations) {
+          const notice = document.createElement('p');
+          notice.textContent = limitation;
+          matrixBox.prepend(notice);
+        }
+      }
       if (!saved) {
-        info.textContent = 'Сохранённой копии нет. Откройте исходный расчёт при запущенном сервере и сохраните его.';
+        info.textContent = 'Выберите сохранённый проект выше или сохраните его на странице проекта при запущенном сервере.';
         return false;
       }
       const {criterion, change, v} = form.elements;
       for (const [code, label] of saved.criteria) criterion.add(new Option(label, code));
       v.defaultValue = saved.originalV;
       [criterion.value, change.value, v.value] = saved.scenario;
-      const source = new URL(saved.path, location.origin);
-      const id = source.pathname.split('/').pop();
-      info.textContent = 'Копия расчёта № ' + id + ' · сохранена ' +
+      const label = projectKey ? 'Проект № ' + id + ' · версия ' + saved.input.revision :
+        'Копия расчёта № ' + new URL(saved.path, location.origin).pathname.split('/').pop();
+      info.textContent = label + ' · сохранена ' +
         new Date(saved.savedAt).toLocaleString('ru-RU') + '. Изменения ползунков действуют в этой вкладке.';
       if (saved.input.project_title) info.textContent = saved.input.project_title + ' · ' + info.textContent;
       const supportsMerec = Boolean(saved.input.sources?.['merec.py']);
       const merecOption = panel.querySelector('[data-offline-merec-option]');
       const merecHelp = panel.querySelector('[data-offline-merec-help]');
       if (merecOption && merecHelp) {
-        merecOption.hidden = !supportsMerec;
-        merecHelp.hidden = !supportsMerec;
+        merecOption.hidden = !supportsMerec || Boolean(projectKey);
+        merecHelp.hidden = !supportsMerec || Boolean(projectKey);
         if (!supportsMerec) info.textContent += ' Сохраните копию заново, чтобы включить расчёт весов MEREC.';
       }
       remove.hidden = false;
       remove.addEventListener('click', () => {
         try {
-          localStorage.removeItem(storageKey);
+          localStorage.removeItem(activeKey);
+          matrixBox?.replaceChildren();
+          if (projectKey) location.replace(location.pathname);
           clearTimeout(timer);
           generation++;
           worker?.terminate();
@@ -202,18 +294,6 @@
     } catch {
       info.textContent = 'Не удалось прочитать сохранённую копию.';
       return false;
-    }
-  }
-
-  async function prepareOfflinePage() {
-    const registration = await navigator.serviceWorker.register('/static/offline_calculation_sw.js');
-    await registration.update();
-    const deadline = Date.now() + 60000;
-    while (registration.active?.state !== 'activated' || registration.installing || registration.waiting) {
-      if (Date.now() >= deadline || (!registration.installing && !registration.waiting && !registration.active)) {
-        throw new Error('Offline assets unavailable');
-      }
-      await new Promise(resolve => setTimeout(resolve, 200));
     }
   }
 

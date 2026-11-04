@@ -7,13 +7,44 @@ from fastapi import Form, HTTPException, Request
 from fastapi.responses import JSONResponse
 from decision_core.marcos import calculate_marcos
 from decision_core.vikor import calculate_vikor
-from decision_store.calculations import matrix_from_snapshot, ranking, plain
+from decision_store.calculations import load_snapshot, matrix_from_snapshot, ranking, plain
 from web_app.calculation_store import load_pair
 from web_app.security import csrf_check
 from web_app.sensitivity_math import compare, perturb
 
 
+def browser_sources():
+    core = Path(__file__).resolve().parents[1] / 'decision_core'
+    files = ('__init__.py', 'criteria.py', 'normalization.py', 'merec.py', 'marcos.py', 'vikor.py')
+    sources = {name: (core / name).read_text(encoding='utf-8-sig') for name in files}
+    sources['preview.py'] = 'import numpy as np\n\n' + getsource(perturb) + '\n\n' + getsource(compare)
+    return sources
+
+
 def register_routes(app, Ctx, project_access):
+    @app.get('/api/projects/{project_id}/offline')
+    def offline_project(project_id: int, context: Ctx):
+        project_access(context, project_id, lock=True)
+        try:
+            snapshot = load_snapshot(context.connection, project_id, 0.5)
+            matrix, excluded = matrix_from_snapshot(snapshot)
+        except ValueError as exc:
+            raise HTTPException(422, str(exc)) from exc
+        project = snapshot['project']
+        payload = {
+            'sources': browser_sources(),
+            'matrix': matrix.to_dict(orient='split'),
+            'project_id': project_id,
+            'project_title': project['title'],
+            'revision': project['revision'],
+            'budget': project['budget'],
+            'excluded': excluded,
+            'criteria': [[c['code'], c['name']] for c in snapshot['criteria']],
+            'alternatives': {a['code']: a['name'] for a in snapshot['alternatives']},
+            'limitations': snapshot['limitations'],
+        }
+        return JSONResponse(plain(payload), headers={'Cache-Control': 'no-store'})
+
     @app.get('/api/projects/{project_id}/calculations/{result_id}/preview')
     def browser_input(project_id: int, result_id: int, context: Ctx):
         project_access(context, project_id)
@@ -21,10 +52,8 @@ def register_routes(app, Ctx, project_access):
         if data is None:
             raise HTTPException(404, 'Исходный расчёт не найден.')
         matrix, _ = matrix_from_snapshot(data['snapshot'])
-        core = Path(__file__).resolve().parents[1] / 'decision_core'
-        files = ('__init__.py', 'criteria.py', 'normalization.py', 'merec.py', 'marcos.py', 'vikor.py')
         payload = {
-            'sources': {name: (core / name).read_text(encoding='utf-8-sig') for name in files},
+            'sources': browser_sources(),
             'matrix': matrix.to_dict(orient='split'),
             'project_title': data['snapshot']['project']['title'],
             'weights': {row['criterion']: row['weight'] for row in data['weighting']['weights']},
@@ -33,9 +62,6 @@ def register_routes(app, Ctx, project_access):
                 for method in ('marcos', 'vikor')
             },
         }
-        payload['sources']['preview.py'] = (
-            'import numpy as np\n\n' + getsource(perturb) + '\n\n' + getsource(compare)
-        )
         return JSONResponse(plain(payload), headers={'Cache-Control': 'no-store'})
 
     @app.post('/api/projects/{project_id}/calculations/{result_id}/preview')

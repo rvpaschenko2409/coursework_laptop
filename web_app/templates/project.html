@@ -5,6 +5,15 @@
 <a class="back-link" href="/projects">← Все проекты</a>
 <div class="page-heading studio-project-heading"><p class="eyebrow">ПРОЕКТ № {{ project.id }} · {{ roles[project.role] }}</p><h1>{{ project.title }}</h1><p class="text-secondary">{{ project.goal or 'Цель проекта пока не указана.' }}</p>
 <div class="summary-strip"><span>Бюджет: {% if project.budget %}{{ '{:,.0f}'.format(project.budget).replace(',', ' ') }} ₽{% else %}не задан{% endif %}</span><span>Критериев: {{ criteria|length }}</span><span>Ноутбуков: {{ alternatives|length }}</span></div><div class="studio-hero-actions"><a class="btn btn-primary" href="/projects/{{ project.id }}/calculations">{{ 'Запустить расчёт' if project.role=='analyst' else 'Открыть результаты' }} {{ icon('arrow') }}</a><a class="btn btn-outline-secondary" href="#decision-matrix">Сравнить ноутбуки</a></div></div>
+<section class="card mb-3" data-save-project="/api/projects/{{ project.id }}/offline" hidden>
+<div class="card-body">
+  <p>Сохраните расчётные данные проекта в этом браузере, чтобы открыть их и рассчитать рейтинги без сервера.</p>
+  <button type="button" class="btn btn-outline-primary">Сохранить проект офлайн</button>
+  <a class="btn btn-outline-secondary" href="/static/offline_calculation.html">Офлайн-проекты</a>
+  <p data-offline-project-status role="status"></p>
+</div>
+</section>
+<script src="{{ url_for('static',path='/live_preview.js') }}?v=offline-design" defer></script>
 {% if synthetic_predictions %}<p class="alert alert-info">Прогнозы получены в учебном эксперименте на синтетических данных. Их точность на реальных ноутбуках не подтверждена.</p>{% endif %}
 {% if outside_profiles %}<p class="alert alert-warning">В проекте есть конфигурации вне профилей учебного набора. Прогнозы для них требуют дополнительной проверки.</p>{% endif %}
 {% if stale_results %}<p class="alert alert-warning">Данные проекта изменились после последнего расчёта. Прежние результаты сохранены; для текущих данных нужен новый расчёт.</p>{% endif %}
