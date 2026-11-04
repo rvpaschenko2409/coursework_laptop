@@ -19,6 +19,13 @@
       <button class="btn btn-outline-secondary" type="reset">Сбросить</button>
     </form>
     <p class="mt-3" role="status" data-preview-status>Откройте панель для пересчёта.</p>
+
+    <div class="mt-3" data-offline-controls hidden>
+      <p>Можно сохранить одну копию расчёта в этом профиле браузера. Она доступна без входа на сайт, пока её не удалят.</p>
+      <button class="btn btn-outline-secondary" type="button" data-save-offline disabled>Сохранить для работы без сервера</button>
+      <a class="btn btn-outline-secondary" href="/static/offline_calculation.html" target="_blank" rel="noopener">Открыть офлайн-копию</a>
+      <p role="status" data-offline-status></p>
+    </div>
     <div class="table-responsive">
       <table class="table calculation-table">
         <caption>Ранги сценария. Меньше означает лучше.</caption>

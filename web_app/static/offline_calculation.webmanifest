@@ -1,0 +1,23 @@
+{
+  "id": "/static/offline_calculation.html",
+  "name": "Выбор ноутбука · Офлайн-расчёт",
+  "short_name": "Офлайн-расчёт",
+  "start_url": "/static/offline_calculation.html",
+  "scope": "/static/",
+  "display": "standalone",
+  "background_color": "#101827",
+  "theme_color": "#162235",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/static/offline_icon_192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/static/offline_icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
