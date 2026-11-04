@@ -3,7 +3,7 @@
   "name": "Выбор ноутбука · Офлайн-расчёт",
   "short_name": "Офлайн-расчёт",
   "start_url": "/static/offline_calculation.html",
-  "scope": "/static/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#101827",
   "theme_color": "#162235",
