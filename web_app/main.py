@@ -329,4 +329,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     register_decision_choice_routes(app,Ctx,render,response,project_access,require_user)
     from web_app.export_routes import register_routes as register_export_routes
     register_export_routes(app,Ctx,project_access)
+    from web_app.live_routes import register_routes as register_live_routes
+    register_live_routes(app,Ctx,project_access)
     return app

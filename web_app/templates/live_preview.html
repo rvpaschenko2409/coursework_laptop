@@ -1,0 +1,31 @@
+<details class="card calculation-details mb-4" data-live-preview hidden>
+  <summary>Что, если? Пробный пересчёт</summary>
+  <div class="card-body">
+    <p>Измените v или вес одного критерия. Сервер нормирует веса и покажет, как изменятся ранги. Сценарий используется для предварительного просмотра.</p>
+    <form method="post" action="/api/projects/{{ project.id }}/calculations/{{ primary.id }}/preview">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <label for="preview-criterion" class="form-label">Критерий</label>
+      <select name="criterion" id="preview-criterion" class="form-select mb-3">
+        {% for row in weighting.weights %}
+        <option value="{{ row.criterion }}">{{ criteria[row.criterion].name }}</option>
+        {% endfor %}
+      </select>
+      <label for="preview-change">Относительное изменение веса, %</label>
+      <output for="preview-change">0</output>
+      <input type="range" class="form-range d-block mb-3" id="preview-change" name="change" min="-50" max="50" value="0">
+      <label for="preview-v">Параметр v для VIKOR</label>
+      <output for="preview-v">{{ snapshot.parameters.v }}</output>
+      <input type="range" class="form-range d-block mb-3" id="preview-v" name="v" min="0" max="1" step="any" value="{{ snapshot.parameters.v }}">
+      <button class="btn btn-outline-secondary" type="reset">Сбросить</button>
+    </form>
+    <p class="mt-3" role="status" data-preview-status>Откройте панель для пересчёта.</p>
+    <div class="table-responsive">
+      <table class="table calculation-table">
+        <caption>Ранги сценария. Меньше означает лучше.</caption>
+        <thead><tr><th scope="col">Ноутбук</th><th scope="col">MARCOS</th><th scope="col">VIKOR</th></tr></thead>
+        <tbody data-preview-rows></tbody>
+      </table>
+    </div>
+  </div>
+</details>
+<script src="{{ url_for('static',path='/live_preview.js') }}" defer></script>
