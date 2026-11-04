@@ -109,7 +109,8 @@
       (data.changes[method].leaders_changed ? ' (лидер изменился)' : '')
     );
     const selected = form.elements.criterion.value;
-    status.textContent = (local ? 'В браузере · ' : 'На сервере · ') + summary.join('. ') + '. Компромисс VIKOR · ' +
+    const mode = offline && form.elements.merec?.checked ? 'MEREC рассчитан заново · ' : '';
+    status.textContent = (local ? 'В браузере · ' : 'На сервере · ') + mode + summary.join('. ') + '. Компромисс VIKOR · ' +
       data.conditions.compromise_set.join(', ') + '. Вес выбранного критерия · ' +
       format.format(data.weights[selected]) + '.';
   }
@@ -129,6 +130,7 @@
       const signal = controller.signal;
       const body = new URLSearchParams(new FormData(form));
       const scenario = [body.get('criterion'), Number(body.get('change')), Number(body.get('v'))];
+      if (offline && form.elements.merec?.checked) scenario.push(true);
       try {
         browser ??= startBrowser(scenario, body);
         let local = await browser;
@@ -173,6 +175,15 @@
       const id = source.pathname.split('/').pop();
       info.textContent = 'Копия расчёта № ' + id + ' · сохранена ' +
         new Date(saved.savedAt).toLocaleString('ru-RU') + '. Изменения ползунков действуют в этой вкладке.';
+      if (saved.input.project_title) info.textContent = saved.input.project_title + ' · ' + info.textContent;
+      const supportsMerec = Boolean(saved.input.sources?.['merec.py']);
+      const merecOption = panel.querySelector('[data-offline-merec-option]');
+      const merecHelp = panel.querySelector('[data-offline-merec-help]');
+      if (merecOption && merecHelp) {
+        merecOption.hidden = !supportsMerec;
+        merecHelp.hidden = !supportsMerec;
+        if (!supportsMerec) info.textContent += ' Сохраните копию заново, чтобы включить расчёт весов MEREC.';
+      }
       remove.hidden = false;
       remove.addEventListener('click', () => {
         try {
@@ -196,8 +207,9 @@
 
   async function prepareOfflinePage() {
     const registration = await navigator.serviceWorker.register('/static/offline_calculation_sw.js');
+    await registration.update();
     const deadline = Date.now() + 60000;
-    while (registration.active?.state !== 'activated') {
+    while (registration.active?.state !== 'activated' || registration.installing || registration.waiting) {
       if (Date.now() >= deadline || (!registration.installing && !registration.waiting && !registration.active)) {
         throw new Error('Offline assets unavailable');
       }

@@ -22,10 +22,11 @@ def register_routes(app, Ctx, project_access):
             raise HTTPException(404, 'Исходный расчёт не найден.')
         matrix, _ = matrix_from_snapshot(data['snapshot'])
         core = Path(__file__).resolve().parents[1] / 'decision_core'
-        files = ('__init__.py', 'criteria.py', 'normalization.py', 'marcos.py', 'vikor.py')
+        files = ('__init__.py', 'criteria.py', 'normalization.py', 'merec.py', 'marcos.py', 'vikor.py')
         payload = {
             'sources': {name: (core / name).read_text(encoding='utf-8-sig') for name in files},
             'matrix': matrix.to_dict(orient='split'),
+            'project_title': data['snapshot']['project']['title'],
             'weights': {row['criterion']: row['weight'] for row in data['weighting']['weights']},
             'rankings': {
                 method: data['calculated'][method]['ranking']

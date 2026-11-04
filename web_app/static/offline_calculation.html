@@ -19,6 +19,10 @@
   <div class="card-body">
     <p>Измените вес критерия или параметр v, чтобы пересчитать ранги на сохранённых данных.</p>
     <form>
+      <label hidden data-offline-merec-option>
+        <input type="checkbox" name="merec"> Рассчитать веса MEREC заново
+      </label>
+      <p data-offline-merec-help hidden>При 0% используются рассчитанные веса MEREC. Стрелки показывают разницу с исходным сохранённым рейтингом.</p>
       <label for="preview-criterion" class="form-label">Критерий</label>
       <select name="criterion" id="preview-criterion" class="form-select mb-3">
       </select>

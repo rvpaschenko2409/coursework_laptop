@@ -1,4 +1,4 @@
-const cacheName = 'coursework-offline-calculation-v2';
+const cacheName = 'coursework-offline-calculation-v3';
 const assets = new Set([
   '/static/offline_calculation.html',
   '/static/offline_calculation.css',

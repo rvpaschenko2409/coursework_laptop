@@ -26,8 +26,12 @@ def rows(frame):
     return frame.rename_axis('alternative_code').reset_index().to_dict(orient='records')
 
 def preview(request_json):
-    criterion, change, v = json.loads(request_json)
-    weights = perturb(data['weights'], criterion, change / 100)
+    criterion, change, v, *options = json.loads(request_json)
+    base_weights = data['weights']
+    if options and options[0]:
+        from decision_core.merec import calculate_merec
+        base_weights = calculate_merec(matrix).set_index('criterion')['weight'].to_dict()
+    weights = perturb(base_weights, criterion, change / 100)
     series = pd.Series(weights)
     marcos = rows(calculate_marcos(matrix, series))
     vikor_frame, conditions = calculate_vikor(matrix, series, v=v)
