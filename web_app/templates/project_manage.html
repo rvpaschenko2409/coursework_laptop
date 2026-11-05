@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}{{ {'edit':'Настройки проекта','copy':'Копирование проекта','delete':'Удаление проекта'}[action] }}{% endblock %}
+{% block content %}
+<a href="/projects/{{ project.id }}">← Вернуться к проекту</a>
+<section class="card mt-4"><div class="card-body">
+<h1>{{ {'edit':'Настройки проекта','copy':'Копирование проекта','delete':'Удаление проекта'}[action] }}</h1>
+{% if action=='delete' %}
+<p class="alert alert-danger">Будет удалён проект «{{ project.title }}» со всеми его данными, результатами и решениями ЛПР. Для подтверждения введите название проекта.</p>
+{% elif action=='copy' %}
+<p>Копия получит новый номер. Будут скопированы текущие критерии, ноутбуки, оценки, участники, CATWOE, заинтересованные стороны, экспертные влияния, наборы данных и версии моделей. История расчётов и решения остаются в исходном проекте. Для копии выполните новый расчёт.</p>
+{% else %}
+<p>Изменение настроек увеличивает версию данных. Сохранённые расчёты останутся доступны с отметкой об устаревшей версии.</p>
+{% endif %}
+<form method="post" action="/projects/{{ project.id }}/{{ action }}">
+<input type="hidden" name="csrf" value="{{ csrf }}">
+<input type="hidden" name="revision" value="{{ project.revision }}">
+<input type="hidden" name="request_key" value="{{ request_key }}">
+{% if action=='delete' %}
+<label class="form-label" for="confirmation">Название проекта</label>
+<input class="form-control mb-4" id="confirmation" name="confirmation" required maxlength="200" autocomplete="off">
+{% else %}
+<label class="form-label" for="title">Название</label>
+<input class="form-control mb-3" id="title" name="title" value="{{ fields.title }}" minlength="2" maxlength="200" required>
+<label class="form-label" for="goal">Цель</label>
+<textarea class="form-control mb-3" id="goal" name="goal" maxlength="2000" rows="4">{{ fields.goal }}</textarea>
+<label class="form-label" for="budget">Бюджет на устройство, ₽</label>
+<input class="form-control mb-4" id="budget" name="budget" value="{{ fields.budget }}" inputmode="decimal">
+{% endif %}
+<button class="btn {{ 'btn-danger' if action=='delete' else 'btn-primary' }}" type="submit">{{ {'edit':'Сохранить настройки','copy':'Создать копию','delete':'Удалить проект'}[action] }}</button>
+<a class="btn btn-outline-secondary" href="/projects/{{ project.id }}">Отмена</a>
+</form>
+</div></section>
+{% endblock %}

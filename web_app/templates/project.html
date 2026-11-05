@@ -2,6 +2,13 @@
 {% from 'ui_interactive.html' import laptop_attrs,filters %}
 {% block title %}{{ project.title }} · СППР «Ноутбук»{% endblock %}
 {% block content %}
+{% if project.role=='analyst' %}
+<nav class="alternative-toolbar mb-3" aria-label="Управление проектом">
+<a class="btn btn-outline-primary" href="/projects/{{ project.id }}/edit">Настройки проекта</a>
+<a class="btn btn-outline-primary" href="/projects/{{ project.id }}/copy">Создать копию</a>
+<a class="btn btn-outline-danger" href="/projects/{{ project.id }}/delete">Удалить проект</a>
+</nav>
+{% endif %}
 <a class="back-link" href="/projects">← Все проекты</a>
 <div class="page-heading studio-project-heading"><p class="eyebrow">ПРОЕКТ № {{ project.id }} · {{ roles[project.role] }}</p><h1>{{ project.title }}</h1><p class="text-secondary">{{ project.goal or 'Цель проекта пока не указана.' }}</p>
 <div class="summary-strip"><span>Бюджет: {% if project.budget %}{{ '{:,.0f}'.format(project.budget).replace(',', ' ') }} ₽{% else %}не задан{% endif %}</span><span>Критериев: {{ criteria|length }}</span><span>Ноутбуков: {{ alternatives|length }}</span></div><div class="studio-hero-actions"><a class="btn btn-primary" href="/projects/{{ project.id }}/calculations">{{ 'Запустить расчёт' if project.role=='analyst' else 'Открыть результаты' }} {{ icon('arrow') }}</a><a class="btn btn-outline-secondary" href="#decision-matrix">Сравнить ноутбуки</a></div></div>

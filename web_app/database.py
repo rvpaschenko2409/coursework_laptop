@@ -93,3 +93,25 @@ def grant_web_permissions(connection,schema: str='public',role: str='coursework_
     grant('SELECT','decision_choices')
     grant('INSERT(project_id,result_id,alternative_code,alternative_snapshot,decided_by,reason)','decision_choices')
     connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(sql.Identifier(schema),sql.Identifier('decision_choices_id_seq'),sql.Identifier(role)))
+
+
+def grant_project_management_permissions(connection, schema='public', role='coursework_app'):
+    """Additional grants for copying current project inputs and deleting a project."""
+    # Validate the role and preserve the grants required by earlier features.
+    grant_web_permissions(connection, schema, role)
+    permissions = {
+        'projects': 'DELETE, INSERT(owner_id,title,goal,budget,status,settings,catwoe,root_definition)',
+        'datasets': 'SELECT, INSERT, UPDATE(parent_dataset_id)',
+        'dataset_groups': 'SELECT, INSERT',
+        'dataset_rows': 'SELECT, INSERT',
+        'ml_models': 'SELECT, INSERT',
+        'predictions': 'INSERT(created_at)',
+        'criteria': 'INSERT(scale_type)',
+        'alternatives': 'INSERT(sort_order)',
+    }
+    for table, privileges in permissions.items():
+        connection.execute(sql.SQL('GRANT ' + privileges + ' ON TABLE {}.{} TO {}').format(
+            sql.Identifier(schema), sql.Identifier(table), sql.Identifier(role)))
+    for sequence in ('datasets_id_seq', 'dataset_rows_id_seq', 'ml_models_id_seq'):
+        connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(
+            sql.Identifier(schema), sql.Identifier(sequence), sql.Identifier(role)))
