@@ -24,7 +24,7 @@ def xml(data):
         raise ValueError('Повреждён XML внутри Excel.') from None
 
 
-def read_csv(content):
+def read_csv(content, max_rows=MAX_ROWS):
     try:
         text = content.decode('utf-8-sig'); encoding = 'UTF-8'
     except UnicodeDecodeError:
@@ -44,33 +44,33 @@ def read_csv(content):
             line = previous + 1; previous = reader.line_num
             if any(cell.strip() for cell in row):
                 rows.append((line, row))
-            if len(rows) > MAX_ROWS + 1:
-                raise ValueError('В одном файле допускается не больше 15 ноутбуков.')
+            if len(rows) > max_rows + 1:
+                raise ValueError(f'В одном файле допускается не больше {max_rows} строк данных.')
     except csv.Error:
         raise ValueError('Не удалось разобрать CSV. Проверьте разделители и кавычки.') from None
     return rows, f'CSV · {encoding}'
 
 
-def column(reference):
+def column(reference, max_sheet_rows=256):
     match = re.fullmatch(r'([A-Z]{1,3})([1-9][0-9]{0,5})', reference)
     if not match:
         raise ValueError('Неверный адрес ячейки Excel.')
     number = 0
     for c in match[1]:
         number = number * 26 + ord(c) - 64
-    if number > MAX_COLS or int(match[2]) > 256:
-        raise ValueError('Excel: максимум 32 столбца и 256 строк, включая пустые.')
+    if number > MAX_COLS or int(match[2]) > max_sheet_rows:
+        raise ValueError(f'Excel: максимум 32 столбца и {max_sheet_rows} строк, включая пустые.')
     return number - 1, int(match[2])
 
 
-def read_xlsx(content):
+def read_xlsx(content, max_rows=MAX_ROWS, max_sheet_rows=256):
     try:
         with zipfile.ZipFile(io.BytesIO(content)) as archive:
             infos = archive.infolist()
             names = [i.filename for i in infos]
-            if len(infos) > 64 or len(names) != len(set(names)) or sum(i.file_size for i in infos) > 16 * MAX_FILE:
+            if len(infos) > 64 or len(names) != len(set(names)) or sum(i.file_size for i in infos) > (16 if max_rows==MAX_ROWS else 64) * MAX_FILE:
                 raise ValueError('Слишком сложный или большой файл Excel.')
-            if any(i.flag_bits & 1 or i.file_size > 8 * MAX_FILE or i.file_size > max(1, i.compress_size) * 500 for i in infos):
+            if any(i.flag_bits & 1 or i.file_size > (8 if max_rows==MAX_ROWS else 32) * MAX_FILE or i.file_size > max(1, i.compress_size) * 500 for i in infos):
                 raise ValueError('Зашифрованный или чрезмерно сжатый Excel не поддерживается.')
             if any('vbaproject' in n.lower() or n.startswith('xl/externalLinks/') for n in names):
                 raise ValueError('Используйте обычный .xlsx без макросов и внешних связей.')
@@ -110,16 +110,16 @@ def read_xlsx(content):
             output = []; seen_rows = set(); cell_count = 0
             for row in sheet.findall('s:sheetData/s:row', NS):
                 raw_row=row.attrib.get('r','0')
-                if not re.fullmatch('[1-9][0-9]{0,2}',raw_row):raise ValueError('Неверный номер строки Excel.')
+                if not re.fullmatch('[1-9][0-9]{0,5}',raw_row):raise ValueError('Неверный номер строки Excel.')
                 rn = int(raw_row)
-                if not 1 <= rn <= 256 or rn in seen_rows:
+                if not 1 <= rn <= max_sheet_rows or rn in seen_rows:
                     raise ValueError('Неверные или повторяющиеся строки Excel.')
                 seen_rows.add(rn); cells = {}
                 for c in row.findall('s:c', NS):
                     cell_count += 1
-                    if cell_count > 4096:
+                    if cell_count > max(4096, (max_rows+1)*MAX_COLS):
                         raise ValueError('В Excel слишком много ячеек.')
-                    ci, ri = column(c.attrib.get('r', ''))
+                    ci, ri = column(c.attrib.get('r', ''), max_sheet_rows)
                     if ri != rn or ci in cells:
                         raise ValueError('Повторяющиеся или неверные адреса ячеек Excel.')
                     if c.find('s:f', NS) is not None:
@@ -141,19 +141,19 @@ def read_xlsx(content):
                     cells[ci] = value
                 if any(v.strip() for v in cells.values()):
                     output.append((rn, [cells.get(i, '') for i in range(max(cells) + 1)]))
-                if len(output) > MAX_ROWS + 1:
-                    raise ValueError('В одном файле допускается не больше 15 ноутбуков.')
+                if len(output) > max_rows + 1:
+                    raise ValueError(f'В одном файле допускается не больше {max_rows} строк данных.')
             return sorted(output), 'Excel XLSX'
     except (zipfile.BadZipFile, KeyError, OSError, RuntimeError, OverflowError, ET.ParseError):
         raise ValueError('Не удалось открыть Excel. Нужен обычный файл .xlsx без пароля.') from None
 
 
-def read_table(content, filename, required, optional=('description',)):
-    if not content or len(content) > MAX_FILE:
-        raise ValueError('Файл должен быть непустым и не больше 1 МБ.')
+def read_table(content, filename, required, optional=('description',), *, max_rows=MAX_ROWS, max_file=MAX_FILE):
+    if not content or len(content) > max_file:
+        raise ValueError(f'Файл должен быть непустым и не больше {max_file // MAX_FILE} МБ.')
     extension = filename.lower().rsplit('.', 1)[-1]
-    if extension == 'csv':rows, label = read_csv(content)
-    elif extension == 'xlsx':rows, label = read_xlsx(content)
+    if extension == 'csv':rows, label = read_csv(content, max_rows)
+    elif extension == 'xlsx':rows, label = read_xlsx(content, max_rows, max(256, max_rows+1))
     else:raise ValueError('Выберите CSV или XLSX. Старый формат XLS не поддерживается.')
     if len(rows) < 2:
         raise ValueError('Нужны строка заголовков и хотя бы один ноутбук.')

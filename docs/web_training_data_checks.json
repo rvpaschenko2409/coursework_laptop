@@ -1,0 +1,37 @@
+{
+  "feature": "web-training-data",
+  "base_commit": "f9df3a6",
+  "python": "3.12.14",
+  "database": "PostgreSQL 16.2, isolated cluster; limited application role",
+  "pytest": {
+    "passed": 375,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "warnings": 0,
+    "seconds": 85.71
+  },
+  "feature_tests": 18,
+  "capacity": {
+    "rows": 10000,
+    "file_bytes": 425982,
+    "preview_bytes": 6571746,
+    "seconds": 0.711,
+    "configurations": 100
+  },
+  "windows_acceptance": "pending",
+  "coverage": [
+    "legacy 2000-row synthetic CSV retains all observations and 100 configurations",
+    "CSV/XLSX parser and old 15-alternative import regression",
+    "300-row XLSX above the old 256-row limit",
+    "quality: types, missing, ranges, invalid values, duplicates, IQR flags",
+    "origin, license, URL, seed and generator validation",
+    "source target alias and configuration grouping independent of supplied group ID",
+    "raw and staging transactional inserts, audit and idempotent replay",
+    "rollback after database failure after row insertion",
+    "CSRF, analyst role, foreign project and actor, stale revision",
+    "preview token ownership, expiry and bounded eviction",
+    "HTML escaping and template downloads",
+    "no training, model activation, split assignment or changes to old results"
+  ]
+}

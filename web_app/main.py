@@ -52,7 +52,8 @@ class SmallForms:
             stakeholder_form=re.fullmatch(r'/(?:api/)?projects/[0-9]+/stakeholders(?:/[0-9]+(?:/delete)?)?',path)
             choice_form=re.fullmatch(r'/(?:api/)?projects/[0-9]+/calculations/[0-9]+/choice',path)
             import_form=re.fullmatch(r'/(?:api/)?projects/[0-9]+/alternatives/import/(?:preview|confirm)',path)
-            limit=1114112 if import_form else 32768 if stakeholder_form or choice_form else (65536 if path.endswith('/dematel/definition') else 8192)
+            training_form=re.fullmatch(r'/(?:api/)?projects/[0-9]+/training-data/preview',path)
+            limit=21037056 if training_form else 1114112 if import_form else 32768 if stakeholder_form or choice_form else (65536 if path.endswith('/dematel/definition') else 8192)
             if size>limit:
                 return await JSONResponse({'detail':'Форма слишком большая.'},status_code=413)(scope,receive,send)
             chunks.append(part)
@@ -345,4 +346,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     register_criterion_routes(app, Ctx, render, response, project_access)
     from web_app.alternative_import_routes import register_routes as register_import_routes
     register_import_routes(app, Ctx, render, response, project_access)
+    from web_app.training_data_routes import register_routes as register_training_data_routes
+    register_training_data_routes(app, Ctx, render, response, project_access)
     return app
