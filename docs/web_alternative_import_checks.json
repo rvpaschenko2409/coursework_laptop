@@ -1,0 +1,42 @@
+{
+  "feature": "web-alternative-import",
+  "base_commit": "ea62e85",
+  "python": "3.12.14",
+  "database": "PostgreSQL 16.2, isolated cluster",
+  "pytest": {
+    "passed": 357,
+    "failed": 0,
+    "skipped": 0,
+    "warnings": 1,
+    "seconds": 80.91
+  },
+  "feature_tests": 17,
+  "examples": {
+    "csv_xlsx_equal": true,
+    "rows": [
+      "B1",
+      "B2"
+    ],
+    "data_origin": "fictional educational examples",
+    "xlsx_visual_review": "both halves of all populated cells reviewed"
+  },
+  "windows_acceptance": "pending",
+  "coverage": [
+    "UTF-8/BOM and Windows-1251 CSV",
+    "XLSX import including text and numeric cells",
+    "dynamic criterion required in import",
+    "preview adds no alternatives/predictions",
+    "active model produces traceable predictions",
+    "no active model: explicit incomplete-performance warning",
+    "atomic confirmation and rollback after second row write",
+    "idempotent retry of successful confirmation",
+    "roles, CSRF, foreign project and actor",
+    "size limits without raising unrelated form limits",
+    "expiry, tampering, stale project and changed model",
+    "duplicate codes in file and in project",
+    "bad cells reported before confirmation",
+    "XSS escaped in preview",
+    "Excel formulas, external links and entities rejected",
+    "CSV and XLSX dynamic template downloads"
+  ]
+}
