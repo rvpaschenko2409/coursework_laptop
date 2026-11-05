@@ -115,3 +115,10 @@ def grant_project_management_permissions(connection, schema='public', role='cour
     for sequence in ('datasets_id_seq', 'dataset_rows_id_seq', 'ml_models_id_seq'):
         connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.{} TO {}').format(
             sql.Identifier(schema), sql.Identifier(sequence), sql.Identifier(role)))
+
+
+def grant_criteria_permissions(connection, schema='public', role='coursework_app'):
+    """Add metadata editing; removal retains rows referenced by saved results."""
+    grant_project_management_permissions(connection, schema, role)
+    connection.execute(sql.SQL('GRANT UPDATE(name,unit,direction) ON TABLE {}.criteria TO {}').format(
+        sql.Identifier(schema), sql.Identifier(role)))

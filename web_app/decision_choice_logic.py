@@ -1,4 +1,5 @@
 """Bounded user input and reproducible context of a deliberate decision-maker choice."""
+from decision_core.compatibility import LEGACY_CHOICE
 from pathlib import Path
 import hashlib
 import unicodedata
@@ -44,7 +45,7 @@ def selected(source,code):
 
 
 def verified_context(context):
-    if context.get('schema_version')!=1 or context['producer'].get('version')!=version():raise ValueError('Для проверки решения нужна сохранённая версия расчётных модулей из Git.')
+    if context.get('schema_version')!=1 or context['producer'].get('version') not in (version(),LEGACY_CHOICE):raise ValueError('Для проверки решения нужна сохранённая версия расчётных модулей из Git.')
     choice=context['choice']
     if choice.get('role_at_decision')!='decision_maker':raise ValueError('Не сохранена роль ЛПР на момент решения.')
     if reason(choice['reason'])!=choice['reason'] or choice.get('acknowledged') is not True:raise ValueError('Обоснование или подтверждение решения не совпало.')

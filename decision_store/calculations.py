@@ -15,6 +15,7 @@ import pandas as pd
 from psycopg.types.json import Jsonb
 
 from decision_core.criteria import CRITERIA, MINIMIZE
+from decision_core.compatibility import LEGACY_CORE
 from decision_core.marcos import calculate_marcos
 from decision_core.merec import calculate_merec
 from decision_core.normalization import normalize_minmax, normalize_ratio
@@ -70,14 +71,19 @@ def matrix_from_snapshot(snapshot: dict) -> tuple[pd.DataFrame,list[str]]:
         raise ValueError('Неизвестная версия формата снимка.')
     validate_v(snapshot['parameters']['v'])
     criteria=snapshot['criteria']
-    if len(criteria)!=5 or {row['code'] for row in criteria}!=set(CRITERIA) or len({row['id'] for row in criteria})!=5:
-        raise ValueError('Этот этап поддерживает пять критериев исходного варианта.')
-    for row in criteria:
-        if row['direction']!=('min' if row['code'] in MINIMIZE else 'max'):
-            raise ValueError('Направления критериев не соответствуют проверенному расчётному ядру.')
+    codes=[row['code'] for row in criteria]
+    if not 2<=len(criteria)<=10 or len(set(codes))!=len(criteria) or len({row['id'] for row in criteria})!=len(criteria):
+        raise ValueError('Нужны от 2 до 10 различных критериев.')
+    if any(row['direction'] not in ('min','max') for row in criteria):
+        raise ValueError('Неизвестное направление критерия.')
+    if 'price_rub' not in codes:
+        raise ValueError('Нужен критерий цены для бюджетного фильтра.')
+    if any(row['code'] in ('price_rub','performance_score') and row['direction'] != ('min' if row['code']=='price_rub' else 'max') for row in criteria):
+        raise ValueError('Направления цены и производительности не соответствуют заданию.')
     alternatives=snapshot['alternatives']
     if not 2<=len(alternatives)<=15 or len({row['id'] for row in alternatives})!=len(alternatives) or len({row['code'] for row in alternatives})!=len(alternatives):
         raise ValueError('Нужно от 2 до 15 альтернатив без повторов идентификаторов и кодов.')
+    CRITERIA=codes
     criterion_ids={row['id']:row['code'] for row in criteria}
     alt_ids={row['id']:row for row in alternatives}
     predictions={row['id']:row for row in snapshot['predictions']}
@@ -137,6 +143,7 @@ def matrix_from_snapshot(snapshot: dict) -> tuple[pd.DataFrame,list[str]]:
             row.append(value)
         matrix.append(row)
     frame=pd.DataFrame(matrix,index=[row['code'] for row in eligible],columns=list(CRITERIA))
+    frame.attrs['directions']={row['code']:row['direction'] for row in criteria}
     return frame,excluded
 
 
@@ -153,6 +160,8 @@ def compute(snapshot: dict) -> dict:
     matrix,excluded=matrix_from_snapshot(snapshot)
     if snapshot.get('matrix') is not None and snapshot['matrix']!=table(matrix):
         raise ValueError('Матрица снимка не соответствует сохранённым исходным оценкам.')
+    CRITERIA=list(matrix.columns)
+    MINIMIZE={c['code'] for c in snapshot['criteria'] if c['direction']=='min'}
     merec=calculate_merec(matrix)
     weights=merec.set_index('criterion')['weight']
     marcos=calculate_marcos(matrix,weights)
@@ -190,8 +199,11 @@ def load_snapshot(connection,project_id: int,v: float) -> dict:
     if project['status']=='archived':
         raise ValueError('Проект архивирован.')
     criteria=connection.execute('''SELECT id,code,name,unit,direction::text AS direction,source::text AS source,sort_order FROM criteria WHERE project_id=%s ORDER BY sort_order,id''',(project_id,)).fetchall()
+    archived=set(project['settings'].get('archived_criteria',[]))
+    criteria=[c for c in criteria if c['id'] not in archived]
     alternatives=connection.execute('''SELECT id,code,name,description,features,sort_order FROM alternatives WHERE project_id=%s ORDER BY sort_order,id''',(project_id,)).fetchall()
     scores=connection.execute('''SELECT id,alternative_id,criterion_id,expert_id,value,source::text AS source,prediction_id,override_reason,updated_at FROM scores WHERE project_id=%s ORDER BY alternative_id,criterion_id''',(project_id,)).fetchall()
+    scores=[s for s in scores if s['criterion_id'] not in archived]
     predictions=connection.execute('''SELECT p.* FROM predictions p WHERE p.project_id=%s AND EXISTS(SELECT 1 FROM scores s WHERE s.project_id=p.project_id AND s.prediction_id=p.id) ORDER BY p.id''',(project_id,)).fetchall()
     models=connection.execute('''SELECT m.* FROM ml_models m WHERE m.project_id=%s AND EXISTS(SELECT 1 FROM predictions p JOIN scores s ON s.prediction_id=p.id WHERE p.model_id=m.id AND s.project_id=m.project_id) ORDER BY m.id''',(project_id,)).fetchall()
     datasets=connection.execute('''SELECT d.* FROM datasets d WHERE d.project_id=%s AND EXISTS(SELECT 1 FROM ml_models m JOIN predictions p ON p.model_id=m.id JOIN scores s ON s.prediction_id=p.id WHERE m.dataset_id=d.id AND s.project_id=d.project_id) ORDER BY d.id''',(project_id,)).fetchall()
@@ -252,7 +264,7 @@ def run_calculation(connection,project_id: int=1,v: float=0.5) -> dict:
             raise ValueError('Сохранённый набор весов изменён.')
         assert_close(stored['input_snapshot']['merec'],calculated['merec'])
         actual_weights=connection.execute('''SELECT c.code,w.value FROM weights w JOIN criteria c ON c.id=w.criterion_id WHERE w.project_id=%s AND w.weight_set_id=%s''',(project_id,weight_set_id)).fetchall()
-        if len(actual_weights)!=5:
+        if len(actual_weights)!=len(snapshot['criteria']):
             raise ValueError('Неполный набор весов.')
         expected={row['criterion']:row['weight'] for row in calculated['merec']['weights']}
         for row in actual_weights:
@@ -287,7 +299,7 @@ def replay_result(connection,result_id: int,project_id: int=1) -> dict:
     row=connection.execute('''SELECT r.*,p.revision AS current_revision FROM results r JOIN projects p ON p.id=r.project_id WHERE r.id=%s AND r.project_id=%s''',(result_id,project_id)).fetchone()
     if not row or row['status']!='succeeded' or row['method'] not in ('marcos','vikor'):
         raise ValueError('Завершённый результат этого проекта не найден.')
-    if row['core_version']!=core_version():
+    if row['core_version'] not in (core_version(), LEGACY_CORE):
         raise ValueError('Версия ядра изменилась. Для строгого воспроизведения нужна соответствующая версия кода из Git.')
     snapshot=row['input_snapshot']
     if digest(snapshot)!=row['params'].get('input_fingerprint'):

@@ -4,7 +4,7 @@
 {% block content %}
 {% if project.role=='analyst' %}
 <nav class="alternative-toolbar mb-3" aria-label="Управление проектом">
-<a class="btn btn-outline-primary" href="/projects/{{ project.id }}/edit">Настройки проекта</a>
+<a class="btn btn-outline-primary" href="/projects/{{ project.id }}/edit">Настройки проекта</a><a class="btn btn-outline-primary" href="/projects/{{ project.id }}/criteria">Критерии</a>
 <a class="btn btn-outline-primary" href="/projects/{{ project.id }}/copy">Создать копию</a>
 <a class="btn btn-outline-danger" href="/projects/{{ project.id }}/delete">Удалить проект</a>
 </nav>

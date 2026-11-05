@@ -1,0 +1,46 @@
+{
+  "feature": "web-criteria",
+  "base_commit": "80631e4",
+  "python": "3.12.14",
+  "postgresql": "16.2 (isolated test cluster; user PostgreSQL 18 requires local acceptance)",
+  "pytest": {
+    "passed": 340,
+    "failed": 0,
+    "skipped": 0,
+    "warnings": 1,
+    "seconds": 81.34
+  },
+  "pyodide_parity": {
+    "scenarios": 72,
+    "criteria_counts": [
+      2,
+      3,
+      6,
+      10
+    ],
+    "tolerance": 1e-12,
+    "result": "passed"
+  },
+  "syntax": {
+    "python_compileall": "passed",
+    "node_check_worker": "passed",
+    "node_check_live_preview": "passed",
+    "node_check_service_worker": "passed"
+  },
+  "windows_acceptance": "pending",
+  "checks": [
+    "criterion create/edit/remove/restore",
+    "2 and 10 criteria bounds",
+    "protected price/performance",
+    "reserved names and invalid numbers",
+    "cross-project access, CSRF, role checks, stale form",
+    "metadata and score validation before mutation",
+    "historical core hash replay and numerical verification",
+    "all four weight methods with 6 criteria",
+    "sensitivity with 6 criteria",
+    "Excel export with 6 criteria",
+    "copy remaps archived criterion IDs",
+    "dynamic laptop form and score saving",
+    "browser Python worker parity with API previews"
+  ]
+}

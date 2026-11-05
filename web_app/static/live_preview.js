@@ -5,7 +5,7 @@
     await registration.update();
     const deadline = Date.now() + 60000;
     while (registration.active?.state !== 'activated' || registration.installing || registration.waiting ||
-        !(await caches.match('/static/offline_calculation.html', {cacheName: 'coursework-offline-calculation-v7'}))) {
+        !(await caches.match('/static/offline_calculation.html', {cacheName: 'coursework-offline-calculation-criteria-v1'}))) {
       if (Date.now() >= deadline || (!registration.installing && !registration.waiting && !registration.active)) {
         throw new Error('Offline assets unavailable');
       }

@@ -22,6 +22,10 @@ def register_routes(app,Ctx,render,response,project_access,require_user):
             (SELECT count(*) FROM alternatives WHERE project_id=%s) AS alternatives,
             (SELECT count(*) FROM criteria WHERE project_id=%s) AS criteria,
             (SELECT count(*) FROM scores WHERE project_id=%s) AS scores''',(pid,pid,pid)).fetchone()
+        from web_app.criterion_store import items as active_criteria
+        current=active_criteria(context.connection,pid)
+        stats=dict(stats);stats['criteria']=len(current)
+        stats['scores']=context.connection.execute('SELECT count(*) AS n FROM scores WHERE project_id=%s AND criterion_id=ANY(%s)',(pid,[c['id'] for c in current])).fetchone()['n']
         return {'project':project,'runs':runs,'has_next':has_next,'page':page,'stats':dict(stats),'error':None,'v':'0.5'}
 
     def pair(context,pid,rid):

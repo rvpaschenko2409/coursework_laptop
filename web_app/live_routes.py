@@ -36,6 +36,7 @@ def register_routes(app, Ctx, project_access):
             raise HTTPException(422, str(exc)) from exc
         project = snapshot['project']
         payload = {
+            'directions': matrix.attrs['directions'],
             'sources': browser_sources(),
             'matrix': matrix.to_dict(orient='split'),
             'project_id': project_id,
@@ -57,7 +58,8 @@ def register_routes(app, Ctx, project_access):
         project_access(context, project_id, analyst=True, lock=True)
         csrf_check(context, csrf, request)
         check_revision(context.connection, project_id, revision)
-        if criterion not in CRITERIA:
+        from web_app.dematel_store import criteria as active_criteria
+        if criterion not in {c['code'] for c in active_criteria(context.connection,project_id)}:
             raise HTTPException(422, 'Неизвестный критерий.')
         try:
             parameter = parse_v(v)
@@ -88,6 +90,7 @@ def register_routes(app, Ctx, project_access):
             raise HTTPException(404, 'Исходный расчёт не найден.')
         matrix, _ = matrix_from_snapshot(data['snapshot'])
         payload = {
+            'directions': matrix.attrs['directions'],
             'sources': browser_sources(),
             'matrix': matrix.to_dict(orient='split'),
             'project_title': data['snapshot']['project']['title'],

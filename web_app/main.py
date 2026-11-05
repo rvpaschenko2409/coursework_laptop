@@ -269,6 +269,8 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     def detail(context,project_id):
         project=project_access(context,project_id)
         criteria=[dict(row) for row in context.connection.execute('SELECT id,code,name,unit,direction::text AS direction,sort_order FROM criteria WHERE project_id=%s ORDER BY sort_order,id',(project_id,)).fetchall()]
+        settings=context.connection.execute('SELECT settings FROM projects WHERE id=%s',(project_id,)).fetchone()['settings']
+        criteria=[c for c in criteria if c['id'] not in settings.get('archived_criteria',[])]
         alternatives=[dict(row) for row in context.connection.execute('SELECT id,code,name,features FROM alternatives WHERE project_id=%s ORDER BY sort_order,id',(project_id,)).fetchall()]
         scores=[dict(row) for row in context.connection.execute('SELECT alternative_id,criterion_id,value,prediction_id,source::text AS source FROM scores WHERE project_id=%s',(project_id,)).fetchall()]
         matrix={(row['alternative_id'],row['criterion_id']):row for row in scores}
@@ -338,4 +340,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     register_live_routes(app,Ctx,project_access)
     from web_app.project_routes import register_routes as register_project_routes
     register_project_routes(app, Ctx, render, response, project_access)
+    from web_app.criterion_routes import register_routes as register_criterion_routes
+    register_criterion_routes(app, Ctx, render, response, project_access)
     return app

@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 
-from .criteria import CRITERIA
+from .criteria import configuration
 from .normalization import normalize_minmax
 
 
@@ -13,6 +13,7 @@ def calculate_vikor(
     v: float = 0.5,
 ) -> tuple[pd.DataFrame, dict]:
     """Возвращает рейтинг и результаты проверки условий VIKOR."""
+    CRITERIA, MINIMIZE = configuration(matrix)
 
     if len(matrix) < 2:
         raise ValueError("Нужны минимум две альтернативы.")

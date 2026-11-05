@@ -1,0 +1,5 @@
+"""Recognized predecessor hashes; replay still verifies snapshots and numerical outputs."""
+LEGACY_CORE = '2615dd1e33d27cf817c78c9acfd1c5c39e05de3d8df4a5ab692c3edab6011729'
+LEGACY_WEIGHTS = '10d138c02f042bd1497bbd4bca5d84eecf656bf123a1fe6284470133c88812f6'
+LEGACY_SENSITIVITY = '5cf0674564d893d963b186660b6ce0a861c9491e34e0de56c2226539bdc4ce76'
+LEGACY_CHOICE = '866067848d828aa41e103720ed5bce8efbb9e610280d5794df88e820d117aa55'

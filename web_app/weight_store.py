@@ -1,4 +1,5 @@
 """Immutable weight provenance, atomic paired calculations and historical replay."""
+from decision_core.compatibility import LEGACY_WEIGHTS
 from uuid import uuid5,NAMESPACE_URL
 from psycopg.types.json import Jsonb
 from decision_store.calculations import load_snapshot,digest,assert_close
@@ -97,7 +98,8 @@ def run(connection,pid,actor,v,selection):
 def load_pair(connection,pid,rows):
     if len(rows)!=2 or {r['method'] for r in rows}!={'marcos','vikor'}:raise ValueError('Не найдена полная пара рейтингов.')
     first=rows[0];snapshot=first['input_snapshot'];version=math.version()
-    if snapshot['producer'].get('weight_adapter_version')!=version:raise ValueError('Для воспроизведения нужна сохранённая версия адаптера весов из Git.')
+    if snapshot['producer'].get('weight_adapter_version') not in (version,LEGACY_WEIGHTS):raise ValueError('Для воспроизведения нужна сохранённая версия адаптера весов из Git.')
+    version=snapshot['producer']['weight_adapter_version']
     calculated=math.compute_weighted(snapshot);fingerprint=digest(snapshot);actor=snapshot['producer']['requested_by']
     batch=str(uuid5(NAMESPACE_URL,'coursework:laptop:weights:v1:'+fingerprint))
     wid=first['params'].get('weight_set_id')

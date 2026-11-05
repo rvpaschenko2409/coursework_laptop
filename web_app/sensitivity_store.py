@@ -1,4 +1,5 @@
 """Append-only sensitivity experiments bound to verified historical result pairs."""
+from decision_core.compatibility import LEGACY_SENSITIVITY
 from uuid import uuid5,NAMESPACE_URL
 from psycopg.types.json import Jsonb
 from decision_store.calculations import digest,plain,assert_close
@@ -45,7 +46,8 @@ def load(connection,pid,rid):
         WHERE r.project_id=%s AND r.id=%s AND r.method='sensitivity' ''',(pid,rid)).fetchone()
     if not row:return None
     snapshot=row['input_snapshot'];fingerprint=digest(snapshot);version=math.version()
-    if row['core_version']!=version or snapshot['producer']['version']!=version:raise ValueError('Для воспроизведения нужна сохранённая версия анализа из Git.')
+    version=snapshot['producer']['version']
+    if version not in (math.version(),LEGACY_SENSITIVITY) or row['core_version']!=version:raise ValueError('Для воспроизведения нужна сохранённая версия анализа из Git.')
     source_id=next(r['id'] for r in snapshot['source']['records'] if r['method']=='marcos')
     expected={'entrypoint':'web_sensitivity','source_result_id':source_id,'step_percent':snapshot['parameters']['step_percent'],
         'input_fingerprint':fingerprint,'requested_by':snapshot['producer']['requested_by']}

@@ -5,6 +5,7 @@ from fastapi.responses import HTMLResponse
 from web_app import alternative_store as store
 from web_app.alternative_validation import MANUAL,HARDWARE,InvalidForm,validate_form,in_training_profiles
 from web_app.laptop_predictions import active_model
+from web_app.criterion_store import manual_fields
 from web_app.security import csrf_check
 
 
@@ -41,7 +42,7 @@ def register_routes(app,Ctx,render,response,project_access,require_user):
             history=[dict(h) for h in context.connection.execute('''SELECT h.*,c.name AS criterion_name,u.name AS actor_name FROM score_history h
                 JOIN scores s ON s.project_id=h.project_id AND s.id=h.score_id JOIN criteria c ON c.project_id=s.project_id AND c.id=s.criterion_id
                 JOIN users u ON u.id=h.actor_id WHERE h.project_id=%s AND s.alternative_id=%s ORDER BY h.id DESC LIMIT 30''',(pid,aid)).fetchall()]
-        return {'project':project,'alternative':row,'fields':fields,'errors':{},'manual_fields':MANUAL,'hardware_fields':HARDWARE,
+        return {'project':project,'alternative':row,'fields':fields,'errors':{},'manual_fields':manual_fields(context.connection,pid),'hardware_fields':HARDWARE,
             'expert':expert,'active_model':model,'current_performance':scores.get('performance_score'),
             'history':history,'outside_profiles':bool(row and not in_training_profiles(row['features']))}
 
@@ -68,11 +69,12 @@ def register_routes(app,Ctx,render,response,project_access,require_user):
         access(context,pid,write=True,expert=expert)
         store.check_revision(context.connection,pid,form.get('revision'))
         existing=store.alternative(context.connection,pid,aid) if aid is not None else None
-        allowed={'csrf','revision','change_reason',*MANUAL}
+        manual=manual_fields(context.connection,pid)
+        allowed={'csrf','revision','change_reason',*manual}
         if not expert:allowed.update({'code','name','description',*HARDWARE,'storage_type','performance_mode','performance_override'})
         if set(form)-allowed:raise HTTPException(422,'В форме есть неизвестные или недоступные для этой роли поля.')
         try:
-            values=validate_form(form,expert)
+            values=validate_form(form,expert,manual)
             with context.connection.transaction():result=store.save(context.connection,pid,context.user['id'],values,existing,expert)
         except InvalidForm as exc:
             if request.url.path.startswith('/api/'):return response(request,context,{'detail':str(exc),'errors':exc.errors},422)

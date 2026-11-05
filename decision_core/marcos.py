@@ -3,7 +3,7 @@
 import numpy as np
 import pandas as pd
 
-from .criteria import CRITERIA, MINIMIZE
+from .criteria import configuration
 from .normalization import normalize_ratio
 
 
@@ -12,6 +12,7 @@ def calculate_marcos(
     weights: pd.Series,
 ) -> pd.DataFrame:
     """Возвращает показатели MARCOS и рейтинг: больше utility — лучше."""
+    CRITERIA, MINIMIZE = configuration(matrix)
 
     # Функция нормирования также проверяет входную матрицу.
     normalized = normalize_ratio(matrix)

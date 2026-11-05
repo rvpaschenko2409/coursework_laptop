@@ -107,6 +107,11 @@ def copy_inputs(connection, source_id, actor, fields, request_key):
                 dataset_parents.append((new_id, row['parent_dataset_id']))
         mappings[table] = mapping
 
+    archived=source['settings'].get('archived_criteria',[])
+    if archived:
+        connection.execute("UPDATE projects SET settings=jsonb_set(settings,'{archived_criteria}',%s) WHERE id=%s",
+            (Jsonb([mappings['criteria'][i] for i in archived if i in mappings['criteria']]),project_id))
+
     for new_id, parent_id in dataset_parents:
         if parent_id is not None:
             connection.execute('UPDATE datasets SET parent_dataset_id=%s WHERE id=%s',

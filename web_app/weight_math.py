@@ -83,6 +83,8 @@ def compute_weighted(snapshot):
     effective={key:(alpha*value+(1-alpha)*objective[key] if method=='combined' else value) for key,value in subjective.items()}
     values=np.array(list(effective.values()))
     if not np.isfinite(values).all() or np.any(values<0) or not np.isclose(values.sum(),1,atol=1e-10,rtol=0):raise ValueError('Итоговые веса должны быть неотрицательными с суммой 1.')
+    CRITERIA=list(matrix.columns)
+    MINIMIZE={c['code'] for c in items if c['direction']=='min'}
     weights=pd.Series({c['code']:effective[str(c['id'])] for c in items}).reindex(list(CRITERIA))
     marcos=calculate_marcos(matrix,weights);vikor,conditions=calculate_vikor(matrix,weights,v=snapshot['parameters']['v'])
     normalized=normalize_ratio(matrix);distances=1-normalize_minmax(matrix)

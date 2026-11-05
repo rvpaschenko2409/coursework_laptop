@@ -198,7 +198,9 @@ def test_archive_keeps_predictions_and_replay_uses_historical_snapshot(edits):
         assert browser.get(f'/api/projects/{pid}').json()['stale_results'] is True
         with edits['admin'].transaction():replayed=replay_result(edits['admin'],calculated['result_ids']['marcos'],pid)
         assert replayed['verified'] and replayed['is_stale']
-        assert core_version()=='2615dd1e33d27cf817c78c9acfd1c5c39e05de3d8df4a5ab692c3edab6011729'
+        stored_core=edits['admin'].execute('SELECT core_version FROM results WHERE id=%s',(calculated['result_ids']['marcos'],)).fetchone()['core_version']
+        assert stored_core==core_version()
+        assert len(stored_core)==64
         # Archive is append-only for the server role.
         import psycopg
         with pytest.raises(psycopg.errors.InsufficientPrivilege):

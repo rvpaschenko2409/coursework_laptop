@@ -1,4 +1,5 @@
 """Finite, one-at-a-time sensitivity on an immutable decision snapshot."""
+from decision_core.compatibility import LEGACY_CORE, LEGACY_WEIGHTS
 from decimal import Decimal,InvalidOperation
 from pathlib import Path
 import hashlib
@@ -43,7 +44,9 @@ def perturb(weights,criterion_id,delta):
 def verify_source(source):
     snap=source['input'];weighted='weight_selection' in snap
     expected_version=weight_math.version() if weighted else core_version()
-    if snap['producer'].get('weight_adapter_version' if weighted else 'core_version')!=expected_version:raise ValueError('Изменилась версия исходного расчётного модуля. Нужна сохранённая версия из Git.')
+    saved_version=snap['producer'].get('weight_adapter_version' if weighted else 'core_version')
+    if saved_version not in (expected_version,LEGACY_WEIGHTS if weighted else LEGACY_CORE):raise ValueError('Изменилась версия исходного расчётного модуля. Нужна сохранённая версия из Git.')
+    expected_version=saved_version
     calculated=weight_math.compute_weighted(snap) if weighted else compute_merec(snap)
     expected_weighting=calculated.get('weighting') or {'method':'merec','alpha':None,'weights':calculated['merec']['weights']}
     assert_close(source['weighting'],expected_weighting,'source.weighting')

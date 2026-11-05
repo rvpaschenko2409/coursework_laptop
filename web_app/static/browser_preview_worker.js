@@ -21,6 +21,8 @@ from decision_core.preview import compare, perturb
 
 data = json.loads(input_json)
 matrix = pd.DataFrame(**data['matrix'])
+if 'directions' in data:
+    matrix.attrs['directions'] = data['directions']
 
 def rows(frame):
     return frame.rename_axis('alternative_code').reset_index().to_dict(orient='records')

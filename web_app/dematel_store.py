@@ -21,6 +21,8 @@ def core_hash():return hashlib.sha256((ROOT/'decision_core/dematel.py').read_tex
 
 def criteria(connection,pid):
     rows=[dict(r) for r in connection.execute('SELECT id,code,name,unit,direction::text AS direction FROM criteria WHERE project_id=%s ORDER BY sort_order,id',(pid,)).fetchall()]
+    archived=connection.execute('SELECT settings FROM projects WHERE id=%s',(pid,)).fetchone()['settings'].get('archived_criteria',[])
+    rows=[r for r in rows if r['id'] not in archived]
     if not 2<=len(rows)<=10:raise ValueError('DEMATEL требует от 2 до 10 критериев.')
     return rows
 
@@ -44,6 +46,7 @@ def matrix_form(form,items):
 
 def save_matrix(connection,pid,actor,items,matrix,reason):
     old=[dict(r) for r in connection.execute('SELECT criterion_i,criterion_j,value FROM comparisons WHERE project_id=%s AND expert_id=%s ORDER BY criterion_i,criterion_j',(pid,actor)).fetchall()]
+    old=[r for r in old if r['criterion_i'] in {c['id'] for c in items} and r['criterion_j'] in {c['id'] for c in items}]
     previous={(r['criterion_i'],r['criterion_j']):r['value'] for r in old}
     changed=[(pid,actor,i['id'],j['id'],matrix[a][b]) for a,i in enumerate(items) for b,j in enumerate(items) if previous.get((i['id'],j['id']))!=matrix[a][b]]
     if changed:
@@ -64,6 +67,7 @@ def sources(connection,pid,items):
     result=[]
     for r in rows:
         cells=[dict(x) for x in connection.execute('SELECT criterion_i,criterion_j,value FROM comparisons WHERE project_id=%s AND expert_id=%s ORDER BY criterion_i,criterion_j',(pid,r['id'])).fetchall()]
+        cells=[c for c in cells if c['criterion_i'] in {i['id'] for i in items} and c['criterion_j'] in {i['id'] for i in items}]
         actual={(c['criterion_i'],c['criterion_j']) for c in cells}
         result.append({**dict(r),'count':len(cells),'complete':actual==expected,'cells':cells})
     return result

@@ -38,18 +38,18 @@ def number(value,label,lower,upper,integer=False):
         raise ValueError(f'{label}: введите{whole} число от {human_number(lower)} до {human_number(upper)}.') from None
 
 
-def scores_from_form(form):
+def scores_from_form(form,manual=None):
     errors={};scores={}
-    for field,args in MANUAL.items():
+    for field,args in (MANUAL if manual is None else manual).items():
         try:scores[field]=number(form.get(field,''),*args)
         except ValueError as exc:errors[field]=str(exc)
     if errors:raise InvalidForm(errors)
     return scores
 
 
-def validate_form(form,expert=False):
+def validate_form(form,expert=False,manual=None):
     errors={};values={}
-    try:values['scores']=scores_from_form(form)
+    try:values['scores']=scores_from_form(form,manual)
     except InvalidForm as exc:errors.update(exc.errors)
     reason=str(form.get('change_reason','')).strip()
     if len(reason)>500 or any(ord(c)<32 and c not in '\r\n' for c in reason):errors['change_reason']='Причина: не более 500 печатных символов.'

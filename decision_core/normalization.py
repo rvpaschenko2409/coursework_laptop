@@ -3,11 +3,12 @@
 import numpy as np
 import pandas as pd
 
-from .criteria import CRITERIA, MINIMIZE
+from .criteria import configuration
 
 
 def normalize_ratio(matrix: pd.DataFrame) -> pd.DataFrame:
     """Нормирование относительно лучшего: больше — лучше."""
+    CRITERIA, MINIMIZE = configuration(matrix)
     if matrix.empty:
         raise ValueError("Матрица альтернатив пуста.")
 
@@ -40,6 +41,7 @@ def normalize_ratio(matrix: pd.DataFrame) -> pd.DataFrame:
     return result
 def normalize_minmax(matrix: pd.DataFrame) -> pd.DataFrame:
     """Нормирование min–max: больше — лучше."""
+    CRITERIA, MINIMIZE = configuration(matrix)
     if matrix.empty:
         raise ValueError("Матрица альтернатив пуста.")
 

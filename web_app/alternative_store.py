@@ -50,8 +50,8 @@ def write_score(connection,project_id,aid,cid,actor,value,source,prediction_id,r
 def save(connection,project_id,actor,values,existing=None,expert=False):
     aid=existing['id'] if existing else None
     before=current_scores(connection,project_id,aid) if aid else {}
-    criteria={row['code']:row['id'] for row in connection.execute('SELECT id,code FROM criteria WHERE project_id=%s',(project_id,)).fetchall()}
-    if set(criteria)!={*MANUAL,'performance_score'}:raise HTTPException(422,'Этот этап поддерживает пять критериев исходного шаблона.')
+    from web_app.criterion_store import items
+    criteria={row['code']:row['id'] for row in items(connection,project_id)}
     reason=values['reason']
     if existing and not reason:raise InvalidForm({'change_reason':'Укажите причину изменения; она сохранится в истории.'})
     reason=reason or 'Первичный ввод ноутбука'

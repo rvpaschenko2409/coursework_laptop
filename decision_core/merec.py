@@ -3,11 +3,12 @@
 import numpy as np
 import pandas as pd
 
-from .criteria import CRITERIA, MINIMIZE
+from .criteria import configuration
 
 
 def calculate_merec(matrix: pd.DataFrame) -> pd.DataFrame:
     """Возвращает эффекты исключения и веса критериев."""
+    CRITERIA, MINIMIZE = configuration(matrix)
     if matrix.empty:
         raise ValueError("Матрица альтернатив пуста.")
 
