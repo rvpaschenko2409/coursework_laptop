@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 .env
 .pytest_cache/
+# Runtime ML artifacts; metadata and checksums live in PostgreSQL.
+models/web/

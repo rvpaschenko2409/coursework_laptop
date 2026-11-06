@@ -15,7 +15,7 @@ def check_revision(connection,project_id,expected):
 
 def ready(connection):
     row=connection.execute('SELECT version_num FROM web_alembic_version').fetchone()
-    if not row or row['version_num']!='web0002':raise HTTPException(503,'Для редактирования требуется подготовить веб-модуль альтернатив.')
+    if not row or row['version_num'] not in ('web0002','web0003'):raise HTTPException(503,'Для редактирования требуется подготовить веб-модуль альтернатив.')
 
 
 def alternative(connection,project_id,alternative_id):

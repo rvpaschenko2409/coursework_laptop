@@ -3,6 +3,7 @@ from functools import lru_cache
 from pathlib import Path
 import hashlib
 import io
+import re
 import math
 import warnings
 import joblib
@@ -19,8 +20,12 @@ ROOT=Path(__file__).resolve().parents[1]
 @lru_cache(maxsize=4)
 def load_pipeline(root,relative,expected_hash,algorithm):
     allowed={'random_forest':'models/random_forest.joblib','ridge':'models/ridge.joblib'}
-    if relative!=allowed.get(algorithm):raise ValueError('Путь зарегистрированной модели не поддерживается.')
+    generated=isinstance(relative,str) and re.fullmatch(r'models/web/[0-9a-f]{32}/'+re.escape(algorithm)+r'\.joblib',relative) if algorithm in allowed else False
+    if relative!=allowed.get(algorithm) and not generated:raise ValueError('Путь зарегистрированной модели не поддерживается.')
     path=Path(root)/relative
+    trusted=(Path(root)/'models').resolve()
+    if not path.resolve().is_relative_to(trusted) or any(p.is_symlink() for p in (path,*path.parents) if p!=Path(root).parent):
+        raise ValueError('Путь модели выходит за доверенный каталог.')
     # Read and validate the exact bytes that will be deserialized.
     try:artifact=path.read_bytes()
     except OSError:raise ValueError('Файл зарегистрированной модели не найден.') from None

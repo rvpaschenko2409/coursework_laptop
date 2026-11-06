@@ -1,0 +1,65 @@
+{
+  "feature": "web-model-training",
+  "base_commit": "f3eaca4",
+  "python": "3.12.14",
+  "database": "PostgreSQL 16.2, isolated schemas; non-owner application role",
+  "pytest": {
+    "passed": 413,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "warnings": 0,
+    "seconds": 107.36
+  },
+  "feature_tests": 12,
+  "baseline_training": {
+    "selected": "random_forest",
+    "metrics": {
+      "ridge": {
+        "cv_mae": 63.821857989792775,
+        "test_mae": 62.47177653310148,
+        "test_rmse": 76.5013193873831,
+        "test_r2": 0.9305404741141549
+      },
+      "random_forest": {
+        "cv_mae": 48.876787353471414,
+        "test_mae": 40.12060001406467,
+        "test_rmse": 52.612452872810465,
+        "test_r2": 0.9671473003351462
+      }
+    },
+    "train_rows": 1608,
+    "test_rows": 392,
+    "seconds": 4.296
+  },
+  "migrations": {
+    "core": "0002 unchanged",
+    "web": "web0002 -> web0003",
+    "online_upgrade": "passed",
+    "repeat_upgrade": "passed",
+    "nonempty_downgrade_guard": "passed"
+  },
+  "windows_acceptance": "pending",
+  "coverage": [
+    "GroupShuffleSplit parity 1608/392 and 80/20 groups",
+    "all five CV folds group-disjoint",
+    "actual Ridge and 200-tree RF tuning, candidate counts 3/4",
+    "CV-only recommendation before holdout evaluation",
+    "fixed preprocessing inside CV Pipeline",
+    "input validation and finite target checks",
+    "real CPU worker and responsive navigation",
+    "durable queue and idempotent request key",
+    "job status persistence, failure and interrupted-process recovery",
+    "queued cancellation and per-project active-job uniqueness",
+    "raw/staging preserved and processed-child lineage recorded",
+    "atomic rollback after registering both models",
+    "failed-run artifact cleanup",
+    "model path/UUID/algorithm/checksum validation",
+    "explicit activation and automatic future laptop prediction",
+    "activation preserves previous scores and predictions",
+    "role, CSRF, foreign-project and foreign-dataset protections",
+    "no CREATE or artifact_path UPDATE permission",
+    "run-input immutability and completed-history protection",
+    "all previous project regression tests"
+  ]
+}
