@@ -21,8 +21,8 @@ class Database:
                 raise ValueError('Веб-сервер должен работать от отдельной непривилегированной роли приложения.')
             if connection.execute('SELECT version_num FROM alembic_version').fetchone()['version_num']!='0002':
                 raise ValueError('Нужна схема ядра 0002.')
-            if connection.execute('SELECT version_num FROM web_alembic_version').fetchone()['version_num'] not in ('web0001','web0002','web0003'):
-                raise ValueError('Нужна подготовленная веб-схема web0001–web0003.')
+            if connection.execute('SELECT version_num FROM web_alembic_version').fetchone()['version_num'] not in ('web0001','web0002','web0003','web0004'):
+                raise ValueError('Нужна подготовленная веб-схема web0001–web0004.')
             if connection.execute("SELECT has_schema_privilege(current_user,current_schema(),'CREATE') AS allowed").fetchone()['allowed']:
                 raise ValueError('Роль приложения не должна иметь CREATE в рабочей схеме.')
             connection.execute('DELETE FROM web_sessions WHERE expires_at<=now()')
@@ -129,3 +129,9 @@ def grant_model_training_permissions(connection, schema='public', role='coursewo
     grant_criteria_permissions(connection,schema,role)
     connection.execute(sql.SQL('GRANT SELECT,INSERT,UPDATE(status,progress,output,error,cancel_requested,started_at,finished_at) ON TABLE {}.web_training_runs TO {}').format(sql.Identifier(schema),sql.Identifier(role)))
     connection.execute(sql.SQL('GRANT UPDATE(is_active) ON TABLE {}.ml_models TO {}').format(sql.Identifier(schema),sql.Identifier(role)))
+
+
+def grant_model_explanation_permissions(connection, schema='public', role='coursework_app'):
+    grant_model_training_permissions(connection,schema,role)
+    connection.execute(sql.SQL('GRANT SELECT,INSERT ON TABLE {}.web_model_explanations TO {}').format(sql.Identifier(schema),sql.Identifier(role)))
+    connection.execute(sql.SQL('GRANT USAGE ON SEQUENCE {}.web_model_explanations_id_seq TO {}').format(sql.Identifier(schema),sql.Identifier(role)))

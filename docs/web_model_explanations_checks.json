@@ -1,0 +1,101 @@
+{
+  "feature": "web-model-explanations",
+  "base_commit": "c105974",
+  "python": "3.12.14",
+  "database": "PostgreSQL 16.2 isolated schemas and non-owner application role",
+  "pytest": {
+    "passed": 424,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "warnings": 0,
+    "seconds": 130.25
+  },
+  "feature_tests": 11,
+  "migration": {
+    "core": "0002 unchanged",
+    "web": "web0003 -> web0004",
+    "online_upgrade": "passed",
+    "repeat_upgrade": "passed"
+  },
+  "local_rf_example": {
+    "base_value": 1031.8817668221395,
+    "prediction": 989.7063359996,
+    "reconstructed_prediction": 989.7063359995998,
+    "additivity_error": 2.2737367544323206e-13,
+    "rows": [
+      {
+        "feature": "cpu_cores",
+        "label": "Ядра процессора",
+        "value": 4,
+        "contribution": -6.563338916137578
+      },
+      {
+        "feature": "cpu_threads",
+        "label": "Потоки процессора",
+        "value": 8,
+        "contribution": -75.80754907192325
+      },
+      {
+        "feature": "cpu_frequency_ghz",
+        "label": "Частота, ГГц",
+        "value": 2.5,
+        "contribution": -9.3926582994973
+      },
+      {
+        "feature": "ram_gb",
+        "label": "Оперативная память, ГБ",
+        "value": 8,
+        "contribution": -21.671935019987394
+      },
+      {
+        "feature": "storage_gb",
+        "label": "Накопитель, ГБ",
+        "value": 512,
+        "contribution": 1.5630290484293408
+      },
+      {
+        "feature": "storage_type",
+        "label": "Тип накопителя",
+        "value": "SSD",
+        "contribution": 69.69702143657648
+      }
+    ]
+  },
+  "permutation": {
+    "repeats": 30,
+    "seed": 42,
+    "test_rows_used": 392,
+    "test_sample_limit": 500,
+    "matches_existing_cli": true
+  },
+  "charts": {
+    "format": "PNG",
+    "size": [
+      1400,
+      756
+    ],
+    "visual_review": "both actual scientific figures inspected; labels and negative bars visible"
+  },
+  "windows_acceptance": "pending",
+  "coverage": [
+    "RF TreeExplainer and Ridge LinearExplainer additivity",
+    "grouped one-hot contributions give six original features",
+    "saved prediction reproduced by its own model",
+    "permutation matches existing CLI including negative importance",
+    "deterministic bounded held-out sampling",
+    "authenticated PNG and JSON exports",
+    "legacy and web-trained model datasets/splits",
+    "full-test MAE replay before explanation",
+    "CSRF and foreign project/prediction rejection",
+    "HTML escaping",
+    "same snapshot returns cached result",
+    "global importance reused for another prediction of the same model",
+    "manual override remains separate from SHAP and original prediction",
+    "active model switch preserves historical explanation",
+    "history survives alternative deletion with frozen input snapshot",
+    "failed additivity saves no partial result",
+    "no UPDATE privilege on explanation history and no CREATE privilege",
+    "all previous project regression tests"
+  ]
+}
