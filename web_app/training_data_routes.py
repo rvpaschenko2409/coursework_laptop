@@ -51,6 +51,7 @@ def public(review):
 
 def register_routes(app,Ctx,render,response,project_access):
     cache=PreviewCache()
+    app.state.training_preview_cache=cache
 
     def page_data(context,pid):
         return dict(project=project_access(context,pid,analyst=True),datasets=store.listing(context.connection,pid),

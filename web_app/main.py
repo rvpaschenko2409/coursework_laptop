@@ -348,4 +348,6 @@ def create_app(database: Database,settings: Settings | None=None,verify_database
     register_import_routes(app, Ctx, render, response, project_access)
     from web_app.training_data_routes import register_routes as register_training_data_routes
     register_training_data_routes(app, Ctx, render, response, project_access)
+    from web_app.data_generator_routes import register_routes as register_generator_routes
+    register_generator_routes(app, Ctx, render, response, project_access)
     return app

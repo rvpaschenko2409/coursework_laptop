@@ -1,0 +1,61 @@
+{
+  "feature": "web-data-generator",
+  "base_commit": "f0a7771",
+  "python": "3.12.14",
+  "database": "PostgreSQL 16.2, isolated cluster and non-owner application role",
+  "pytest": {
+    "passed": 401,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "warnings": 0,
+    "seconds": 83.36
+  },
+  "generator_feature_tests": 26,
+  "generator_and_upload_tests": 44,
+  "capacity": {
+    "raw_rows": 10000,
+    "staging_rows": 8000,
+    "packed_bytes": 9556779,
+    "seconds": 0.971
+  },
+  "baseline_parity": {
+    "seed": 42,
+    "n_rows": 2000,
+    "noise_sigma": 0.05,
+    "defects": [
+      0,
+      0,
+      0
+    ],
+    "exact_record_equality_with_existing_csv": true
+  },
+  "defect_example": {
+    "seed": 42,
+    "raw_rows": 2000,
+    "staging_rows": 1600,
+    "configurations": 100,
+    "missing_rows": 100,
+    "outlier_rows": 100,
+    "duplicate_rows": 200
+  },
+  "windows_acceptance": "pending",
+  "coverage": [
+    "repeatable values and recipe identity",
+    "same recipe with renamed title returns existing dataset",
+    "changed seed changes identity",
+    "clean seed42 exact legacy CSV parity",
+    "zero-noise target stable within equipment group",
+    "disjoint missing/outlier/duplicate injection and half-up count rounding",
+    "parameter limits and total-defect limit",
+    "10000-row bounded-cache capacity",
+    "raw/staging rows and per-record lineage in PostgreSQL",
+    "no database write before confirmation",
+    "atomic persistence and retry after failure",
+    "no model training or split assignment",
+    "analyst role, project scope, CSRF, stale revision, preview actor binding",
+    "8KiB generator form limit unchanged",
+    "HTML escaping and page rendering",
+    "all existing project tests"
+  ]
+}
