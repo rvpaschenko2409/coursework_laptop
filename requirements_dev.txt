@@ -1,0 +1,2 @@
+# Optional development tools. Install the regular requirements first.
+ruff==0.11.13
