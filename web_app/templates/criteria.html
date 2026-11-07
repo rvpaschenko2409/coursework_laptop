@@ -3,7 +3,7 @@
 {% block title %}Критерии · {{ project.title }}{% endblock %}
 {% block content %}<a href="/projects/{{ project.id }}">← К проекту</a>
 <div class="page-heading"><p class="eyebrow">{{ project.title }}</p><h1>Критерии сравнения</h1><p>От 2 до 10 критериев. Все оценки должны быть положительными. Направление «min» — меньше лучше, «max» — больше лучше.</p></div>
-{% if project.role=='analyst' %}<a class="btn btn-primary mb-3" href="/projects/{{ project.id }}/criteria/new">Добавить критерий</a>{% endif %}
+{% if project.role=='analyst' %}<a class="btn btn-primary mb-3" href="/projects/{{ project.id }}/criteria/new">Добавить критерий</a> <a class="btn btn-outline-secondary mb-3" href="/projects/{{ project.id }}/criteria/new?calculated=true">Добавить расчётный критерий</a>{% endif %}
 <section class="card"><div class="table-responsive"><table class="table mb-0"><thead><tr><th>Критерий</th><th>Единица</th><th>Направление</th><th>Шкала</th><th>Источник</th><th>Действия</th></tr></thead><tbody>
 {% for c in items %}<tr><td>{{ c.name }}<span class="unit-label">{{ c.code }}</span></td><td>{{ c.unit }}</td><td>{{ 'Меньше — лучше' if c.direction=='min' else 'Больше — лучше' }}</td><td>{{ scale_label(c.scale_type) }}</td><td>{{ source_label(c.source) }}</td><td>{% if project.role=='analyst' %}<a href="/projects/{{ project.id }}/criteria/{{ c.id }}/edit">Изменить</a>{% if c.code not in ['price_rub','performance_score'] %} · <a href="/projects/{{ project.id }}/criteria/{{ c.id }}/delete">Удалить из сравнения</a>{% endif %}{% endif %}</td></tr>{% endfor %}
 </tbody></table></div></section>

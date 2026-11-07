@@ -27,17 +27,19 @@ def register_routes(app, Ctx, render, response, project_access):
         return render(request, context, 'criteria.html', project=project,
                       items=store.items(context.connection, project_id), archived=store.items(context.connection, project_id, True))
 
-    def editor(pid, cid, action, request, context):
+    def editor(pid, cid, action, request, context, calculated=False):
         project = project_access(context, pid, analyst=True)
         row = get_row(context, pid, cid, action == 'restore') if cid else None
         alternatives = [dict(r) for r in context.connection.execute('SELECT id,code,name FROM alternatives WHERE project_id=%s ORDER BY sort_order,id', (pid,)).fetchall()]
         scores = {r['alternative_id']: str(r['value']) for r in context.connection.execute('SELECT alternative_id,value FROM scores WHERE project_id=%s AND criterion_id=%s', (pid, cid)).fetchall()} if cid else {}
         return render(request, context, 'criterion_form.html', project=project, criterion=row,
-                      alternatives=alternatives, scores=scores, action=action)
+                      alternatives=alternatives, scores=scores, action=action,
+                      calculated=calculated or bool(row and row['source'] == 'calc'),
+                      cpu_clock_code=store.CPU_CLOCK, cpu_clock_unit=store.CPU_CLOCK_UNIT)
 
     @app.get('/projects/{project_id}/criteria/new', response_class=HTMLResponse)
-    def new(project_id: int, request: Request, context: Ctx):
-        return editor(project_id, None, 'new', request, context)
+    def new(project_id: int, request: Request, context: Ctx, calculated: bool = False):
+        return editor(project_id, None, 'new', request, context, calculated)
 
     @app.get('/projects/{project_id}/criteria/{criterion_id}/{action}', response_class=HTMLResponse)
     def edit(project_id: int, criterion_id: int, action: str, request: Request, context: Ctx):
@@ -55,6 +57,8 @@ def register_routes(app, Ctx, render, response, project_access):
             allowed.add('confirmation')
         else:
             allowed.update({'code', 'name', 'unit', 'direction'})
+            if action == 'new':
+                allowed.add('source')
             allowed.update(f"score_{a['id']}" for a in context.connection.execute('SELECT id FROM alternatives WHERE project_id=%s', (pid,)).fetchall())
         if set(form) - allowed:
             raise HTTPException(422, 'Неизвестные поля формы.')

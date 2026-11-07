@@ -273,3 +273,60 @@ def test_six_criteria_all_weight_methods_sensitivity_and_browser_worker(criteria
 def test_reserved_criterion_names(code):
     with pytest.raises(HTTPException):
         validate(dict(code=code,name='Критерий',unit='балл',direction='max',reason='Проверка кода'))
+
+
+def test_calculated_criterion_lifecycle(criteria_env):
+    from test_alternative_import import confirm, file_bytes, payload, preview
+    from test_web_alternatives import edit
+    from web_app.criterion_store import CPU_CLOCK
+
+    browser, _ = analyst(criteria_env)
+    with browser:
+        pid = copy_demo(criteria_env, browser)
+        path = f'/api/projects/{pid}'
+        alternatives = browser.get(path).json()['alternatives']
+        aid = alternatives[0]['id']
+
+        def score(alternative_id):
+            rows = browser.get(f'{path}/alternatives/{alternative_id}').json()['scores']
+            return next((row for row in rows if row['code'] == CPU_CLOCK), None)
+
+        page = browser.get(f'/projects/{pid}/criteria/new?calculated=true')
+        assert page.status_code == 200 and 'name="source" value="calc"' in page.text
+        fields = dict(code=CPU_CLOCK, name='Суммарная базовая частота ядер',
+                      unit='ГГц', direction='max', source='calc', reason='Проверка расчётного критерия')
+        invalid = browser.post(f'{path}/criteria', data=form(browser, pid, **fields, **{f'score_{aid}': '1'}))
+        assert invalid.status_code == 422
+        added = browser.post(f'{path}/criteria', data=form(browser, pid, **fields))
+        assert added.status_code == 201, added.text
+        cid = added.json()['criterion_id']
+        for row in alternatives:
+            saved = score(row['id'])
+            features = row['features']
+            assert saved['value'] == pytest.approx(features['cpu_cores'] * features['cpu_frequency_ghz'])
+            assert saved['source'] == 'calc' and saved['prediction_id'] is None
+
+        template = browser.get(f'/projects/{pid}/alternatives/import/template.csv')
+        assert template.status_code == 200 and CPU_CLOCK not in template.text
+        checked = preview(browser, pid, file_bytes([payload(code='X7')]))
+        assert checked.status_code == 200, checked.text
+        result = confirm(browser, pid, checked.json()['token'])
+        assert result.status_code == 201, result.text
+        imported = result.json()['alternative_ids'][0]
+        assert score(imported)['source'] == 'calc'
+
+        result = edit(browser, pid, aid, cpu_cores='8', cpu_threads='16', cpu_frequency_ghz='3.1',
+                      change_reason='Уточнение характеристик')
+        assert result.status_code == 200, result.text
+        assert score(aid)['value'] == pytest.approx(24.8)
+        assert run(browser, pid).status_code == 201
+
+        confirmation = dict(confirmation=CPU_CLOCK, reason='Проверка удаления и восстановления')
+        for action in ('delete', 'restore'):
+            result = browser.post(f'{path}/criteria/{cid}/{action}', data=form(browser, pid, **confirmation))
+            assert result.status_code == 200, result.text
+            if action == 'delete':
+                result = edit(browser, pid, aid, cpu_frequency_ghz='2.5', change_reason='Уточнение частоты')
+                assert result.status_code == 200, result.text
+                assert score(aid)['value'] == pytest.approx(24.8)
+        assert score(aid)['value'] == pytest.approx(20)

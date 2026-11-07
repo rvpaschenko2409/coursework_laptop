@@ -50,8 +50,10 @@ def write_score(connection,project_id,aid,cid,actor,value,source,prediction_id,r
 def save(connection,project_id,actor,values,existing=None,expert=False):
     aid=existing['id'] if existing else None
     before=current_scores(connection,project_id,aid) if aid else {}
-    from web_app.criterion_store import items
-    criteria={row['code']:row['id'] for row in items(connection,project_id)}
+    from web_app.criterion_store import CPU_CLOCK, cpu_clock_total, items
+    active_criteria = items(connection, project_id)
+    criteria = {row['code']: row['id'] for row in active_criteria}
+    calculated = next((row for row in active_criteria if row['code'] == CPU_CLOCK and row['source'] == 'calc'), None)
     reason=values['reason']
     if existing and not reason:raise InvalidForm({'change_reason':'Укажите причину изменения; она сохранится в истории.'})
     reason=reason or 'Первичный ввод ноутбука'
@@ -88,6 +90,9 @@ def save(connection,project_id,actor,values,existing=None,expert=False):
             prediction_id=connection.execute('''INSERT INTO predictions(project_id,model_id,alternative_id,criterion_id,value,features_snapshot,explanation,created_by)
                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s) RETURNING id''',(project_id,model['id'],aid,criteria['performance_score'],predicted,
                     Jsonb(values['features']),Jsonb({'origin':model['origin'],'within_training_profiles':in_training_profiles(values['features'])}),actor)).fetchone()['id']
+        if calculated:
+            changed = write_score(connection, project_id, aid, calculated['id'], actor,
+                                  cpu_clock_total(features), 'calc', None, reason, before.get(CPU_CLOCK)) or changed
     else:changed=False
     for code,value in values['scores'].items():
         changed=write_score(connection,project_id,aid,criteria[code],actor,value,'manual',None,reason,before.get(code)) or changed

@@ -4,6 +4,10 @@ from decimal import Decimal, InvalidOperation
 from fastapi import HTTPException
 from psycopg.types.json import Jsonb
 from web_app.alternative_store import write_score
+from web_app.alternative_validation import HARDWARE, MANUAL, number
+
+CPU_CLOCK = 'cpu_clock_total_ghz'
+CPU_CLOCK_UNIT = 'ГГц'
 
 PROTECTED = {'price_rub': 'min', 'performance_score': 'max'}
 RESERVED = {'csrf','revision','code','name','description','change_reason','reason','unit','direction','confirmation','performance_mode','performance_override','cpu_cores','cpu_threads','cpu_frequency_ghz','ram_gb','storage_gb','storage_type'}
@@ -16,10 +20,9 @@ def items(connection, pid, archived=False):
 
 
 def manual_fields(connection, pid):
-    from web_app.alternative_validation import MANUAL
     return {c['code']: (c['name'] + (', ' + c['unit'] if c['unit'] else ''), *MANUAL[c['code']][1:])
             if c['code'] in MANUAL else (c['name'] + (', ' + c['unit'] if c['unit'] else ''), 0.000001, 1e12, False)
-            for c in items(connection, pid) if c['code'] != 'performance_score'}
+            for c in items(connection, pid) if c['source'] == 'manual' and c['code'] != 'performance_score'}
 
 
 def positive(raw):
@@ -60,8 +63,34 @@ def audit(connection, pid, actor, action, cid, details):
         VALUES(%s,%s,%s,'criterion',%s,%s)''', (pid, actor, action, str(cid), Jsonb(details)))
 
 
+def cpu_clock_total(features):
+    cores = number(str(features.get('cpu_cores', '')), *HARDWARE['cpu_cores'])
+    frequency = number(str(features.get('cpu_frequency_ghz', '')), *HARDWARE['cpu_frequency_ghz'])
+    return float(cores * Decimal(str(frequency)))
+
+
+def refresh_cpu_clock(connection, pid, cid, actor, reason):
+    rows = connection.execute('''SELECT a.id AS alternative_id,a.code,a.features,s.id,s.value,s.source,s.prediction_id
+        FROM alternatives a LEFT JOIN scores s
+        ON s.project_id=a.project_id AND s.alternative_id=a.id AND s.criterion_id=%s
+        WHERE a.project_id=%s ORDER BY a.id''', (cid, pid)).fetchall()
+    for row in rows:
+        try:
+            value = cpu_clock_total(row['features'])
+        except ValueError as exc:
+            raise HTTPException(422, f"Ноутбук {row['code']}: заполните характеристики процессора. {exc}") from exc
+        write_score(connection, pid, row['alternative_id'], cid, actor, value, 'calc', None, reason,
+                    row if row['id'] is not None else None)
+
+
 def save(connection, pid, actor, form, existing=None):
     fields, reason = validate(form, existing)
+    source = existing['source'] if existing else form.get('source', 'manual')
+    if not existing and source not in ('manual', 'calc'):
+        raise HTTPException(422, 'Выберите ручной ввод или расчёт.')
+    if source == 'calc' and (fields['code'] != CPU_CLOCK or fields['unit'] != CPU_CLOCK_UNIT):
+        raise HTTPException(422, 'Для расчётного критерия используйте код cpu_clock_total_ghz и единицу ГГц.')
+    manual = source == 'manual' and fields['code'] != 'performance_score'
     if existing and fields['code'] in {'price_rub','performance_score','mass_kg','battery_hours','warranty_months'} and fields['unit'] != existing['unit']:
         raise HTTPException(422, 'Единицы исходного шаблона фиксированы. Добавьте отдельный критерий для другой шкалы.')
     active = items(connection, pid)
@@ -72,11 +101,10 @@ def save(connection, pid, actor, form, existing=None):
     if any(r['id'] != (existing['id'] if existing else None) for r in duplicate):
         raise HTTPException(422, 'Код или название уже заняты, в том числе удалённым критерием. Его можно восстановить.')
     alternatives = connection.execute('SELECT id FROM alternatives WHERE project_id=%s ORDER BY id', (pid,)).fetchall()
-    expected = {f"score_{a['id']}" for a in alternatives} if fields['code'] != 'performance_score' else set()
+    expected = {f"score_{a['id']}" for a in alternatives} if manual else set()
     if {k for k in form if k.startswith('score_')} != expected:
         raise HTTPException(422, 'Заполните оценки всех ноутбуков этого проекта без посторонних идентификаторов.')
     values = {key: positive(form[key]) for key in expected}
-    from web_app.alternative_validation import MANUAL,number
     if fields['code'] in MANUAL:
         try:
             for key in expected:number(form[key], *MANUAL[fields['code']])
@@ -90,14 +118,17 @@ def save(connection, pid, actor, form, existing=None):
                                (fields['name'], fields['unit'], fields['direction'], pid, cid))
     else:
         cid = connection.execute('''INSERT INTO criteria(project_id,code,name,unit,direction,source,sort_order)
-            SELECT %s,%s,%s,%s,%s,'manual',coalesce(max(sort_order),-1)+1 FROM criteria WHERE project_id=%s RETURNING id''',
-            (pid, fields['code'], fields['name'], fields['unit'], fields['direction'], pid)).fetchone()['id']
-    scores = {r['alternative_id']: dict(r) for r in connection.execute('SELECT * FROM scores WHERE project_id=%s AND criterion_id=%s', (pid, cid)).fetchall()}
-    if fields['code'] != 'performance_score':
+            SELECT %s,%s,%s,%s,%s,%s,coalesce(max(sort_order),-1)+1 FROM criteria WHERE project_id=%s RETURNING id''',
+            (pid, fields['code'], fields['name'], fields['unit'], fields['direction'], source, pid)).fetchone()['id']
+    if source == 'calc' and not existing:
+        refresh_cpu_clock(connection, pid, cid, actor, reason)
+    if manual:
+        scores = {r['alternative_id']: dict(r) for r in connection.execute(
+            'SELECT * FROM scores WHERE project_id=%s AND criterion_id=%s', (pid, cid)).fetchall()}
         for a in alternatives:
             write_score(connection, pid, a['id'], cid, actor, values[f"score_{a['id']}"], 'manual', None, reason, scores.get(a['id']))
     audit(connection, pid, actor, 'web_criterion_edit' if existing else 'web_criterion_create', cid,
-          {'reason': reason, 'before': old, 'after': fields})
+          {'reason': reason, 'before': old, 'after': {**fields, 'source': source}})
     return cid
 
 
@@ -112,6 +143,8 @@ def remove_or_restore(connection, pid, actor, row, form, restore=False):
         raise HTTPException(422, 'Нужно сохранить 2–10 критериев. Цена и прогнозная производительность обязательны.')
     settings = dict(connection.execute('SELECT settings FROM projects WHERE id=%s', (pid,)).fetchone()['settings'])
     hidden = set(settings.get('archived_criteria', []))
+    if restore and row['code'] == CPU_CLOCK and row['source'] == 'calc':
+        refresh_cpu_clock(connection, pid, row['id'], actor, reason)
     hidden.discard(row['id']) if restore else hidden.add(row['id'])
     settings['archived_criteria'] = sorted(hidden)
     connection.execute('UPDATE projects SET settings=%s WHERE id=%s', (Jsonb(settings), pid))
