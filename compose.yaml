@@ -1,0 +1,53 @@
+name: coursework-laptop
+
+x-app: &app
+  image: coursework-laptop-app:local
+  build: .
+  environment: &app-env
+    COURSEWORK_APP_PASSWORD: ${COURSEWORK_APP_PASSWORD:-local-demo-app-db}
+  init: true
+
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: coursework_laptop
+      POSTGRES_PASSWORD: ${COURSEWORK_DB_PASSWORD:-local-demo-admin-db}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "127.0.0.1", "-U", "postgres", "-d", "coursework_laptop"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  setup:
+    <<: *app
+    environment:
+      <<: *app-env
+      COURSEWORK_DB_PASSWORD: ${COURSEWORK_DB_PASSWORD:-local-demo-admin-db}
+      COURSEWORK_DEMO_PASSWORD: ${COURSEWORK_DEMO_PASSWORD:-LaptopDemo2026!}
+    command: ["python", "-m", "scripts.compose_start", "setup"]
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    <<: *app
+    command: ["python", "-m", "scripts.compose_start", "web"]
+    ports:
+      - "127.0.0.1:8001:8000"
+    volumes:
+      - trained_models:/app/models/web
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "from urllib.request import urlopen; urlopen('http://127.0.0.1:8000/static/offline_calculation.html', timeout=3).close()"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+volumes:
+  postgres_data:
+  trained_models:
