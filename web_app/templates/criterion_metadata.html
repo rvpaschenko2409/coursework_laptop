@@ -1,0 +1,6 @@
+{% macro scale_label(scale) -%}
+  {{ 'Шкала отношений' if scale == 'ratio' else scale }}
+{%- endmacro %}
+{% macro source_label(source) -%}
+  {{ {'manual': 'Ручной ввод', 'ml': 'Прогноз модели', 'calc': 'Расчёт'}.get(source, source) }}
+{%- endmacro %}
