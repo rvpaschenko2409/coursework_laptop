@@ -1,10 +1,11 @@
-const cacheName = 'coursework-offline-calculation-criteria-v1';
+const cacheName = 'coursework-offline-calculation-criteria-v2';
 const assets = new Set([
   '/static/offline_calculation.html',
   '/static/offline_calculation.css',
   '/static/offline_calculation.webmanifest',
   '/static/offline_icon_192.png',
   '/static/offline_icon_512.png',
+  '/static/offline_icon_maskable.png',
   '/static/live_preview.js',
   '/static/browser_preview_worker.js',
   '/static/pyodide/numpy-2.0.2-cp312-cp312-pyodide_2024_0_wasm32.whl',

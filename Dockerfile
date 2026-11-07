@@ -11,6 +11,7 @@ COPY scripts scripts
 COPY decision_core decision_core
 COPY decision_store decision_store
 COPY web_app web_app
+RUN python -m scripts.install_pyodide
 COPY data data
 COPY results results
 COPY models/ridge.joblib models/random_forest.joblib models/

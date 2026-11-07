@@ -20,7 +20,7 @@
   <p data-offline-project-status role="status"></p>
 </div>
 </section>
-<script src="{{ url_for('static',path='/live_preview.js') }}?v=offline-sync" defer></script>
+<script src="{{ url_for('static',path='/live_preview.js') }}?v=pwa-runtime-v2" defer></script>
 {% if synthetic_predictions %}<p class="alert alert-info">Прогнозы получены в учебном эксперименте на синтетических данных. Их точность на реальных ноутбуках не подтверждена.</p>{% endif %}
 {% if outside_profiles %}<p class="alert alert-warning">В проекте есть конфигурации вне профилей учебного набора. Прогнозы для них требуют дополнительной проверки.</p>{% endif %}
 {% if stale_results %}<p class="alert alert-warning">Данные проекта изменились после последнего расчёта. Прежние результаты сохранены; для текущих данных нужен новый расчёт.</p>{% endif %}
