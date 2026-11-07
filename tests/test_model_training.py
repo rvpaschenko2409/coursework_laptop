@@ -234,3 +234,41 @@ def test_migration_guard_model_role_and_run_identity_immutable(model_env):
             with env['admin'].transaction():env['admin'].execute('UPDATE web_training_runs SET params=%s WHERE id=%s',(Jsonb({'seed':99}),row['id']))
         with pytest.raises(psycopg.Error):
             with env['admin'].transaction():env['admin'].execute(env['migration'].DOWN_SQL,prepare=False)
+
+
+def test_compare_completed_runs_from_saved_outputs(model_env):
+    with client(model_env) as browser:
+        user = signup(browser)
+        pid = new_project(browser)
+        did = add_source(model_env, pid, user['id'])
+        path = f'/projects/{pid}/models/compare'
+
+        empty = browser.get(path)
+        assert empty.status_code == 200
+        assert 'нужны два успешно завершённых запуска' in empty.text
+
+        run_ids = []
+        for seed in ('42', '42', '43'):
+            queued = enqueue(browser, pid, did, seed=seed)
+            assert queued.status_code == 202, queued.text
+            rid = queued.json()['run_id']
+            assert wait_run(browser, pid, rid)['status'] == 'succeeded'
+            run_ids.append(rid)
+
+        first, second, different = run_ids
+        both = browser.get(path, params={'first': first, 'second': second})
+        assert both.status_code == 200, both.text
+        assert 'одинаковым разбиением' in both.text
+        assert 'random_forest' in both.text and 'ridge' in both.text
+        assert '<th>Разница</th>' in both.text and '+0.0000' in both.text
+
+        changed = browser.get(path, params={'first': first, 'second': different})
+        assert changed.status_code == 200
+        assert 'разные наборы или разбиения' in changed.text
+        assert '<th>Разница</th>' not in changed.text
+
+        assert browser.get(path, params={'first': first, 'second': first}).status_code == 422
+        assert browser.get(path, params={'first': first}).status_code == 422
+        other = new_project(browser)
+        assert browser.get(f'/projects/{other}/models/compare',
+                           params={'first': first, 'second': second}).status_code == 404

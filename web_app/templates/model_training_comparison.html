@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Сравнение запусков · {{ project.title }}{% endblock %}
+{% block content %}
+<div class="editor-content">
+  <a class="back-link" href="/projects/{{ project.id }}/models">← К журналу обучения</a>
+  <div class="page-heading">
+    <p class="eyebrow">{{ project.title }}</p>
+    <h1>Сравнение запусков обучения</h1>
+    <p>Параметры и метрики взяты из журнала на момент завершения каждого запуска.</p>
+  </div>
+  {% if options|length < 2 %}
+    <p class="alert alert-info">Для сравнения нужны два успешно завершённых запуска в этом проекте.</p>
+  {% else %}
+    <form method="get" class="card mb-4">
+      <div class="card-body">
+        {% for key, label, selected in [('first', 'Первый запуск', first), ('second', 'Второй запуск', second)] %}
+          <label class="form-label" for="{{ key }}">{{ label }}</label>
+          <select class="form-select mb-3" id="{{ key }}" name="{{ key }}" required>
+            <option value="">Выберите запуск</option>
+            {% for run in options %}
+              <option value="{{ run.id }}"{% if run.id == selected %} selected{% endif %}>
+                {{ run.created_at|omsk_time }} · набор № {{ run.source_dataset_id }} · seed {{ run.seed }} · {{ (run.id|string)[:8] }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endfor %}
+        <button class="btn btn-primary" type="submit">Сравнить</button>
+      </div>
+    </form>
+  {% endif %}
+  {% if comparison %}
+    <p class="alert alert-info">
+      {% if comparison.same_split %}
+        Запуски использовали один набор с одинаковым разбиением. Разница рассчитана как значение второго запуска минус значение первого.
+      {% else %}
+        У запусков разные наборы или разбиения. Метрики приведены рядом для справки. Разница не рассчитывается.
+      {% endif %}
+    </p>
+    <section class="card mb-4"><div class="card-body">
+      <h2>Условия экспериментов</h2>
+      <div class="table-responsive"><table class="table">
+        <thead><tr><th>Параметр</th><th>Первый запуск</th><th>Второй запуск</th></tr></thead>
+        <tbody>
+          {% for label, cells in [
+            ('Дата запуска', comparison.runs|map(attribute='created_at')|map('omsk_time')|list),
+            ('Исходный набор, №', comparison.runs|map(attribute='source_dataset_id')|list),
+            ('Набор с разбиением, №', comparison.runs|map(attribute='output.dataset_id')|list),
+            ('Источник данных', comparison.runs|map(attribute='output.origin')|list),
+            ('Seed', comparison.runs|map(attribute='params.seed')|list),
+            ('Версия обучения', comparison.runs|map(attribute='params.version')|list),
+            ('Строк обучения', comparison.runs|map(attribute='output.train_rows')|list),
+            ('Строк теста', comparison.runs|map(attribute='output.test_rows')|list),
+            ('Рекомендация по CV', comparison.runs|map(attribute='output.recommended')|list)
+          ] %}
+            <tr><th scope="row">{{ label }}</th>{% for cell in cells %}<td>{{ cell|default('—') }}</td>{% endfor %}</tr>
+          {% endfor %}
+        </tbody>
+      </table></div>
+    </div></section>
+    {% for model in comparison.models %}
+      <section class="card mb-4"><div class="card-body">
+        <h2>{{ model.name }}</h2>
+        <div class="table-responsive"><table class="table">
+          <thead><tr><th>Метрика</th>
+            {% for version in model.versions %}<th>{{ loop.index }}-й запуск{% if version is not none %} · версия {{ version }}{% endif %}</th>{% endfor %}
+            {% if comparison.same_split %}<th>Разница</th>{% endif %}
+          </tr></thead>
+          <tbody>
+            {% for metric in model.metrics %}
+              <tr><th scope="row">{{ metric.label }}</th>
+                {% for value in [metric.first, metric.second] %}<td>{{ '%.4f'|format(value) if value is not none else '—' }}</td>{% endfor %}
+                {% if comparison.same_split %}<td>{{ '%+.4f'|format(metric.delta) if metric.delta is not none else '—' }}</td>{% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table></div>
+      </div></section>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}

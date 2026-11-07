@@ -28,6 +28,48 @@ def listing(connection,pid):
         created_at,started_at,finished_at FROM web_training_runs WHERE project_id=%s ORDER BY created_at DESC LIMIT 50''',(pid,)).fetchall()
 
 
+def completed_options(connection, pid):
+    return connection.execute("""
+        SELECT id,source_dataset_id,created_at,params->>'seed' AS seed
+        FROM web_training_runs WHERE project_id=%s AND status='succeeded'
+        ORDER BY created_at DESC,id DESC
+        """, (pid,)).fetchall()
+
+
+def comparison(connection, pid, first, second):
+    rows = connection.execute("""
+        SELECT id,source_dataset_id,created_at,params,status,output
+        FROM web_training_runs WHERE project_id=%s AND id IN (%s,%s)
+        """, (pid, first, second)).fetchall()
+    by_id = {row['id']: row for row in rows}
+    if len(by_id) != 2:
+        raise HTTPException(404, 'Запуск не найден в этом проекте.')
+    left, right = by_id[first], by_id[second]
+    if any(run['status'] != 'succeeded' for run in (left, right)):
+        raise HTTPException(422, 'Выберите два успешно завершённых запуска.')
+
+    a, b = left['output'], right['output']
+    # The processed dataset identity incorporates the input and full split manifest.
+    same_split = bool(a.get('dataset_id') and a['dataset_id'] == b.get('dataset_id'))
+    a_models, b_models = a['models'], b['models']
+    metrics = (
+        ('cv_mae', 'MAE CV ↓'),
+        ('test_mae', 'MAE тест ↓'),
+        ('test_rmse', 'RMSE тест ↓'),
+        ('test_r2', 'R² тест ↑'),
+    )
+    models = []
+    for name in sorted(a_models.keys() | b_models.keys()):
+        a_model, b_model = a_models.get(name, {}), b_models.get(name, {})
+        values = []
+        for key, label in metrics:
+            old, new = a_model.get(key), b_model.get(key)
+            delta = new - old if same_split and old is not None and new is not None else None
+            values.append({'label': label, 'first': old, 'second': new, 'delta': delta})
+        models.append({'name': name, 'versions': (a_model.get('version'), b_model.get('version')), 'metrics': values})
+    return {'runs': (left, right), 'same_split': same_split, 'models': models}
+
+
 def models(connection,pid):
     return connection.execute('''SELECT m.id,m.name,m.version,m.algorithm,m.dataset_id,m.params,m.metrics,m.environment,
         m.seed,m.is_active,m.trained_at,m.registered_at,d.origin FROM ml_models m JOIN datasets d

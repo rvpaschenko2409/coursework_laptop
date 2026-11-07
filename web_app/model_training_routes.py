@@ -37,6 +37,18 @@ def register_routes(app,Ctx,render,response,project_access):
             return notify(response(request,context,data))
         return notify(render(request,context,'model_training.html',**data))
 
+    @app.get('/projects/{project_id}/models/compare', response_class=HTMLResponse)
+    def compare(project_id: int, request: Request, context: Ctx,
+                first: uuid.UUID | None = None, second: uuid.UUID | None = None):
+        project = project_access(context, project_id)
+        store.ready(context.connection)
+        if (first is None) != (second is None) or (first is not None and first == second):
+            raise HTTPException(422, 'Выберите два разных завершённых запуска.')
+        result = store.comparison(context.connection, project_id, first, second) if first is not None else None
+        return render(request, context, 'model_training_comparison.html', project=project,
+                      options=store.completed_options(context.connection, project_id),
+                      first=first, second=second, comparison=result)
+
     @app.post('/projects/{project_id}/models/train')
     @app.post('/api/projects/{project_id}/models/train')
     async def train(project_id:int,request:Request,context:Ctx):
