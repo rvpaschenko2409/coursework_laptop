@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="{{ url_for('static',path='/interactive.css') }}?v=interactive-1">
 <script src="{{ url_for('static',path='/interactive.js') }}?v=interactive-1"></script>
 <link rel="stylesheet" href="{{ url_for('static',path='/design_system.css') }}?v=1">
+{% block extra_head %}{% endblock %}
 </head>
 <body>{% from 'ui_visuals.html' import icon %}
 <a class="skip-link" href="#main">Перейти к содержимому</a>

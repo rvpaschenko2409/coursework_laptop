@@ -89,3 +89,10 @@ def register_routes(app,Ctx,render,response,project_access,require_user):
         project,data=pair(context,project_id,result_id)
         from web_app.calculation_charts import chart_bytes
         return Response(chart_bytes(data,chart),media_type='image/png')
+
+    @app.get('/projects/{project_id}/calculations/{result_id}/ranks-chart', response_class=HTMLResponse)
+    def ranks_chart(project_id: int, result_id: int, request: Request, context: Ctx):
+        _, data = pair(context, project_id, result_id)
+        from web_app.calculation_plotly import rank_figure
+
+        return render(request, context, 'calculation_ranks_chart.html', figure=rank_figure(data['comparison']))
